@@ -1,0 +1,17 @@
+# Keeps the deploy workflow's actions current on its own.
+#
+# GitHub retires the Node version an action runs on every couple of years.
+# When that happens the build starts printing deprecation warnings and,
+# eventually, stops working. This opens a single pull request when newer
+# versions exist, so the site does not quietly rot.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      actions:
+        patterns: ["*"]
+    commit-message:
+      prefix: "Update"
