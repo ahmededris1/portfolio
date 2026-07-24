@@ -206,10 +206,13 @@ function start(){
         flush(Number(entry.target.dataset.index));
         io.unobserve(entry.target);
       });
-    // A small lead only. Each slide is a full screen, so anything larger
-    // pulls in two or three projects' previews before the visitor has
-    // scrolled at all — which is the cost this is meant to avoid.
-    }, { rootMargin: "0px 0px 15% 0px" });
+    // Each slide is exactly one screen tall, so the next one begins on the
+    // very pixel this one ends. At a plain "0px" margin that counts as
+    // touching, and a second preview — nearly a megabyte — downloads before
+    // the visitor has scrolled at all. Pulling the bottom edge up by a pixel
+    // excludes it. A preview then starts loading as its slide first appears,
+    // long before it is scrolled to.
+    }, { rootMargin: "0px 0px -1px 0px" });
     slides.forEach(slide => io.observe(slide));
   }
 
@@ -467,10 +470,16 @@ function start(){
     if(themeMeta) themeMeta.setAttribute("content", project.bg); // browser UI colour
   }
 
+  // The viewport height, cached. render() runs on every animation frame, and
+  // reading window.innerHeight there forces the browser to recompute layout
+  // it had just invalidated by writing the previous frame's transforms. The
+  // height only changes on resize, so it is read there instead.
+  let viewportH = window.innerHeight;
+
   // Position everything based on the current scroll position.
   // `t` is a timestamp used only for the gentle floating motion.
   function render(t){
-    const vh = window.innerHeight;
+    const vh = viewportH;
     const p  = window.scrollY / vh + introReel;   // fractional slide index (+ opening cascade)
     const spacing = vh * 0.55;
 
@@ -576,7 +585,7 @@ function start(){
   function introFrame(prog, t){
     const N = reelImgs.length;
     const q = prog * (N - 1);            // 0 → N-1  (which project is centred)
-    const vh = window.innerHeight;
+    const vh = viewportH;
     const spacing = vh * 0.52;
     reelImgs.forEach((el, i) => {
       const off = (N - 1 - i) - q;       // reversed: first project starts at the bottom
@@ -628,7 +637,10 @@ function start(){
   render(performance.now());
   startLoop();
   window.addEventListener("scroll", scheduleRender, { passive: true });
-  window.addEventListener("resize", scheduleRender, { passive: true });
+  window.addEventListener("resize", () => {
+    viewportH = window.innerHeight;   // the one place this is read
+    scheduleRender();
+  }, { passive: true });
 
   // Hover the project nav → enter "browse" mode (flat centred bands + name list)
   if(!REDUCE){
