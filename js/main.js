@@ -190,9 +190,20 @@ function start(){
   const deferred = PROJECTS.map(() => []);
   const deferToSlide = (i, load) => deferred[i].push(load);
 
+  // Nothing behind the opening overlay is visible, so slide imagery waits for
+  // it to lift. That leaves the whole of the first second to the cover image,
+  // which is the one thing the visitor is actually waiting to see.
+  let introLifted = false;
+  const heldBack = [];
+  const afterIntro = load => introLifted ? load() : heldBack.push(load);
+  function releaseHeldMedia(){
+    introLifted = true;
+    heldBack.splice(0).forEach(load => load());
+  }
+
   function watchSlides(){
     const slides = $$(".slide");
-    const flush = i => deferred[i].splice(0).forEach(load => load());
+    const flush = i => deferred[i].splice(0).forEach(afterIntro);
 
     // Without IntersectionObserver, just load everything rather than risk
     // a slide that never fills in.
@@ -309,8 +320,12 @@ function start(){
     const mqRun = mq.map(m => `<span class="ab-mq-item">${esc(m)}</span>`).join(sep);
     const marquee = mq.length ? `<div class="ab-marquee" aria-hidden="true"><div class="ab-mq-track"><span class="ab-mq-set">${mqRun}${sep}</span><span class="ab-mq-set">${mqRun}${sep}</span></div></div>` : "";
 
+    // The portrait is only ever seen on the About page, which is hidden until
+    // it is opened — but the overlay still occupies the viewport, so a plain
+    // src would download it during the first paint, competing with the cover
+    // image. It is fetched on first open instead (see openAbout).
     const photo = A.photo
-      ? `<img src="${esc(A.photo)}" alt="${esc(SITE.name)}">` : "";
+      ? `<img data-src="${esc(A.photo)}" alt="${esc(SITE.name)}">` : "";
 
     const aboutBody = $("#aboutBody");
     aboutBody.innerHTML = `
@@ -431,18 +446,25 @@ function start(){
   // this script. Rebuild them only if the content file names someone else.
   (function intro(){
     const mark = $("#introMark");
-    if(mark.textContent.trim() !== SITE.name.trim()){
+    // Word gaps are non-breaking spaces: a plain space alone in an
+    // inline-block collapses to nothing, and the name ran together.
+    const shown = mark.textContent.replace(/\u00a0/g, " ").trim();
+    if(shown !== SITE.name.trim()){
       mark.replaceChildren();
       [...SITE.name].forEach((char, i) => {
         const span = document.createElement("span");
-        span.textContent = char;
-        span.style.animationDelay = (i * 0.045) + "s";
+        span.textContent = char === " " ? "\u00a0" : char;
+        span.style.animationDelay = (i * 0.03) + "s";
         mark.appendChild(span);
       });
     }
-    const wait = REDUCE ? 300 : 1500;
+    // Long enough for the last letter to finish rising (0.30s stagger +
+    // 0.55s rise), and no longer: every extra moment here is a moment the
+    // visitor spends looking at an empty screen.
+    const wait = REDUCE ? 300 : 900;
     setTimeout(() => {
       $("#intro").classList.add("hide");
+      releaseHeldMedia();       // the reel is about to be visible
       playIntroReel();          // sweep the project images up from the bottom
     }, wait);
   })();
@@ -923,6 +945,12 @@ function start(){
 
   function openAbout(){
     lastFocused = document.activeElement;
+    // Fetch the portrait the first time the page is opened, not before.
+    const photoEl = $(".ab-hero-photo img[data-src]", aboutEl);
+    if(photoEl){
+      photoEl.src = photoEl.dataset.src;
+      delete photoEl.dataset.src;
+    }
     aboutEl.scrollTop = 0;
     aboutEl.inert = false;
     setBackgroundInert(true);
