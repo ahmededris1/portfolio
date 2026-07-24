@@ -659,6 +659,24 @@ body.about-open #dots,body.about-closing #dots{opacity:0;pointer-events:none;tra
 }
 #intro .mark span{display:inline-block;transform:translateY(110%);animation:rise .9s cubic-bezier(.7,0,.2,1) forwards}
 @keyframes rise{to{transform:none}}
+/* The letters rise one after another. The stagger lives here rather than
+   being set from JavaScript so the whole animation can start the moment the
+   stylesheet lands, without waiting for a script. Covers names up to 16
+   characters; anything longer rises together with the last of these. */
+#intro .mark span:nth-child(2){animation-delay:.045s}
+#intro .mark span:nth-child(3){animation-delay:.09s}
+#intro .mark span:nth-child(4){animation-delay:.135s}
+#intro .mark span:nth-child(5){animation-delay:.18s}
+#intro .mark span:nth-child(6){animation-delay:.225s}
+#intro .mark span:nth-child(7){animation-delay:.27s}
+#intro .mark span:nth-child(8){animation-delay:.315s}
+#intro .mark span:nth-child(9){animation-delay:.36s}
+#intro .mark span:nth-child(10){animation-delay:.405s}
+#intro .mark span:nth-child(11){animation-delay:.45s}
+#intro .mark span:nth-child(12){animation-delay:.495s}
+#intro .mark span:nth-child(13){animation-delay:.54s}
+#intro .mark span:nth-child(14){animation-delay:.585s}
+#intro .mark span:nth-child(n+15){animation-delay:.63s}
 
 /* ---------- 13. Reel responsive tweaks ---------- */
 @media(max-width:860px){

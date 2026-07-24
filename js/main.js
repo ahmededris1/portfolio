@@ -426,15 +426,20 @@ function start(){
     });
   })();
 
-  // Intro loader: animate the name, then hide the overlay.
+  // Intro loader: hide the overlay once the name has finished rising.
+  // The letters are already in index.html, so they paint without waiting for
+  // this script. Rebuild them only if the content file names someone else.
   (function intro(){
     const mark = $("#introMark");
-    [...SITE.name].forEach((char, i) => {
-      const span = document.createElement("span");
-      span.textContent = char === " " ? " " : char;
-      span.style.animationDelay = (i * 0.045) + "s";
-      mark.appendChild(span);
-    });
+    if(mark.textContent.trim() !== SITE.name.trim()){
+      mark.replaceChildren();
+      [...SITE.name].forEach((char, i) => {
+        const span = document.createElement("span");
+        span.textContent = char;
+        span.style.animationDelay = (i * 0.045) + "s";
+        mark.appendChild(span);
+      });
+    }
     const wait = REDUCE ? 300 : 1500;
     setTimeout(() => {
       $("#intro").classList.add("hide");

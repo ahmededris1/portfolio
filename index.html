@@ -58,7 +58,7 @@
   <link rel="preload" as="image" href="images/scb-hero.webp" fetchpriority="high">
 
   <!-- The look of the site lives in this file -->
-  <link rel="stylesheet" href="css/styles.css?v=6">
+  <link rel="stylesheet" href="css/styles.css?v=7">
 
   <!--
     Structured data. This tells Google, LinkedIn and Bing who the site
@@ -112,8 +112,14 @@
   <!-- Lets keyboard users jump straight to the content -->
   <a class="skip-link" href="#reel">Skip to content</a>
 
-  <!-- Opening animation. It hides itself automatically. -->
-  <div id="intro" aria-hidden="true"><div class="mark" id="introMark"></div></div>
+  <!-- Opening animation. It hides itself automatically.
+       The name is spelled out here, one letter per span, rather than being
+       built by JavaScript: it is the first thing painted, so leaving it to a
+       script means the visitor stares at an empty dark screen until the
+       scripts have downloaded and run. If you change the name in
+       data/projects.js, the script below corrects this on load — but update
+       it here too, so the right name paints straight away. -->
+  <div id="intro" aria-hidden="true"><div class="mark" id="introMark"><span>A</span><span>h</span><span>m</span><span>e</span><span>d</span><span> </span><span>E</span><span>d</span><span>r</span><span>i</span><span>s</span></div></div>
 
   <!-- Top bar: logo on the left, About link on the right.
        The inner wrapper keeps the logo and nav lined up with the page
@@ -192,7 +198,7 @@
     1) projects.js  = your content (safe to edit)
     2) main.js      = the behaviour (no need to edit)
   -->
-  <script defer src="data/projects.js?v=6"></script>
-  <script defer src="js/main.js?v=6"></script>
+  <script defer src="data/projects.js?v=7"></script>
+  <script defer src="js/main.js?v=7"></script>
 </body>
 </html>
