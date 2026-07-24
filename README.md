@@ -120,6 +120,7 @@ not a relative one.
 
 ```
 index.html          the page structure, tab title and sharing preview tags
+404.html            shown if someone follows a broken link to the site
 pika.svg            the icon shown in the browser tab
 robots.txt          tells search engines they may index the site
 sitemap.xml         the list of pages for search engines
@@ -151,6 +152,26 @@ videos/             the inline clip used in the Cookster case study
 - **Adding a new kind of story block**: add a `case` to `storyBlock()` in
   `js/main.js` and style it in section 10 of the CSS. If it should run edge
   to edge, add its class to the full-bleed selector list there too.
+- **Pictures load as they are needed.** Each project's preview and cover are
+  fetched only when that slide comes near the viewport, which keeps the
+  opening screen at roughly 3MB instead of 7MB. If you add imagery to a
+  slide, register it through `deferToSlide()` in section 1 of `js/main.js`
+  rather than setting it straight away. The one deliberate exception is the
+  opening cascade, which sweeps through every project at once and therefore
+  needs its images up front.
+- **`index.html` preloads the first project's cover.** JavaScript applies it
+  as a background, which the browser cannot discover on its own, and it is
+  the largest thing on the opening screen. Reordering projects makes that
+  preload point at the wrong file — harmless, but worth correcting.
+- **Screenshots use `alt=""` on purpose.** Each one that needs describing is
+  in a `<figure>` with its label in a `<figcaption>`, which already serves as
+  the text alternative. Repeating it in `alt` would make a screen reader say
+  the same words twice.
+- **Structured data** in the head of `index.html` tells search engines who
+  the site belongs to. It repeats the name, role, location, employer and
+  social links from `data/projects.js`, because search engines read it before
+  any JavaScript runs. Keep the two in step, and check edits at
+  <https://validator.schema.org>.
 
 ---
 

@@ -180,10 +180,44 @@ function start(){
   const reel    = $("#reel");
   const dotsNav = $("#dots");
 
+  // Deferred imagery.
+  // The animated previews are over a megabyte each, so fetching all of them
+  // up front costs several seconds on a phone before anything is readable.
+  // Each project registers its pictures here instead, and they are fetched
+  // when that slide comes within a screen of the viewport. The opening
+  // cascade is deliberately NOT deferred — it sweeps through every project
+  // at once, so those images have to be there from the start.
+  const deferred = PROJECTS.map(() => []);
+  const deferToSlide = (i, load) => deferred[i].push(load);
+
+  function watchSlides(){
+    const slides = $$(".slide");
+    const flush = i => deferred[i].splice(0).forEach(load => load());
+
+    // Without IntersectionObserver, just load everything rather than risk
+    // a slide that never fills in.
+    if(!("IntersectionObserver" in window)){
+      slides.forEach((_, i) => flush(i));
+      return;
+    }
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(!entry.isIntersecting) return;
+        flush(Number(entry.target.dataset.index));
+        io.unobserve(entry.target);
+      });
+    // A small lead only. Each slide is a full screen, so anything larger
+    // pulls in two or three projects' previews before the visitor has
+    // scrolled at all — which is the cost this is meant to avoid.
+    }, { rootMargin: "0px 0px 15% 0px" });
+    slides.forEach(slide => io.observe(slide));
+  }
+
   PROJECTS.forEach((project, i) => {
     // One full-screen slide per project
     const slide = document.createElement("section");
     slide.className = "slide";
+    slide.dataset.index = String(i);
     slide.setAttribute("aria-label", project.name + " project");
     slide.innerHTML = `
       <div class="slide-inner">
@@ -204,15 +238,22 @@ function start(){
         </div>
       </div>`;
     reel.appendChild(slide);
-    setArt($(".hero .art", slide), project, 1);
+
+    // The inline hero (used instead of the floating reel on narrow screens).
+    const heroArt = $(".hero .art", slide);
+    if(i === 0) setArt(heroArt, project, 1);              // first screen: immediately
+    else deferToSlide(i, () => setArt(heroArt, project, 1));
+
     // The small preview can use its own image (project.thumb); otherwise it
     // falls back to the project's cover / generated artwork.
     const thumbEl = $(".thumbart", slide);
-    if(project.thumb){
-      thumbEl.style.background = `#000 url("${project.thumb}") center / cover no-repeat`;
-    } else {
-      setArt(thumbEl, project, 0.5);
-    }
+    deferToSlide(i, () => {
+      if(project.thumb){
+        thumbEl.style.background = `#000 url("${project.thumb}") center / cover no-repeat`;
+      } else {
+        setArt(thumbEl, project, 0.5);
+      }
+    });
 
     // Matching dot in the side navigation
     const dot = document.createElement("button");
@@ -222,6 +263,9 @@ function start(){
     dot.addEventListener("click", () => scrollToSlide(i));
     dotsNav.appendChild(dot);
   });
+
+  // Every slide exists now, so the deferred imagery can start watching.
+  watchSlides();
 
   /* ---------- 2. Build the About page (a full overlay, not a reel slide) ---------- */
   (function buildAbout(){
@@ -350,25 +394,32 @@ function start(){
 
   /* ---------- 4. Rolling logo and intro loader ---------- */
 
-  // Logo: each letter is stacked twice so it can "roll" on hover.
-  // The animated letters are hidden from screen readers; the link's
-  // aria-label (set in index.html) provides the real name.
+  // Logo: each letter rolls over to a copy of itself on hover.
+  // The second copy is drawn by CSS from the data-char attribute rather than
+  // being a second element, so the logo's text reads "AHMED EDRIS" once. A
+  // duplicated letter in the markup would spell "AAHHMMEEDD", which no longer
+  // matches the link's accessible name and trips accessibility checks.
   (function buildLogo(){
     const logo = $("#logo");
     const words = SITE.name.trim().split(/\s+/);
     words.forEach((word, wordIndex) => {
       const wordEl = document.createElement("span");
       wordEl.className = "word";
-      wordEl.setAttribute("aria-hidden", "true");
       [...word.toUpperCase()].forEach((char, charIndex) => {
         const letter = document.createElement("span");
         letter.className = "ltr";
-        letter.innerHTML = `<span class="stack"><b>${esc(char)}</b><b>${esc(char)}</b></span>`;
-        $(".stack", letter).style.animationDelay = ((wordIndex * 5 + charIndex) * 0.04) + "s";
+        const stack = document.createElement("span");
+        stack.className = "stack";
+        stack.dataset.char = char;                 // CSS paints the rolled-to copy
+        stack.style.animationDelay = ((wordIndex * 5 + charIndex) * 0.04) + "s";
+        stack.innerHTML = `<b>${esc(char)}</b>`;
+        letter.appendChild(stack);
         wordEl.appendChild(letter);
       });
       logo.appendChild(wordEl);
-      // The space between words comes from the CSS "gap" on .logo
+      // A real space so the logo's text matches the link's accessible name.
+      // The visual gap between words comes from the CSS "gap" on .logo.
+      if(wordIndex < words.length - 1) logo.appendChild(document.createTextNode(" "));
     });
   })();
 
@@ -613,6 +664,10 @@ function start(){
     const k  = b.kicker ? `<p class="cs-kicker">${esc(b.kicker)}</p>` : "";
     const h  = b.title  ? `<h3 class="cs-h">${esc(b.title)}</h3>` : "";
     const ps = Array.isArray(b.body) ? b.body.map(p => `<p class="cs-p">${esc(p)}</p>`).join("") : "";
+    // Screenshots carry alt="" on purpose. Each one that needs describing
+    // sits in a <figure> with its label in a <figcaption>, so the caption is
+    // already its text alternative — repeating it in alt would make a screen
+    // reader announce the same words twice.
     const phone = src => `<div class="cs-phone"><img loading="lazy" src="${esc(src)}" alt=""></div>`;
 
     switch(b.type){
@@ -663,7 +718,7 @@ function start(){
                 ? `<div class="cs-plate">${img}</div>`
                 : `<div class="cs-browser"><div class="cs-bar"><i></i><i></i><i></i></div>${img}</div>`)
             : `<div class="cs-dev">${img}</div>`;
-          return `<figure class="cs-gcell">${media}${label ? `<span>${esc(label)}</span>` : ""}</figure>`;
+          return `<figure class="cs-gcell">${media}${label ? `<figcaption>${esc(label)}</figcaption>` : ""}</figure>`;
         }).join("");
         const quote = b.quote
           ? `<blockquote class="cs-note"><p>${esc(b.quote)}</p>${b.quoteCite ? `<cite>${esc(b.quoteCite)}</cite>` : ""}</blockquote>` : "";
@@ -673,7 +728,7 @@ function start(){
       case "casework": {
         const gal = arr => `<div class="cs-gallery">${(arr || []).map(([src, label]) =>
           `<figure class="cs-g-item"><div class="cs-dev"><img loading="lazy" src="${esc(src)}" alt=""></div>${
-            label ? `<span>${esc(label)}</span>` : ""}</figure>`).join("")}</div>`;
+            label ? `<figcaption>${esc(label)}</figcaption>` : ""}</figure>`).join("")}</div>`;
         const grp = (arr, tag) => (Array.isArray(arr) && arr.length)
           ? `<div class="cs-group"><span class="cs-tag ${tag}">${tag === "before" ? "Before" : "After"}</span>${gal(arr)}</div>` : "";
         const quote = b.quote

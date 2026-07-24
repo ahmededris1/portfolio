@@ -118,7 +118,12 @@ body.case-closing header{opacity:0;pointer-events:none;transition:opacity 250ms}
 .logo .word{display:inline-flex}
 .ltr{display:inline-block;height:1em;overflow:hidden;vertical-align:bottom}
 .ltr .stack{display:flex;flex-direction:column;transform:translateY(0)}
-.ltr .stack b{height:1em;line-height:1;font-weight:700}
+.ltr .stack b,
+.ltr .stack::after{height:1em;line-height:1;font-weight:700}
+/* The letter the roll reveals. Drawn from the attribute rather than a second
+   element so the logo's text content stays "AHMED EDRIS" for screen readers
+   and accessibility checkers. */
+.ltr .stack::after{content:attr(data-char);display:block}
 .logo:hover .stack{animation:roll .5s cubic-bezier(.6,.01,.15,1) infinite}
 @keyframes roll{to{transform:translateY(-50%)}}
 
@@ -401,9 +406,9 @@ body.case-open .cs-figure{transform:none;opacity:1}
 #csStory .cs-gal .cs-ggrid{display:flex;flex-wrap:wrap;gap:clamp(14px,1.8vw,26px);justify-content:center;align-items:flex-start;margin-top:38px}
 #csStory .cs-gal .cs-gcell{margin:0;text-align:center}
 #csStory .cs-gal:not(.is-wide) .cs-gcell{width:clamp(148px,19vw,198px)}
-#csStory .cs-gal .cs-gcell span{display:block;margin-top:13px;font-size:12px;letter-spacing:.015em;opacity:.66;line-height:1.35}
+#csStory .cs-gal .cs-gcell figcaption{display:block;margin-top:13px;font-size:12px;letter-spacing:.015em;opacity:.66;line-height:1.35}
 #csStory .cs-gal.is-wide .cs-ggrid{display:grid;grid-template-columns:1fr;gap:clamp(34px,5vw,64px);max-width:1000px;margin:40px auto 0}
-#csStory .cs-gal.is-wide .cs-gcell span{margin-top:16px;font-size:13px}
+#csStory .cs-gal.is-wide .cs-gcell figcaption{margin-top:16px;font-size:13px}
 #csStory .cs-browser{border-radius:14px;overflow:hidden;background:#12100f;box-shadow:0 34px 80px -34px rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.1)}
 #csStory .cs-bar{height:38px;background:#1d1a1c;display:flex;align-items:center;gap:9px;padding:0 16px}
 #csStory .cs-bar i{width:11px;height:11px;border-radius:50%;background:#3a3a42}
@@ -439,7 +444,7 @@ body.case-open .cs-figure{transform:none;opacity:1}
 #csStory .cs-g-item{margin:0;width:clamp(148px,19vw,198px);text-align:center}
 #csStory .cs-dev{background:#0d0d0d;border-radius:30px;padding:8px;box-shadow:0 26px 60px -28px rgba(0,0,0,.7)}
 #csStory .cs-dev img{display:block;width:100%;height:auto;border-radius:24px}
-#csStory .cs-g-item span{display:block;margin-top:13px;font-size:12px;letter-spacing:.015em;opacity:.64;line-height:1.35}
+#csStory .cs-g-item figcaption{display:block;margin-top:13px;font-size:12px;letter-spacing:.015em;opacity:.64;line-height:1.35}
 #csStory .cs-note{max-width:720px;margin:38px auto 0;padding:22px 0;border-top:1px solid rgba(255,255,255,.14);border-bottom:1px solid rgba(255,255,255,.14)}
 #csStory .cs-note p{font-family:"Fraunces",serif;font-style:italic;font-weight:600;font-size:clamp(19px,2.1vw,26px);line-height:1.36;opacity:.96}
 #csStory .cs-note cite{display:block;margin-top:14px;font-style:normal;font-size:12px;letter-spacing:.16em;text-transform:uppercase;opacity:.6}

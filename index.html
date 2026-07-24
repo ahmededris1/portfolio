@@ -36,16 +36,76 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://ahmededris1.github.io/portfolio/images/social-preview.png">
 
-  <!-- Small icon shown in the browser tab -->
+  <!-- Small icon shown in the browser tab, and on an iPhone home screen -->
   <link rel="icon" href="pika.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 
-  <!-- Fonts (loaded from Google Fonts) -->
+  <!-- Fonts. The stylesheet is fetched without blocking the first paint:
+       the browser draws the text in a system font straight away and swaps
+       in Fraunces / Space Grotesk the moment they arrive. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Space+Grotesk:wght@400;500;700&display=swap">
+  <link rel="stylesheet" media="print" onload="this.media='all';this.onload=null" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Space+Grotesk:wght@400;500;700&display=swap">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Space+Grotesk:wght@400;500;700&display=swap"></noscript>
+
+  <!-- The first project's cover is the biggest thing on the opening screen.
+       JavaScript applies it as a background, which the browser cannot see
+       until the scripts have run, so it is announced here instead.
+       If you reorder the projects in data/projects.js, point this at the new
+       first project's "img". Getting it wrong costs one wasted download —
+       it will not break anything. -->
+  <link rel="preload" as="image" href="images/scb-hero.webp" fetchpriority="high">
 
   <!-- The look of the site lives in this file -->
-  <link rel="stylesheet" href="css/styles.css?v=4">
+  <link rel="stylesheet" href="css/styles.css?v=5">
+
+  <!--
+    Structured data. This tells Google, LinkedIn and Bing who the site
+    belongs to, rather than leaving them to guess from the page text. It is
+    what lets a search for the name show the right role, photo and links.
+
+    It repeats a few facts from data/projects.js on purpose: search engines
+    read this from the raw HTML, before any JavaScript runs. If the name,
+    role, location, employer or social links change, change them here too.
+    Validate any edit at https://validator.schema.org
+  -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "mainEntity": {
+      "@type": "Person",
+      "name": "Ahmed Edris",
+      "jobTitle": "Senior Product Designer",
+      "description": "Interactive product designer working on banking, telecom and government products.",
+      "url": "https://ahmededris1.github.io/portfolio/",
+      "image": "https://ahmededris1.github.io/portfolio/images/social-preview.png",
+      "email": "mailto:ahemdharvoc@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Riyadh",
+        "addressCountry": "SA"
+      },
+      "worksFor": { "@type": "Organization", "name": "Tahakom" },
+      "knowsAbout": [
+        "Product design",
+        "Interaction design",
+        "UX research",
+        "Design systems",
+        "Prototyping",
+        "Usability testing",
+        "Information architecture",
+        "Accessibility"
+      ],
+      "sameAs": [
+        "https://www.linkedin.com/in/ahmed-edris1/",
+        "https://www.behance.net/ahmededris1",
+        "https://github.com/ahmededris1"
+      ]
+    }
+  }
+  </script>
 </head>
 <body>
 
@@ -132,7 +192,7 @@
     1) projects.js  = your content (safe to edit)
     2) main.js      = the behaviour (no need to edit)
   -->
-  <script src="data/projects.js?v=4"></script>
-  <script src="js/main.js?v=4"></script>
+  <script src="data/projects.js?v=5"></script>
+  <script src="js/main.js?v=5"></script>
 </body>
 </html>

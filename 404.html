@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page not found — Ahmed Edris</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0f0f10">
+  <meta name="color-scheme" content="dark">
+  <link rel="icon" href="pika.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* Self-contained on purpose: this page must work even if the main
+       stylesheet or scripts are the thing that failed to load. */
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      min-height:100vh;min-height:100dvh;
+      background:#0f0f10;color:#f2f2f2;
+      font-family:"Space Grotesk",system-ui,sans-serif;
+      display:grid;place-items:center;
+      padding:clamp(24px,6vw,64px);text-align:center;
+      -webkit-font-smoothing:antialiased;
+    }
+    .code{
+      font-family:"Fraunces",serif;font-weight:900;
+      font-size:clamp(96px,22vw,240px);line-height:.86;letter-spacing:-.03em;
+      color:#f5054f;
+    }
+    h1{
+      font-family:"Fraunces",serif;font-weight:700;
+      font-size:clamp(26px,4.5vw,48px);line-height:1.1;letter-spacing:-.02em;
+      margin:24px 0 14px;
+    }
+    p{font-size:clamp(15px,1.6vw,18px);line-height:1.6;opacity:.7;max-width:44ch;margin:0 auto}
+    .back{
+      display:inline-flex;align-items:center;gap:12px;margin-top:40px;
+      background:#f5054f;color:#fff;text-decoration:none;
+      padding:15px 30px;border-radius:100px;
+      font-weight:700;letter-spacing:.06em;font-size:15px;
+      transition:transform .3s cubic-bezier(.6,.01,.15,1),filter .3s;
+    }
+    .back:hover{transform:translateY(-2px);filter:brightness(1.08)}
+    .back:focus-visible{outline:3px solid #fff;outline-offset:3px}
+    .back span{transition:transform .3s cubic-bezier(.6,.01,.15,1)}
+    .back:hover span{transform:translateX(-4px)}
+    @media(prefers-reduced-motion:reduce){*{transition-duration:.001ms !important}}
+  </style>
+</head>
+<body>
+  <main>
+    <p class="code" aria-hidden="true">404</p>
+    <h1>This page took a wrong turn</h1>
+    <p>The link may be out of date, or the page may have moved. The work is all still here.</p>
+    <a class="back" href="/"><span aria-hidden="true">&larr;</span> Back to the portfolio</a>
+  </main>
+</body>
+</html>
