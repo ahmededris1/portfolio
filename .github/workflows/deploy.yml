@@ -21,15 +21,15 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
-      # One-time setup: a repository admin has to switch Settings -> Pages ->
-      # Source to "GitHub Actions" before the first deploy can succeed. The
-      # workflow cannot do it itself; creating a Pages site needs admin rights
+      - uses: actions/checkout@v7
+      # Pages must be set to build from "GitHub Actions" once, under
+      # Settings -> Pages -> Source. Already done for this repository; a fork
+      # would need it again, because creating a Pages site needs admin rights
       # that the automatic GITHUB_TOKEN does not carry.
-      - uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v6
       - name: Upload site
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: .
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
