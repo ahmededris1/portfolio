@@ -461,23 +461,12 @@ function start(){
     // Long enough for the last letter to finish rising (0.30s stagger +
     // 0.55s rise), and no longer: every extra moment here is a moment the
     // visitor spends looking at an empty screen.
-    // The main stylesheet is fetched without blocking the first paint, so it
-    // may still be in flight. Lifting the overlay before it lands would show
-    // the reel unstyled for a moment.
-    function whenStylesReady(then){
-      const sheet = document.getElementById("mainCss");
-      if(!sheet || sheet.media === "all") return then();
-      const go = () => { sheet.removeEventListener("load", go); clearTimeout(bail); then(); };
-      const bail = setTimeout(go, 3000);   // never wait forever on a stalled file
-      sheet.addEventListener("load", go);
-    }
-
     const wait = REDUCE ? 300 : 900;
-    setTimeout(() => whenStylesReady(() => {
+    setTimeout(() => {
       $("#intro").classList.add("hide");
       releaseHeldMedia();       // the reel is about to be visible
       playIntroReel();          // sweep the project images up from the bottom
-    }), wait);
+    }, wait);
   })();
 
   /* ---------- 5. Scroll animation loop + theme colours ---------- */

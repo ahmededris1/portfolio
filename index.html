@@ -57,51 +57,12 @@
        it will not break anything. -->
   <link rel="preload" as="image" href="images/scb-hero.webp" fetchpriority="high">
 
-  <!-- Critical CSS: everything needed to draw the opening screen, inlined.
-       A linked stylesheet costs a second round trip before anything can be
-       painted at all, which on a slow connection is most of the wait. These
-       rules live here and nowhere else — they are not a copy of anything in
-       css/styles.css, so do not move them back into it. -->
-  <style>
-    body{margin:0}
-    #intro{
-      position:fixed;inset:0;z-index:100;background:#0e0e0e;color:#f4f1ea;
-      display:grid;place-items:center;transition:opacity .35s,visibility .35s;
-    }
-    #intro.hide{opacity:0;visibility:hidden;pointer-events:none}
-    #intro .mark{
-      font-family:"Fraunces",serif;font-weight:900;font-size:clamp(40px,8vw,96px);
-      letter-spacing:-.02em;overflow:hidden;
-    }
-    #intro .mark span{display:inline-block;transform:translateY(110%);animation:rise .55s cubic-bezier(.7,0,.2,1) forwards}
-    @keyframes rise{to{transform:none}}
-    /* The letters rise one after another. Covers names up to 16 characters;
-       anything longer rises together with the last of these. */
-    #intro .mark span:nth-child(2){animation-delay:.03s}
-    #intro .mark span:nth-child(3){animation-delay:.06s}
-    #intro .mark span:nth-child(4){animation-delay:.09s}
-    #intro .mark span:nth-child(5){animation-delay:.12s}
-    #intro .mark span:nth-child(6){animation-delay:.15s}
-    #intro .mark span:nth-child(7){animation-delay:.18s}
-    #intro .mark span:nth-child(8){animation-delay:.21s}
-    #intro .mark span:nth-child(9){animation-delay:.24s}
-    #intro .mark span:nth-child(10){animation-delay:.27s}
-    #intro .mark span:nth-child(11){animation-delay:.30s}
-    #intro .mark span:nth-child(12){animation-delay:.33s}
-    #intro .mark span:nth-child(13){animation-delay:.36s}
-    #intro .mark span:nth-child(14){animation-delay:.39s}
-    #intro .mark span:nth-child(n+15){animation-delay:.42s}
-    @media(prefers-reduced-motion:reduce){#intro .mark span{animation-duration:.001ms}}
-  </style>
-
-  <!-- The rest of the styling. Fetched without blocking the first paint: the
-       overlay above covers the page until it lands, and js/main.js will not
-       lift the overlay before it has. -->
-  <link rel="stylesheet" id="mainCss" media="print" onload="this.media='all';this.onload=null" href="css/styles.css?v=9">
+  <!-- The look of the site lives in this file -->
+  <link rel="stylesheet" href="css/styles.css?v=10">
   <noscript>
-    <link rel="stylesheet" href="css/styles.css?v=9">
-    <!-- Without JavaScript nothing ever lifts the overlay, so hide it and let
-         the message at the bottom of the page show through. -->
+    <!-- Without JavaScript nothing ever lifts the opening overlay, which
+         would leave a dark screen covering the message at the foot of the
+         page. Hide it so that message shows through. -->
     <style>#intro{display:none}</style>
   </noscript>
 
@@ -243,7 +204,7 @@
     1) projects.js  = your content (safe to edit)
     2) main.js      = the behaviour (no need to edit)
   -->
-  <script defer src="data/projects.js?v=9"></script>
-  <script defer src="js/main.js?v=9"></script>
+  <script defer src="data/projects.js?v=10"></script>
+  <script defer src="js/main.js?v=10"></script>
 </body>
 </html>
