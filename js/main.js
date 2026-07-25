@@ -497,11 +497,20 @@ function start(){
     if(themeMeta) themeMeta.setAttribute("content", project.bg); // browser UI colour
   }
 
-  // The viewport height, cached. render() runs on every animation frame, and
-  // reading window.innerHeight there forces the browser to recompute layout
-  // it had just invalidated by writing the previous frame's transforms. The
-  // height only changes on resize, so it is read there instead.
-  let viewportH = window.innerHeight;
+  // The height of one slide, cached. render() runs on every animation frame,
+  // and reading layout there forces the browser to recompute what the last
+  // frame's transforms just invalidated — so it is measured here and on resize
+  // instead, never inside render().
+  //
+  // This is the slide's own height, NOT window.innerHeight, and on a phone the
+  // two differ on purpose. innerHeight tracks the *current* viewport, which
+  // grows and shrinks as the address bar hides and shows mid-scroll; driving
+  // the reel from it made `p` lurch every time the bar moved, so slides slid
+  // under each other. A slide is pinned to the stable large-viewport height in
+  // CSS (100lvh), so measuring it gives a value the bar cannot move — and the
+  // scroll maths below stay locked to what is actually on screen.
+  const measureSlideH = () => (slides[0] ? slides[0].offsetHeight : window.innerHeight);
+  let viewportH = measureSlideH();
 
   // Position everything based on the current scroll position.
   // `t` is a timestamp used only for the gentle floating motion.
@@ -665,7 +674,7 @@ function start(){
   startLoop();
   window.addEventListener("scroll", scheduleRender, { passive: true });
   window.addEventListener("resize", () => {
-    viewportH = window.innerHeight;   // the one place this is read
+    viewportH = measureSlideH();   // re-measure; unchanged when only the address bar moved
     scheduleRender();
   }, { passive: true });
 
