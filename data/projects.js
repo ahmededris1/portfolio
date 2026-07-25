@@ -88,6 +88,147 @@ const SITE = {
 const PROJECTS = [
 
   {
+    name:    "Cookster",
+    eyebrow: "Social Platform · 2024",
+    desc:    "A video-first social network for food lovers — share recipes, discover dishes, follow chefs.",
+
+    img: "images/cookster-hero.webp",
+    thumb: "images/cookster-thumb.webp",
+
+    bg:     "#211710",  // screen background colour — warm espresso
+    fg:     "#f7efe4",  // text colour on this screen
+    accent: "#f5c518",  // highlight colour — Cookster gold
+    dark:   true,
+
+    stops: ["#3a2a16", "#160f08"],
+    blobs: ["#f5c518", "#c8912a"],
+
+    role: "Senior UI/UX Designer",
+    year: "2024",
+    type: "iOS · Android",
+
+    timeline: "End-to-end product design",
+    team:     "Product design + engineering",
+    tools:    "Figma · prototyping",
+
+    overview: "Cookster is a video-first social platform for food lovers — a place to share recipes, photos and cooking tips, discover new dishes, and follow a vibrant community of home cooks, chefs and restaurants.",
+    work:     "I designed the full experience: a TikTok-style food feed, a frictionless record-to-post flow, discovery and community, chef and restaurant profiles, built-in restaurant advertising, and multi-language support.",
+
+    // ----------------------------------------------------------
+    // RICH CASE STUDY — social food platform (with live video)
+    // ----------------------------------------------------------
+    story: [
+      { type: "lead",
+        body: "Cookster is an engaging, video-first social platform for people who love food. Users upload recipes, photos and cooking tips, discover new dishes, plan meals and review restaurants — all while connecting with a vibrant community of home cooks, chefs and food lovers. As senior UI/UX designer I shaped the whole product: a scroll-and-watch feed, a frictionless create flow, rich community and discovery, and a built-in way for restaurants to advertise — wrapped in a warm, multi-language design." },
+
+      { type: "stats", items: [
+        ["Video-first", "feed at the core"],
+        ["3", "account types"],
+        ["Multi-lang", "Arabic & English"],
+        ["Built-in", "restaurant advertising"],
+      ]},
+
+      { type: "section",
+        kicker: "01 — The idea",
+        title: "What if food had its own social network?",
+        body: [
+          "People already share food everywhere — but on platforms built for everything else. Cookster's bet was a home built specifically for food culture: short, appetising videos as the primary language, and a community where a home cook, a professional chef and a restaurant can all find their audience.",
+          "The design had to make watching effortless, creating fast, and belonging obvious — appetising enough to make you hungry, simple enough to post from your kitchen.",
+        ]},
+
+      { type: "video", tint: "#160f08",
+        kicker: "02 — In motion",
+        title: "A feed you scroll with your thumb and your appetite",
+        src: "videos/cookster-home.mp4",
+        poster: "images/cook-video-poster.webp",
+        caption: "The home feed in motion — full-bleed food video, creator front and centre, and like / comment / save / share always within thumb reach." },
+
+      { type: "gallery", tint: "#2a1c10",
+        kicker: "03 — First impressions",
+        title: "Onboarding that sets the appetite",
+        body: [
+          "Three bright onboarding screens set expectations in seconds — share your passion, connect and engage, discover culinary delights — then hand over to a flexible sign-up. New users choose who they are on the platform: a personal food lover, a chef, or a restaurant, because each has different goals from day one.",
+        ],
+        shots: [
+          ["images/cook-ob1.webp",     "Share your passion"],
+          ["images/cook-ob2.webp",     "Connect & engage"],
+          ["images/cook-ob3.webp",     "Discover culinary delights"],
+          ["images/cook-account.webp", "Pick your account type"],
+          ["images/cook-signin.webp",  "Fast social sign-in"],
+        ]},
+
+      { type: "section",
+        kicker: "04 — Create",
+        title: "From kitchen to feed in a few taps",
+        body: [
+          "The heart of a social platform is how easily people can post. Cookster's create flow mirrors the record-edit-share loop people already know — a full-screen camera with filters and voiceover, a light editor, and a post screen that captures the details that make food content discoverable: dish type, title, tags and location.",
+        ]},
+
+      { type: "gallery", tint: "#30210f",
+        kicker: "04 — Create (cont.)",
+        title: "Record, edit, post",
+        body: [
+          "Camera permission is asked in context, editing tools stay out of the way, and posting confirms with a clear success state — so the loop feels rewarding enough to do again tomorrow.",
+        ],
+        shots: [
+          ["images/cook-record.webp", "Full-screen record"],
+          ["images/cook-edit.webp",   "Voiceover, filters, text"],
+          ["images/cook-post.webp",   "Add details & tags"],
+          ["images/cook-posted.webp", "Published successfully"],
+        ]},
+
+      { type: "quote",
+        text: "The best food content is made on impulse, in a kitchen, with one hand. If posting takes more than a minute, the moment — and the meal — is gone.",
+        cite: "Design principle" },
+
+      { type: "gallery", tint: "#2a1c10",
+        kicker: "05 — Discover & community",
+        title: "A place to find your next favourite dish",
+        body: [
+          "Discovery blends editorial and social: trending hashtags, sponsored highlights, and a search that filters across videos, users, live, restaurants and chefs. Messaging keeps the community talking, so following someone leads somewhere real.",
+        ],
+        shots: [
+          ["images/cook-home.webp",     "Home feed"],
+          ["images/cook-discover.webp", "Discover & trending"],
+          ["images/cook-search1.webp",  "Search across everything"],
+          ["images/cook-search2.webp",  "Filter by chefs & restaurants"],
+          ["images/cook-messages.webp", "Community messaging"],
+        ]},
+
+      { type: "gallery", tint: "#30210f",
+        kicker: "06 — Chefs & restaurants",
+        title: "Where food businesses grow — and advertise",
+        body: [
+          "Chefs and restaurants get rich profiles with menus, followers and a direct way to be discovered. Crucially, Cookster builds monetisation in from the start: restaurants can buy advertising packages to promote their content, turning the community into a genuine growth channel rather than a billboard bolted on afterwards.",
+        ],
+        shots: [
+          ["images/cook-chef.webp",       "Chef profile"],
+          ["images/cook-restaurant.webp", "Restaurant profile & map"],
+          ["images/cook-packages.webp",   "Advertising packages"],
+        ]},
+
+      { type: "gallery", tint: "#2a1c10",
+        kicker: "07 — Built for everyone",
+        title: "Multi-language by default",
+        body: [
+          "Cookster serves a bilingual, Arabic- and English-speaking audience, so language is a first-class setting rather than an afterthought, and the profile and settings are structured to switch cleanly. Food is universal — the interface should be too.",
+        ],
+        shots: [
+          ["images/cook-language.webp",    "Change language anytime"],
+          ["images/cook-editprofile.webp", "Profile & preferences"],
+          ["images/cook-camperm.webp",     "Permissions in context"],
+        ]},
+
+      { type: "section",
+        kicker: "08 — Reflection",
+        title: "What I'd build and test next",
+        body: [
+          "Cookster is a complete, shippable design covering the full loop — from a first onboarding tap to a published video, a followed chef and a promoted restaurant. Taken further, my priorities would be usability-testing the record-to-post flow against real kitchen conditions, validating the Arabic RTL layouts with native speakers, and instrumenting the feed to learn what actually keeps food lovers watching.",
+        ]},
+    ],
+  },
+
+  {
     name:    "SC Bank",
     eyebrow: "Usability Research · 2025",
     desc:    "A usability study that turned real SME feedback into a friction-free business banking app.",
@@ -297,142 +438,6 @@ const PROJECTS = [
   },
 
   {
-    name:    "Qatar Credit Bureau",
-    eyebrow: "Fintech Platform · 2026",
-    desc:    "A two-sided credit platform: a calm consumer app and a powerful bureau admin panel.",
-
-    img: "images/qcb-hero.webp",
-    thumb: "images/qcb-thumb.webp",
-
-    bg:     "#1c0a12",  // deep burgundy
-    fg:     "#f7e8ee",  // text colour on this screen
-    accent: "#ec2f5b",  // crimson highlight
-    dark:   true,       // dark background
-
-    stops: ["#5e1330", "#12060c"],
-    blobs: ["#e11d48", "#8a1a3a"],
-
-    role: "Senior UI/UX Designer",
-    year: "2026",
-    type: "iOS · Android · Web",
-
-    timeline: "End-to-end product design",
-    team:     "Product design + engineering",
-    tools:    "Figma · design system",
-
-    overview: "Qatar Credit Bureau needed two products from one credit record: a consumer app that gives people control over their credit story, and an admin platform for the bureau's members. I designed both end to end.",
-    work:     "A calm, reassurance-led mobile app for consumers, and a dense, accountable web platform for analytics, audit and management — held together by one bilingual design system.",
-
-    // ----------------------------------------------------------
-    // RICH CASE STUDY — two-sided product (consumer app + admin)
-    // ----------------------------------------------------------
-    story: [
-      { type: "lead",
-        body: "Qatar Credit Bureau (QCB) is the country's trusted source of credit information — the institution banks, insurers and telecoms rely on to decide who they can lend to and trust. I designed a two-sided product around it: a consumer mobile app that finally gives individuals and companies control over their own credit story, and an admin platform that gives the bureau's members the analytics, audit and management tools to run it. As senior UI/UX designer I owned both experiences end to end." },
-
-      { type: "stats", items: [
-        ["2", "sides — app + admin platform"],
-        ["14+", "core screens designed"],
-        ["EN · AR", "bilingual, RTL-ready"],
-        ["QAR", "built for the Qatar market"],
-      ]},
-
-      { type: "section",
-        kicker: "01 — The problem",
-        title: "Credit runs on trust — but people rarely get to see it",
-        body: [
-          "Most people never see their own credit data until a loan is refused. QCB's mandate is the opposite: transparency. Give consumers and companies direct, secure access to their score, to every request made against their data, and to a way of disputing what's wrong.",
-          "On the other side sit the bureau's members — banks, insurers, telecoms — who must query that data responsibly, and a bureau team that has to prove every single access was legitimate. One credit record, two very different jobs to design for.",
-        ]},
-
-      { type: "quote",
-        text: "For consumers the job was reassurance. For the bureau's members it was control. The same credit record had to feel calm on a phone and powerful on a dashboard.",
-        cite: "The core design principle" },
-
-      { type: "gallery", tint: "#2a0f1a",
-        kicker: "02 — The consumer app",
-        title: "Your credit, in your pocket",
-        body: [
-          "The app opens with a Qatar ID login and biometrics, then leads with the one number people actually care about — their credit score — framed as reassurance rather than judgement. Personal and company profiles live under a single account, with pending consent requests and recent activity surfaced the moment you land.",
-        ],
-        shots: [
-          ["images/qcb-m-login.webp",    "Qatar ID + biometric login"],
-          ["images/qcb-m-home.webp",     "Credit score, front and centre"],
-          ["images/qcb-m-activity.webp", "Consents, disputes & history"],
-          ["images/qcb-m-more.webp",     "Profile & settings"],
-        ]},
-
-      { type: "section",
-        kicker: "03 — Consent & control",
-        title: "Every time a bank looks at your file, you know",
-        body: [
-          "The Credit Activity view turns invisible back-office queries into something a person can see and act on: which member requested access, exactly what they can see, and until when. Disputes and history sit right alongside, so raising a correction is a tap — not a phone call and a week of waiting.",
-        ]},
-
-      { type: "gallery", tint: "#240b16",
-        kicker: "04 — Buying a report",
-        title: "Official reports, without the bureaucracy",
-        body: [
-          "Consumers can purchase official credit reports — physical or digital — through a flow that feels as familiar as any shop: a clear cart with QAR pricing and vouchers, a checkout with local payment methods, an unambiguous success state with a direct download, and a light feedback prompt to keep improving.",
-        ],
-        shots: [
-          ["images/qcb-m-cart.webp",     "Cart — physical or digital"],
-          ["images/qcb-m-checkout.webp", "Local payment methods"],
-          ["images/qcb-m-success.webp",  "Success + instant download"],
-          ["images/qcb-m-feedback.webp", "Rate the experience"],
-        ]},
-
-      { type: "section",
-        kicker: "05 — The other side",
-        title: "A control room for the bureau",
-        body: [
-          "Behind the app sits a web platform for bureau staff and member institutions. Where the app optimises for calm, the platform optimises for density and control: real-time operations, deep analytics, a complete audit trail, and the reference-data management that keeps the whole system accurate.",
-        ]},
-
-      { type: "gallery", wide: true, tint: "#2a0f1a",
-        kicker: "06 — Operations & analytics",
-        title: "Everything the bureau needs, at a glance",
-        body: [
-          "The home dashboard answers ‘what's happening right now’ — inquiries, reports, disputes and active customers, with top-performing members and recent activity within reach. The analytics suite goes deeper: inquiry-purpose trends, credit-usage by member sub-category, peak inquiry times, and ID-volume breakdowns that help the bureau read demand.",
-        ],
-        quote: "A dashboard for a credit bureau isn't a vanity chart — it's how a regulator-grade institution watches its own heartbeat.",
-        quoteCite: "On the admin platform",
-        shots: [
-          ["images/qcb-a-home.webp",      "Operations dashboard"],
-          ["images/qcb-a-analytics.webp", "Credit usage analytics"],
-        ]},
-
-      { type: "gallery", wide: true, tint: "#240b16",
-        kicker: "07 — Accountable by design",
-        title: "In a credit bureau, every action is traceable",
-        body: [
-          "The System Audit module logs every access and change — across audit logs, data loads, email, file movement and SMS — all searchable, filterable and exportable. Around it, focused modals handle the careful work: adding records, editing products and pricing, and confirming any destructive action before it happens.",
-        ],
-        shots: [
-          ["images/qcb-a-audit.webp",   "System audit logs"],
-          ["images/qcb-a-record.webp",  "Add & edit records"],
-          ["images/qcb-a-product.webp", "Product & pricing management"],
-          ["images/qcb-a-popup.webp",   "Guarded confirmations"],
-        ]},
-
-      { type: "section",
-        kicker: "08 — The system",
-        title: "One product family, two scripts",
-        body: [
-          "Qatar is bilingual, so English and Arabic are first-class across both products, with layouts built to mirror into right-to-left cleanly rather than bolting Arabic onto a left-to-right skeleton.",
-          "A shared design language — the QCB crimson, generous spacing and a consistent component set — keeps the calm consumer app and the dense admin platform recognisably one family, even though they serve completely different users.",
-        ]},
-
-      { type: "section",
-        kicker: "09 — Reflection",
-        title: "What I'd validate next",
-        body: [
-          "The design covers both products end to end, from a consumer's first login to a bureau admin editing a product. Taken further, my priorities would be usability-testing the consent-management flow with real consumers, pressure-testing the Arabic RTL layouts across the data-heavy admin tables, and instrumenting the report-purchase funnel to see exactly where buyers hesitate.",
-        ]},
-    ],
-  },
-
-  {
     name:    "Greenz",
     eyebrow: "Q-Commerce · 2025",
     desc:    "A 15-minute grocery run, rebuilt for the way people actually shop.",
@@ -586,142 +591,137 @@ const PROJECTS = [
   },
 
   {
-    name:    "Cookster",
-    eyebrow: "Social Platform · 2024",
-    desc:    "A video-first social network for food lovers — share recipes, discover dishes, follow chefs.",
+    name:    "Qatar Credit Bureau",
+    eyebrow: "Fintech Platform · 2026",
+    desc:    "A two-sided credit platform: a calm consumer app and a powerful bureau admin panel.",
 
-    img: "images/cookster-hero.webp",
-    thumb: "images/cookster-thumb.webp",
+    img: "images/qcb-hero.webp",
+    thumb: "images/qcb-thumb.webp",
 
-    bg:     "#211710",  // screen background colour — warm espresso
-    fg:     "#f7efe4",  // text colour on this screen
-    accent: "#f5c518",  // highlight colour — Cookster gold
-    dark:   true,
+    bg:     "#1c0a12",  // deep burgundy
+    fg:     "#f7e8ee",  // text colour on this screen
+    accent: "#ec2f5b",  // crimson highlight
+    dark:   true,       // dark background
 
-    stops: ["#3a2a16", "#160f08"],
-    blobs: ["#f5c518", "#c8912a"],
+    stops: ["#5e1330", "#12060c"],
+    blobs: ["#e11d48", "#8a1a3a"],
 
     role: "Senior UI/UX Designer",
-    year: "2024",
-    type: "iOS · Android",
+    year: "2026",
+    type: "iOS · Android · Web",
 
     timeline: "End-to-end product design",
     team:     "Product design + engineering",
-    tools:    "Figma · prototyping",
+    tools:    "Figma · design system",
 
-    overview: "Cookster is a video-first social platform for food lovers — a place to share recipes, photos and cooking tips, discover new dishes, and follow a vibrant community of home cooks, chefs and restaurants.",
-    work:     "I designed the full experience: a TikTok-style food feed, a frictionless record-to-post flow, discovery and community, chef and restaurant profiles, built-in restaurant advertising, and multi-language support.",
+    overview: "Qatar Credit Bureau needed two products from one credit record: a consumer app that gives people control over their credit story, and an admin platform for the bureau's members. I designed both end to end.",
+    work:     "A calm, reassurance-led mobile app for consumers, and a dense, accountable web platform for analytics, audit and management — held together by one bilingual design system.",
 
     // ----------------------------------------------------------
-    // RICH CASE STUDY — social food platform (with live video)
+    // RICH CASE STUDY — two-sided product (consumer app + admin)
     // ----------------------------------------------------------
     story: [
       { type: "lead",
-        body: "Cookster is an engaging, video-first social platform for people who love food. Users upload recipes, photos and cooking tips, discover new dishes, plan meals and review restaurants — all while connecting with a vibrant community of home cooks, chefs and food lovers. As senior UI/UX designer I shaped the whole product: a scroll-and-watch feed, a frictionless create flow, rich community and discovery, and a built-in way for restaurants to advertise — wrapped in a warm, multi-language design." },
+        body: "Qatar Credit Bureau (QCB) is the country's trusted source of credit information — the institution banks, insurers and telecoms rely on to decide who they can lend to and trust. I designed a two-sided product around it: a consumer mobile app that finally gives individuals and companies control over their own credit story, and an admin platform that gives the bureau's members the analytics, audit and management tools to run it. As senior UI/UX designer I owned both experiences end to end." },
 
       { type: "stats", items: [
-        ["Video-first", "feed at the core"],
-        ["3", "account types"],
-        ["Multi-lang", "Arabic & English"],
-        ["Built-in", "restaurant advertising"],
+        ["2", "sides — app + admin platform"],
+        ["14+", "core screens designed"],
+        ["EN · AR", "bilingual, RTL-ready"],
+        ["QAR", "built for the Qatar market"],
       ]},
 
       { type: "section",
-        kicker: "01 — The idea",
-        title: "What if food had its own social network?",
+        kicker: "01 — The problem",
+        title: "Credit runs on trust — but people rarely get to see it",
         body: [
-          "People already share food everywhere — but on platforms built for everything else. Cookster's bet was a home built specifically for food culture: short, appetising videos as the primary language, and a community where a home cook, a professional chef and a restaurant can all find their audience.",
-          "The design had to make watching effortless, creating fast, and belonging obvious — appetising enough to make you hungry, simple enough to post from your kitchen.",
-        ]},
-
-      { type: "video", tint: "#160f08",
-        kicker: "02 — In motion",
-        title: "A feed you scroll with your thumb and your appetite",
-        src: "videos/cookster-home.mp4",
-        poster: "images/cook-video-poster.webp",
-        caption: "The home feed in motion — full-bleed food video, creator front and centre, and like / comment / save / share always within thumb reach." },
-
-      { type: "gallery", tint: "#2a1c10",
-        kicker: "03 — First impressions",
-        title: "Onboarding that sets the appetite",
-        body: [
-          "Three bright onboarding screens set expectations in seconds — share your passion, connect and engage, discover culinary delights — then hand over to a flexible sign-up. New users choose who they are on the platform: a personal food lover, a chef, or a restaurant, because each has different goals from day one.",
-        ],
-        shots: [
-          ["images/cook-ob1.webp",     "Share your passion"],
-          ["images/cook-ob2.webp",     "Connect & engage"],
-          ["images/cook-ob3.webp",     "Discover culinary delights"],
-          ["images/cook-account.webp", "Pick your account type"],
-          ["images/cook-signin.webp",  "Fast social sign-in"],
-        ]},
-
-      { type: "section",
-        kicker: "04 — Create",
-        title: "From kitchen to feed in a few taps",
-        body: [
-          "The heart of a social platform is how easily people can post. Cookster's create flow mirrors the record-edit-share loop people already know — a full-screen camera with filters and voiceover, a light editor, and a post screen that captures the details that make food content discoverable: dish type, title, tags and location.",
-        ]},
-
-      { type: "gallery", tint: "#30210f",
-        kicker: "04 — Create (cont.)",
-        title: "Record, edit, post",
-        body: [
-          "Camera permission is asked in context, editing tools stay out of the way, and posting confirms with a clear success state — so the loop feels rewarding enough to do again tomorrow.",
-        ],
-        shots: [
-          ["images/cook-record.webp", "Full-screen record"],
-          ["images/cook-edit.webp",   "Voiceover, filters, text"],
-          ["images/cook-post.webp",   "Add details & tags"],
-          ["images/cook-posted.webp", "Published successfully"],
+          "Most people never see their own credit data until a loan is refused. QCB's mandate is the opposite: transparency. Give consumers and companies direct, secure access to their score, to every request made against their data, and to a way of disputing what's wrong.",
+          "On the other side sit the bureau's members — banks, insurers, telecoms — who must query that data responsibly, and a bureau team that has to prove every single access was legitimate. One credit record, two very different jobs to design for.",
         ]},
 
       { type: "quote",
-        text: "The best food content is made on impulse, in a kitchen, with one hand. If posting takes more than a minute, the moment — and the meal — is gone.",
-        cite: "Design principle" },
+        text: "For consumers the job was reassurance. For the bureau's members it was control. The same credit record had to feel calm on a phone and powerful on a dashboard.",
+        cite: "The core design principle" },
 
-      { type: "gallery", tint: "#2a1c10",
-        kicker: "05 — Discover & community",
-        title: "A place to find your next favourite dish",
+      { type: "gallery", tint: "#2a0f1a",
+        kicker: "02 — The consumer app",
+        title: "Your credit, in your pocket",
         body: [
-          "Discovery blends editorial and social: trending hashtags, sponsored highlights, and a search that filters across videos, users, live, restaurants and chefs. Messaging keeps the community talking, so following someone leads somewhere real.",
+          "The app opens with a Qatar ID login and biometrics, then leads with the one number people actually care about — their credit score — framed as reassurance rather than judgement. Personal and company profiles live under a single account, with pending consent requests and recent activity surfaced the moment you land.",
         ],
         shots: [
-          ["images/cook-home.webp",     "Home feed"],
-          ["images/cook-discover.webp", "Discover & trending"],
-          ["images/cook-search1.webp",  "Search across everything"],
-          ["images/cook-search2.webp",  "Filter by chefs & restaurants"],
-          ["images/cook-messages.webp", "Community messaging"],
-        ]},
-
-      { type: "gallery", tint: "#30210f",
-        kicker: "06 — Chefs & restaurants",
-        title: "Where food businesses grow — and advertise",
-        body: [
-          "Chefs and restaurants get rich profiles with menus, followers and a direct way to be discovered. Crucially, Cookster builds monetisation in from the start: restaurants can buy advertising packages to promote their content, turning the community into a genuine growth channel rather than a billboard bolted on afterwards.",
-        ],
-        shots: [
-          ["images/cook-chef.webp",       "Chef profile"],
-          ["images/cook-restaurant.webp", "Restaurant profile & map"],
-          ["images/cook-packages.webp",   "Advertising packages"],
-        ]},
-
-      { type: "gallery", tint: "#2a1c10",
-        kicker: "07 — Built for everyone",
-        title: "Multi-language by default",
-        body: [
-          "Cookster serves a bilingual, Arabic- and English-speaking audience, so language is a first-class setting rather than an afterthought, and the profile and settings are structured to switch cleanly. Food is universal — the interface should be too.",
-        ],
-        shots: [
-          ["images/cook-language.webp",    "Change language anytime"],
-          ["images/cook-editprofile.webp", "Profile & preferences"],
-          ["images/cook-camperm.webp",     "Permissions in context"],
+          ["images/qcb-m-login.webp",    "Qatar ID + biometric login"],
+          ["images/qcb-m-home.webp",     "Credit score, front and centre"],
+          ["images/qcb-m-activity.webp", "Consents, disputes & history"],
+          ["images/qcb-m-more.webp",     "Profile & settings"],
         ]},
 
       { type: "section",
-        kicker: "08 — Reflection",
-        title: "What I'd build and test next",
+        kicker: "03 — Consent & control",
+        title: "Every time a bank looks at your file, you know",
         body: [
-          "Cookster is a complete, shippable design covering the full loop — from a first onboarding tap to a published video, a followed chef and a promoted restaurant. Taken further, my priorities would be usability-testing the record-to-post flow against real kitchen conditions, validating the Arabic RTL layouts with native speakers, and instrumenting the feed to learn what actually keeps food lovers watching.",
+          "The Credit Activity view turns invisible back-office queries into something a person can see and act on: which member requested access, exactly what they can see, and until when. Disputes and history sit right alongside, so raising a correction is a tap — not a phone call and a week of waiting.",
+        ]},
+
+      { type: "gallery", tint: "#240b16",
+        kicker: "04 — Buying a report",
+        title: "Official reports, without the bureaucracy",
+        body: [
+          "Consumers can purchase official credit reports — physical or digital — through a flow that feels as familiar as any shop: a clear cart with QAR pricing and vouchers, a checkout with local payment methods, an unambiguous success state with a direct download, and a light feedback prompt to keep improving.",
+        ],
+        shots: [
+          ["images/qcb-m-cart.webp",     "Cart — physical or digital"],
+          ["images/qcb-m-checkout.webp", "Local payment methods"],
+          ["images/qcb-m-success.webp",  "Success + instant download"],
+          ["images/qcb-m-feedback.webp", "Rate the experience"],
+        ]},
+
+      { type: "section",
+        kicker: "05 — The other side",
+        title: "A control room for the bureau",
+        body: [
+          "Behind the app sits a web platform for bureau staff and member institutions. Where the app optimises for calm, the platform optimises for density and control: real-time operations, deep analytics, a complete audit trail, and the reference-data management that keeps the whole system accurate.",
+        ]},
+
+      { type: "gallery", wide: true, tint: "#2a0f1a",
+        kicker: "06 — Operations & analytics",
+        title: "Everything the bureau needs, at a glance",
+        body: [
+          "The home dashboard answers ‘what's happening right now’ — inquiries, reports, disputes and active customers, with top-performing members and recent activity within reach. The analytics suite goes deeper: inquiry-purpose trends, credit-usage by member sub-category, peak inquiry times, and ID-volume breakdowns that help the bureau read demand.",
+        ],
+        quote: "A dashboard for a credit bureau isn't a vanity chart — it's how a regulator-grade institution watches its own heartbeat.",
+        quoteCite: "On the admin platform",
+        shots: [
+          ["images/qcb-a-home.webp",      "Operations dashboard"],
+          ["images/qcb-a-analytics.webp", "Credit usage analytics"],
+        ]},
+
+      { type: "gallery", wide: true, tint: "#240b16",
+        kicker: "07 — Accountable by design",
+        title: "In a credit bureau, every action is traceable",
+        body: [
+          "The System Audit module logs every access and change — across audit logs, data loads, email, file movement and SMS — all searchable, filterable and exportable. Around it, focused modals handle the careful work: adding records, editing products and pricing, and confirming any destructive action before it happens.",
+        ],
+        shots: [
+          ["images/qcb-a-audit.webp",   "System audit logs"],
+          ["images/qcb-a-record.webp",  "Add & edit records"],
+          ["images/qcb-a-product.webp", "Product & pricing management"],
+          ["images/qcb-a-popup.webp",   "Guarded confirmations"],
+        ]},
+
+      { type: "section",
+        kicker: "08 — The system",
+        title: "One product family, two scripts",
+        body: [
+          "Qatar is bilingual, so English and Arabic are first-class across both products, with layouts built to mirror into right-to-left cleanly rather than bolting Arabic onto a left-to-right skeleton.",
+          "A shared design language — the QCB crimson, generous spacing and a consistent component set — keeps the calm consumer app and the dense admin platform recognisably one family, even though they serve completely different users.",
+        ]},
+
+      { type: "section",
+        kicker: "09 — Reflection",
+        title: "What I'd validate next",
+        body: [
+          "The design covers both products end to end, from a consumer's first login to a bureau admin editing a product. Taken further, my priorities would be usability-testing the consent-management flow with real consumers, pressure-testing the Arabic RTL layouts across the data-heavy admin tables, and instrumenting the report-purchase funnel to see exactly where buyers hesitate.",
         ]},
     ],
   },
