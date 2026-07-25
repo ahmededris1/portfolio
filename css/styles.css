@@ -142,7 +142,14 @@ body.case-closing header{opacity:0;pointer-events:none;transition:opacity 250ms}
 /* ---------- 5. Project reel and slides ---------- */
 #reel{perspective:1600px;perspective-origin:50% 50%}
 .slide{
-  height:100vh;height:100dvh;position:relative;
+  /* A stable full-screen height, on purpose NOT 100dvh. On a phone the
+     address bar hides and shows as you scroll, and a dynamic height makes
+     every slide grow and shrink with it — dragging its content (already
+     close to a screen tall) past the slide edges, so one project's preview
+     overlaps the next. The large-viewport height never moves with the bar,
+     so the reel stays put. The JS reads this same height (see section 5 of
+     js/main.js), so its scroll maths and this layout can never disagree. */
+  height:100vh;height:100lvh;position:relative;
   display:flex;align-items:center;
   padding:0 clamp(24px,5vw,64px);
   transform-style:preserve-3d;
@@ -226,7 +233,10 @@ body.browsing .reel-img{width:min(1060px,66vw)}
 }
 .thumb:hover{transform:translateY(-6px);box-shadow:0 32px 58px -22px rgba(0,0,0,.55)}
 .thumbart,.thumbart canvas{display:block;width:100%;height:100%}
-@media(max-width:860px){.thumb{margin-top:28px}}
+@media(max-width:860px){.thumb{margin-top:20px}}
+/* On the narrowest phones the preview shrinks a little too, so the whole
+   slide clears a short screen without the next project peeking in. */
+@media(max-width:640px){.thumb{width:164px}}
 
 /* ---------- 8. Dot navigation ---------- */
 #dots{
@@ -680,10 +690,25 @@ body.about-open #dots,body.about-closing #dots{opacity:0;pointer-events:none;tra
 
 /* ---------- 13. Reel responsive tweaks ---------- */
 @media(max-width:860px){
-  .slide-inner{grid-template-columns:1fr;gap:6vh}
-  .slide-media{justify-self:start;max-width:100%;aspect-ratio:16/10;order:1}
+  /* One column, with a tighter vertical rhythm than the desktop layout.
+     A slide here stacks an image, a heading, a paragraph and a preview, and
+     it all has to sit inside one stable screen (see the height note in §5).
+     A long title such as "Qatar Credit Bureau" wraps to three lines, so the
+     heading is scaled down and the gaps trimmed to keep the tallest project
+     from spilling into the next one on a short phone. */
+  .slide-inner{grid-template-columns:1fr;gap:clamp(14px,2.6vh,30px)}
+  /* The cover image keeps its 16/10 shape on a normal phone, but a short
+     screen caps its height (the clamp only bites once 26vh drops below the
+     image's natural height), so the picture yields space to the words and
+     preview rather than pushing them off-screen. */
+  .slide-media{justify-self:start;max-width:100%;aspect-ratio:16/10;order:1;max-height:clamp(136px,26vh,260px)}
   .slide-text{order:2}
-  .slide-title{font-size:clamp(52px,16vw,90px)}
+  .eyebrow{margin-bottom:12px}
+  /* Size the heading by width on a tall phone, but let a short phone rein it
+     in by height (min picks whichever is smaller) — so a three-line title
+     stays big where there's room and shrinks only where a screen is short. */
+  .slide-title{font-size:clamp(38px,min(15.5vw,8.5vh),90px);margin-bottom:16px}
+  .slide-desc{margin-bottom:22px}
 }
 
 /* ---------- 14. Reduced-motion fallback ---------- */
