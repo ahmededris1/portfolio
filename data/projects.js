@@ -91,7 +91,7 @@ const PROJECTS = [
     eyebrow: "Social Platform · 2024",
     desc:    "A video-first social network for food lovers — share recipes, discover dishes, follow chefs.",
 
-    img: "images/cookster-hero.webp",
+    img: "images/cookster-cover.webp",
     thumb: "images/cookster-thumb.webp",
 
     bg:     "#211710",  // screen background colour — warm espresso
@@ -232,7 +232,7 @@ const PROJECTS = [
     eyebrow: "Usability Research · 2025",
     desc:    "A usability study that turned real SME feedback into a friction-free business banking app.",
 
-    img: "images/scb-hero.webp",
+    img: "images/scb-cover.webp",
     thumb: "images/scb-thumb.webp",  // animated preview (slide + prev/next nav)
 
     bg:     "#0b1a2e",  // screen background colour — deep ink navy
@@ -253,187 +253,17 @@ const PROJECTS = [
     team:     "UX research + product design",
     tools:    "Moderated remote testing · Figma",
 
-    // The case study writing (fallback if the rich story is removed)
-    overview: "SCB Business needed evidence, not opinions. We ran moderated usability testing with SME customers to find where the app helped and where it fought them.",
-    work:     "Nine sessions across two iterations surfaced concrete fixes across registration, the dashboard, transfers and account views — each validated against real customer behaviour.",
-
-    // ----------------------------------------------------------
-    // RICH CASE STUDY — usability study with before/after evidence
-    // ----------------------------------------------------------
-    story: [
-      { type: "lead",
-        body: "SCB Business is the SME banking app for Suez Canal Bank — the product a small manufacturer or trader opens to move money, check facilities and run the financial side of their company. After shipping release 1.0 we had a hunch, backed by earlier reviews, that usability issues were quietly costing customers time and confidence. Rather than redesign on instinct, I led a moderated usability study with real SME owners, then turned every finding into a specific, testable change — and validated it in a second round." },
-
-      { type: "stats", items: [
-        ["9", "moderated sessions"],
-        ["2", "research iterations"],
-        ["5", "journeys redesigned"],
-        ["2", "platforms — web & mobile"],
-      ]},
-
-      { type: "section",
-        kicker: "01 — Why we tested",
-        title: "Hypotheses, not assumptions",
-        body: [
-          "Two things pushed us to run a formal study. First, earlier reviews of release 1.0 had already flagged usability issues we knew we needed to fix. Second, we strongly suspected there were more — problems subtle enough to survive internal testing but real enough to frustrate a business owner working under time pressure.",
-          "So we set a clear goal: evaluate and optimise the product's usability, and make the experience seamless, efficient and intuitive for our SME customers across every platform they actually use. No redesign would ship on opinion alone; each change had to answer to something we watched a customer struggle with.",
-        ]},
-
-      { type: "principles",
-        kicker: "02 — What we set out to learn",
-        title: "Three questions to validate",
-        items: [
-          ["Web or mobile?", "Which platform do our SME customers genuinely prefer, and what drives that choice."],
-          ["What gets used?", "Which features are used most often, and which ones customers actually value."],
-          ["Where's the friction?", "Which journeys perform well, and which quietly create hesitation and drop-off."],
-        ]},
-
-      { type: "section",
-        kicker: "03 — How we ran it",
-        title: "Moderated, remote, and iterative",
-        body: [
-          "Participants were SME customers — with a deliberate focus on small businesses — drawn from manufacturing and trading, the two industries that make up the core of the book. We ran moderated, remote usability tests so we could set real tasks, watch them unfold, and probe the reasoning behind every pause.",
-          "The first iteration covered six sessions: three with small businesses and three with mid-cap companies, so we could hear how needs shift with size. A second iteration added three more sessions on the revised designs to confirm the fixes landed — with further rounds ongoing as new modules are ready.",
-        ]},
-
-      { type: "quote",
-        text: "We didn't want opinions on a screen. We wanted to watch a business owner try to get their work done, and see exactly where the product got in the way.",
-        cite: "The research approach" },
-
-      { type: "casework",
-        kicker: "Finding 01 — Activation & Login",
-        title: "Getting in shouldn't be the hardest part",
-        tint: "#0c3357",
-        body: [
-          "Registration and internet-banking activation was where new customers stalled first. The wording didn't match customers' mental models, the flow was longer than it needed to be, and the activation email buried the one thing people were looking for — their username and how long they had to act.",
-        ],
-        quote: "Shorten the registration flow, rewrite the email content, and put the activation code on the same screen as the username.",
-        quoteCite: "Design note",
-        before: [
-          ["images/scb-reg-b1.webp", "Before — two-step ‘Register Now’"],
-        ],
-        after: [
-          ["images/scb-reg-a1.webp", "Clear entry: Log in / Subscribe"],
-          ["images/scb-reg-a2.webp", "Activation on one screen"],
-          ["images/scb-reg-a3.webp", "Branch or download options"],
-          ["images/scb-reg-a4.webp", "Redesigned activation email"],
-        ],
-        changes: [
-          "Renamed the “Register Now” button to “Subscribe to Online Banking” so its purpose is unmistakable.",
-          "Added a hint that the mobile number must be the one registered at the bank.",
-          "Let customers download the activation form directly, without an unnecessary validation check.",
-          "Redesigned the activation email so the username is easy to find, and made it clear the code is valid for 48 hours only.",
-        ]},
-
-      { type: "casework",
-        kicker: "Finding 02 — Dashboard",
-        title: "A home screen people can read at a glance",
-        tint: "#0a2f52",
-        body: [
-          "The dashboard packed real value but leaned on unlabelled icons and an order that didn't match how customers scanned it. Balance privacy — a genuine concern for business owners using the app in public — was hidden behind an icon few recognised.",
-        ],
-        quote: "Remove the separate customise button, add a clear ‘hide balance’ label, and make hiding work across every section — with a hide/unhide toggle on each secondary screen.",
-        quoteCite: "Design note",
-        before: [
-          ["images/scb-dash-b1.webp", "Before — icon-only, dense"],
-        ],
-        after: [
-          ["images/scb-dash-a1.webp", "Labelled actions, balance hidden"],
-          ["images/scb-dash-a2.webp", "One tap to show balances"],
-          ["images/scb-dash-a3.webp", "Hide-balance default in More"],
-        ],
-        changes: [
-          "Labelled the balance-reveal control and moved “customise dashboard” into the More tab.",
-          "Placed the Accounts section directly beneath the quick actions, as most customers expected.",
-          "Gave the loan/overdraft figure a clear label — customers read it as the “utilised amount”.",
-          "Made every section title more prominent for faster recognition.",
-          "Extended hide-balance across all sections, with a per-screen toggle and a default in More.",
-        ]},
-
-      { type: "casework",
-        kicker: "Finding 03 — Transfers",
-        title: "Confidence at the moment money moves",
-        tint: "#0c3357",
-        body: [
-          "Transfers worked, but the details eroded trust. The confirmation didn't clearly say it had gone through, offered no way to keep a receipt, and an “Instant transfer (coming soon)” option sat in the flow doing nothing but confusing people. The beneficiary step added filter tabs that created more doubt than clarity.",
-        ],
-        before: [
-          ["images/scb-tr-b1.webp", "Before — select account"],
-          ["images/scb-tr-b2.webp", "Before — success, ‘Home’ only"],
-          ["images/scb-tr-b3.webp", "Before — ‘coming soon’ option"],
-        ],
-        after: [
-          ["images/scb-tr-a1.webp", "Clearer ‘Transfer from’"],
-          ["images/scb-tr-a2.webp", "Success label + Share receipt"],
-          ["images/scb-tr-a3.webp", "Instant-transfer option removed"],
-        ],
-        changes: [
-          "Added a clear success label on the confirmation page.",
-          "Added a “Share” option so customers can keep or send a receipt.",
-          "Partially revealed the beneficiary name on the revision page (e.g. Ahmed A** S****) to confirm accuracy.",
-          "Removed the confusing “Instant transfer (coming soon)” option.",
-          "Removed the filter tabs from the beneficiary sheet, and let customers filter by type instead — bank account, card, wallet or mobile number.",
-        ]},
-
-      { type: "casework",
-        kicker: "Finding 04 — Accounts, CDs, TDs & Finances",
-        title: "Rebuilding the information architecture",
-        tint: "#0a2f52",
-        body: [
-          "This was the deepest problem we found. The structure of Accounts, Finances and CDs/TDs was actively causing confusion and stopping customers from completing tasks — flat, undifferentiated lists that gave no sense of hierarchy or grouping.",
-          "The second- and third-level screens needed a comprehensive redesign, not a patch: consistent tabs, clearer grouping, and a hierarchy that matches how business owners actually think about their money — accounts, finance and deposits as distinct, navigable worlds.",
-        ],
-        before: [
-          ["images/scb-acc-b1.webp", "Before — flat ‘Loans’ list"],
-          ["images/scb-acc-b2.webp", "Before — flat deposits list"],
-        ],
-        after: [
-          ["images/scb-acc-a1.webp", "Tabbed Finance view"],
-          ["images/scb-acc-a2.webp", "Tabbed Deposits & Certificates"],
-          ["images/scb-acc-a3.webp", "Redesigned account details"],
-          ["images/scb-acc-a4.webp", "Card details"],
-          ["images/scb-acc-a5.webp", "Time deposit detail"],
-          ["images/scb-acc-a6.webp", "Loan details with schedule"],
-        ]},
-
-      { type: "casework",
-        kicker: "Finding 05 — Personalisation",
-        title: "A dashboard customers can make their own",
-        tint: "#0c3357",
-        body: [
-          "Customers wanted the home screen to reflect how they work. We added a dedicated customise flow — but testing showed the interaction wasn't obvious, so we built in an illustration that demonstrates exactly how to arrange and hide sections.",
-        ],
-        after: [
-          ["images/scb-custom-1.webp", "Customise your dashboard"],
-          ["images/scb-custom-2.webp", "Drag to reorder, toggle to hide"],
-        ]},
-
-      { type: "section",
-        kicker: "06 — Beyond the screens",
-        title: "What customers told us",
-        body: [
-          "Most customers prefer the mobile app for its constant accessibility — it's always in their pocket. The ones who favour web raised security needs, like restricting employee logins to working hours, a concern that grew louder with company size, especially among mid-cap organisations.",
-          "Many rate the app among the best business tools in the market — but some still read it as retail-oriented, missing business-specific features like a loan dashboard, spending insights and supplier management. We also heard concrete asks: OTP magic-copy across every process, adding suppliers directly in the app, and clearly displayed daily transfer limits so customers can track their usage.",
-        ]},
-
-      { type: "principles",
-        kicker: "07 — Prioritised asks",
-        title: "The backlog customers wrote for us",
-        items: [
-          ["OTP magic-copy everywhere", "Auto-copy the one-time code across activation, transfers and every other verified step."],
-          ["Add suppliers in-app", "Let businesses onboard new suppliers directly, without leaving the app."],
-          ["Visible transfer limits", "Show daily limits clearly so customers can monitor usage at a glance."],
-          ["Business-first framing", "Add a loan dashboard, spending insights and supplier management to shed the retail perception."],
-        ]},
-
-      { type: "section",
-        kicker: "08 — Where this goes next",
-        title: "Validated, then shipped",
-        body: [
-          "We're finalising the proposed designs for the product catalogue and the Accounts, CDs & TDs and Finance modules, and continuing the usability rounds on the new changes to build solid validation before release.",
-          "Throughout, we're aligning every redesigned module with the retail app so customers meet one consistent language across the whole bank — not two products wearing the same logo.",
-        ]},
-    ],
+    // This case study is password-protected. Its text and image list are
+    // encrypted (AES-256-GCM, key derived from the password with PBKDF2), so
+    // editing it here will not work — ask for it to be re-encrypted instead.
+    overview: "",
+    work:     "",
+    locked: {
+      iter: 600000,
+      salt: "gjoNJxbHcoWNq/qX9OMU5g==",
+      iv:   "HSgY3bYWFHmxRoVM",
+      data: "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"
+    },
   },
 
   {
@@ -441,7 +271,7 @@ const PROJECTS = [
     eyebrow: "Q-Commerce · 2025",
     desc:    "A 15-minute grocery run, rebuilt for the way people actually shop.",
 
-    img: "images/greenz-hero.webp",
+    img: "images/greenz-cover.webp",
     thumb: "images/greenz-thumb.webp",
 
     bg:     "#10281f",
@@ -594,7 +424,7 @@ const PROJECTS = [
     eyebrow: "Fintech Platform · 2026",
     desc:    "A two-sided credit platform: a calm consumer app and a powerful bureau admin panel.",
 
-    img: "images/qcb-hero.webp",
+    img: "images/qcb-cover.webp",
     thumb: "images/qcb-thumb.webp",
 
     bg:     "#1c0a12",  // deep burgundy
@@ -730,7 +560,7 @@ const PROJECTS = [
     eyebrow: "Banking · Web & Mobile · 2023–24",
     desc:    "Multiple products for the Kingdom's largest bank — insurance, finance, and a payroll revamp.",
 
-    img: "images/alrajhi-hero.webp",
+    img: "images/alrajhi-cover.webp",
     thumb: "images/alrajhi-thumb.webp",  // animated preview (slide + prev/next nav)
 
     bg:     "#082a52",  // Al Rajhi deep blue
@@ -749,241 +579,17 @@ const PROJECTS = [
     team:     "Product design, research & engineering",
     tools:    "Figma · Mixpanel · Hotjar · usability testing",
 
-    overview: "Across 2023–2024 I designed several products for Al Rajhi Bank's business platform — a Takaful medical-insurance module for web and mobile, a business finance application flow, and a ground-up revamp of the payroll experience.",
-    work:     "The flagship was the payroll revamp: an evidence-led redesign that lifted completion from 45% to 78%, cut average time from 12 to 7 minutes, and dropped payroll support tickets by 60%.",
-
-    // ==========================================================
-    // RICH CASE STUDY — Al Rajhi Bank (three product streams)
-    // ==========================================================
-    story: [
-      { type: "lead",
-        body: "Al Rajhi Bank is one of the largest Islamic banks in the world, and its business platform serves companies across the Kingdom of Saudi Arabia. Over 2023 and 2024 I worked across several products on that platform — a Takaful (Islamic medical insurance) module on web and mobile, a business finance application flow, and a full, research-led revamp of the payroll experience. Everything was designed bilingually (Arabic and English) and in SAR, for a demanding, high-trust context where clarity and compliance matter as much as polish." },
-
-      { type: "stats", items: [
-        ["3", "product streams shipped"],
-        ["Web + Mobile", "designed across both"],
-        ["45 → 78%", "payroll completion"],
-        ["−60%", "payroll support tickets"],
-      ]},
-
-      { type: "section",
-        kicker: "01 — Overview",
-        title: "One bank, several products, two platforms",
-        body: [
-          "Rather than a single screen, this was a body of work: distinct products that each had to fit inside Al Rajhi's business ecosystem while solving a very different problem. Some lived on the desktop business portal used by finance teams and HR; others were mobile-first, for owners running their company from their phone.",
-          "Below I've grouped the work into its three streams — Takaful insurance, applying for finance, and the payroll revamp — with the payroll project covered in the most depth, because it's where research, design and measurable outcome came together most completely.",
-        ]},
-
-      /* ---------- STREAM A: TAKAFUL ---------- */
-      { type: "section",
-        kicker: "02 — Al Rajhi Takaful",
-        title: "Medical insurance, from the whole company to a single employee",
-        body: [
-          "Takaful is Shariah-compliant insurance. This module lets an employer buy and manage medical coverage for their entire workforce — assigning plans, capturing the health declarations regulators require, and handling collections and government payments. It's a dense, rule-heavy process, and the design's job was to make it feel manageable.",
-          "I designed it for two contexts: a web experience for HR and finance admins managing hundreds of employees, and a mobile experience for smaller businesses enrolling their team on the go.",
-        ]},
-
-      { type: "gallery", wide: true, tint: "#0b3a6b",
-        kicker: "02 — Takaful · Web",
-        title: "The admin side: manage coverage at scale",
-        body: [
-          "On web, the module surfaces the whole insurance operation — a dashboard entry point, employee management with single and bulk selection, plan and pricing (collection) management, government payments, and the Masdar registration overview — all inside Al Rajhi's business portal.",
-        ],
-        shots: [
-          ["images/ar-tk-web-dashboard.webp",  "Takaful entry point"],
-          ["images/ar-tk-web-employees.webp",  "Assign insurance to employees"],
-          ["images/ar-tk-web-collection.webp", "Plans & pricing"],
-          ["images/ar-tk-web-bulk.webp",       "Bulk employee selection"],
-          ["images/ar-tk-web-govpay.webp",     "Government payment & policy"],
-          ["images/ar-tk-web-masdar.webp",     "Masdar registration overview"],
-        ]},
-
-      { type: "gallery", tint: "#0a2f57",
-        kicker: "02 — Takaful · Mobile",
-        title: "The mobile side: enrol a team in minutes",
-        body: [
-          "On mobile, the flow guides a business owner from onboarding through choosing an insurance class, adding each employee with the required medical declarations, reviewing the quote, and confirming with an OTP — ending on a clear success state.",
-        ],
-        shots: [
-          ["images/ar-tk-m-ob1.webp",    "Medical care bundle"],
-          ["images/ar-tk-m-ob2.webp",    "Quick import tool"],
-          ["images/ar-tk-m-assign.webp", "Choose an insurance class"],
-          ["images/ar-tk-m-health.webp", "Health declarations"],
-          ["images/ar-tk-m-review.webp", "Review the quote"],
-          ["images/ar-tk-m-otp.webp",    "Confirm with OTP"],
-          ["images/ar-tk-m-status.webp", "Request sent"],
-        ]},
-
-      /* ---------- STREAM B: APPLY FOR FINANCE ---------- */
-      { type: "section",
-        kicker: "03 — Apply for finance",
-        title: "Business financing that fits in a lunch break",
-        body: [
-          "Applying for business finance is traditionally paperwork-heavy. This flow turns it into a guided request: the business chooses what they need financing for — cash, cars, invoice, real estate or payroll — accepts the Shariah and SIMAH terms, and signs a digital promissory note through Nafeth, with a clear promise that approval takes no longer than one business day.",
-          "The design keeps each step small and legible, sets expectations honestly, and lives alongside the business dashboard where owners track balances, finance and cards.",
-        ]},
-
-      { type: "gallery", tint: "#0b3a6b",
-        kicker: "03 — Apply for finance",
-        title: "A guided, three-step request",
-        body: [
-          "From choosing a financing purpose to a digital promissory note via Nafeth and a clear review of amount, instalment and tenure — the flow removes ambiguity from a high-stakes decision.",
-        ],
-        shots: [
-          ["images/ar-fin-purpose.webp",    "What do you need financing for?"],
-          ["images/ar-fin-login.webp",      "Secure business login"],
-          ["images/ar-fin-terms.webp",      "Terms & conditions"],
-          ["images/ar-fin-promissory.webp", "Digital promissory note (Nafeth)"],
-          ["images/ar-fin-review.webp",     "Review & approval expectation"],
-          ["images/ar-fin-dashboard.webp",  "Business banking dashboard"],
-        ]},
-
-      /* ---------- STREAM C: PAYROLL REVAMP (flagship) ---------- */
-      { type: "section",
-        kicker: "04 — The flagship: Payroll revamp",
-        title: "Rescuing the payroll flow",
-        body: [
-          "Payroll is the beating heart of a business banking platform — and Al Rajhi's was quietly failing its users. This is the project I'm proudest of, because it started with hard evidence, moved through real research, and ended in numbers we could stand behind.",
-        ]},
-
-      { type: "section",
-        kicker: "04 — The challenge",
-        title: "The numbers told us something was wrong",
-        body: [
-          "Through a combination of user surveys, backend analytics, and usability testing on Al Rajhi's business platform — specifically the payroll flow — we identified major usability issues affecting performance. Users were frequently dropping off due to unclear navigation, inconsistent design patterns, and a lack of guidance during critical steps.",
-          "At the time, the conversion rate for completing the payroll process was around 45%, and roughly 30% of users dropped off during the employee data-entry stage. Average completion time was over 12 minutes, and payroll-related support tickets were consistently high. These insights pointed clearly to a need to redesign the flow to improve task success, reduce cognitive load, and increase efficiency.",
-        ]},
-
-      { type: "stats", items: [
-        ["~45%", "completed payroll"],
-        ["~30%", "dropped at data entry"],
-        ["12+ min", "average completion"],
-        ["High", "support-ticket volume"],
-      ]},
-
-      { type: "section",
-        kicker: "05 — Understanding the problem",
-        title: "We went looking for the ‘why’",
-        body: [
-          "To solve the problem we ran a set of activities to identify the pain points — and we spoke with our users directly, rather than guessing at their intent from dashboards alone.",
-        ]},
-
-      { type: "gallery", wide: true, plain: true, tint: "#0a2f57",
-        kicker: "05 — User flow",
-        title: "Mapping the whole journey",
-        body: [
-          "We mapped a full user-flow journey to visualise every step a user takes to complete key payroll tasks. Laying the path out end to end helped us understand how people navigate the interface — and exactly where the roadblocks were.",
-        ],
-        shots: [
-          ["images/ar-pay-userflow.webp", "Payroll user-flow map"],
-        ]},
-
-      { type: "gallery", wide: true, plain: true, tint: "#0b3a6b",
-        kicker: "05 — User interviews",
-        title: "What users actually told us",
-        body: [
-          "We synthesised the interviews into key findings, common frustrations, and enhancement ideas — turning scattered feedback into a shared, prioritised picture of the problem.",
-        ],
-        shots: [
-          ["images/ar-pay-insights.webp", "User-interview insights board"],
-        ]},
-
-      { type: "section",
-        kicker: "06 — Heat map analysis",
-        title: "Watching where attention (and friction) lived",
-        body: [
-          "To understand behaviour and interaction patterns, we tracked users' clicks, scrolls and cursor movement across the payroll screens. The heat maps revealed the areas of real engagement — and the friction points where people hesitated, hunted, or gave up.",
-        ]},
-
-      { type: "gallery", wide: true, plain: true, tint: "#0a2f57",
-        kicker: "06 — Heat maps",
-        title: "Evidence, not opinion",
-        body: [
-          "Overlaid on the live payroll screens, the heat maps made the problem areas impossible to argue with — and told us exactly where the redesign had to focus.",
-        ],
-        shots: [
-          ["images/ar-pay-heat1.webp", "Payroll dashboard — heat map"],
-          ["images/ar-pay-heat2.webp", "WPS payroll — heat map"],
-          ["images/ar-pay-heat3.webp", "Payroll details — heat map"],
-        ]},
-
-      { type: "section",
-        kicker: "07 — Solving it",
-        title: "The journey into the solution",
-        body: [
-          "Now it was time to design a way out. I sketched solutions, built an interactive prototype, and put it in front of users — iterating before committing anything to high fidelity.",
-        ]},
-
-      { type: "gallery", wide: true, plain: true, tint: "#0b3a6b",
-        kicker: "07 — Sketching",
-        title: "Cheap, fast, disposable ideas",
-        body: [
-          "After identifying the main pain points, I needed a solution for a genuinely easy-to-use platform — so I sketched and validated the ideas on paper before moving into Figma, where changes are slower and feel more precious than they should.",
-        ],
-        shots: [
-          ["images/ar-pay-sketches.webp", "Low-fidelity payroll sketches"],
-        ]},
-
-      { type: "section",
-        kicker: "08 — Testing",
-        title: "Putting the first iteration to the test",
-        body: [
-          "After building the first iteration, we ran remote usability testing with selected users to pressure-test our outputs and surface the early usability problems while they were still cheap to fix.",
-        ]},
-
-      { type: "gallery", wide: true, plain: true, tint: "#0a2f57",
-        kicker: "08 — Testing results",
-        title: "Listening, then adjusting",
-        body: [
-          "We captured each participant's struggles and successes, made adjustments based on their comments, and only then moved towards final outputs.",
-        ],
-        shots: [
-          ["images/ar-pay-test1.webp", "Usability testing — user 2"],
-          ["images/ar-pay-test2.webp", "Usability testing — user 1"],
-        ]},
-
-      { type: "section",
-        kicker: "09 — Outcome",
-        title: "The redesign paid off — measurably",
-        body: [
-          "We tracked the changes through a combination of Mixpanel funnel analysis and backend completion logs. Completion climbed from around 45% to roughly 78% over the first two months post-launch. Payroll-related support tickets dropped by about 60%, which matched the qualitative feedback we heard from users, and average completion time fell from over 12 minutes to about 7.",
-        ]},
-
-      { type: "stats", items: [
-        ["78%", "completion — up from 45%"],
-        ["−60%", "payroll support tickets"],
-        ["7 min", "completion — down from 12"],
-        ["2 months", "to reach the numbers"],
-      ]},
-
-      { type: "gallery", wide: true, tint: "#0b3a6b",
-        kicker: "09 — The redesigned payroll",
-        title: "Clear, consistent, and guided",
-        body: [
-          "The final experience gives payroll a proper home: a parent dashboard across WPS, Plus and Enterprise payroll, clean batch and history views, and a guided subscription flow — consistent patterns and visible guidance at every critical step.",
-        ],
-        shots: [
-          ["images/ar-pay-dashboard.webp",     "Payroll dashboard"],
-          ["images/ar-pay-wps.webp",           "WPS payroll"],
-          ["images/ar-pay-enterprise.webp",    "Enterprise payroll"],
-          ["images/ar-pay-batch.webp",         "Batch details"],
-          ["images/ar-pay-history.webp",       "Payroll history"],
-          ["images/ar-pay-subscription.webp",  "Subscription & products"],
-          ["images/ar-pay-plus.webp",          "Plans & upgrade"],
-        ]},
-
-      { type: "quote",
-        text: "We didn't ship a prettier payroll — we shipped a measurably better one. Starting from evidence meant we could prove the redesign worked, not just claim it.",
-        cite: "On the payroll revamp" },
-
-      { type: "section",
-        kicker: "10 — Reflection",
-        title: "Breadth, held together by rigour",
-        body: [
-          "Working across Al Rajhi's platform meant moving between very different problems — regulated insurance, high-stakes finance, and a metrics-driven payroll fix — on both web and mobile. What tied them together was a way of working: understand the real user, design from evidence, test before committing, and measure the result.",
-          "The payroll revamp is the clearest proof of that approach, but the same discipline shaped every screen across these products.",
-        ]},
-    ],
+    // This case study is password-protected. Its text and image list are
+    // encrypted (AES-256-GCM, key derived from the password with PBKDF2), so
+    // editing it here will not work — ask for it to be re-encrypted instead.
+    overview: "",
+    work:     "",
+    locked: {
+      iter: 600000,
+      salt: "MXb1BR7OpFozVMRxdk2E/Q==",
+      iv:   "qcxqLOWT8oPtVIVx",
+      data: "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"
+    },
   },
 
   {

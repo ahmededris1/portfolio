@@ -65,7 +65,7 @@ Delete its whole block, from `{` to the matching `},`.
 **Swap a picture**
 1. Put your file inside the `images` folder.
 2. Find the line that names the old picture, for example
-   `img: "images/scb-hero.webp",`
+   `img: "images/scb-cover.webp",`
 3. Change the file name in the quotes to yours.
 
 Each project can use three kinds of picture, all optional:
