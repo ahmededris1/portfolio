@@ -822,6 +822,75 @@ function start(){
       </nav>`;
   }
 
+  // ---- Password-protected case studies ----
+  // A project with `locked` in data/projects.js carries its overview, work and
+  // story encrypted (AES-256-GCM; key derived from the password with PBKDF2).
+  // Nothing readable ships in the page — the browser decrypts it only once the
+  // visitor enters the right password.
+  async function unlockProject(locked, password){
+    const bytes = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+    const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveKey"]);
+    const key  = await crypto.subtle.deriveKey(
+      { name: "PBKDF2", salt: bytes(locked.salt), iterations: locked.iter, hash: "SHA-256" },
+      base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+    const plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: bytes(locked.iv) }, key, bytes(locked.data));
+    return JSON.parse(new TextDecoder().decode(plain));
+  }
+
+  function lockPanel(){
+    const ask = SITE.email
+      ? ` Don’t have it? <a class="cs-lock-link" href="mailto:${esc(SITE.email)}">Ask me for access</a>.` : "";
+    return `<section class="cs-lock" aria-labelledby="csLockTitle">
+        <p class="cs-kicker">Confidential</p>
+        <h3 class="cs-h" id="csLockTitle">This case study is password-protected</h3>
+        <p class="cs-p">The work was done under a confidentiality agreement, so the full case study sits behind a password.${ask}</p>
+        <form class="cs-lock-form" novalidate>
+          <label class="cs-lock-label" for="csLockPw">Password</label>
+          <div class="cs-lock-row">
+            <input class="cs-lock-input" id="csLockPw" name="password" type="password" inputmode="numeric" autocomplete="off" required>
+            <button class="cs-lock-btn" type="submit">Unlock</button>
+          </div>
+          <p class="cs-lock-msg" id="csLockMsg" role="status" aria-live="polite"></p>
+        </form>
+      </section>`;
+  }
+
+  function wireLock(project){
+    const form  = $(".cs-lock-form", csStory);
+    const input = $("#csLockPw");
+    const msg   = $("#csLockMsg");
+    const btn   = $(".cs-lock-btn", csStory);
+    form.addEventListener("submit", async e => {
+      e.preventDefault();
+      const pw = input.value.trim();
+      if(!pw){ msg.textContent = "Enter the password to continue."; input.focus(); return; }
+      if(!(window.crypto && crypto.subtle)){
+        msg.textContent = "This browser can’t unlock the case study — please try an up-to-date browser.";
+        return;
+      }
+      btn.disabled = true;
+      msg.textContent = "Unlocking…";
+      try{
+        const data = await unlockProject(project.locked, pw);
+        project.overview = data.overview;
+        project.work     = data.work;
+        project.story    = data.story;          // stays unlocked until the page reloads
+        $("#csOverview").textContent = project.overview || "";
+        $("#csWork").textContent     = project.work || "";
+        renderStory(project);
+        // Move focus to the start of the story so keyboard and screen-reader
+        // users land on the content that just appeared.
+        const first = $("#csStory > *");
+        if(first){ first.setAttribute("tabindex", "-1"); first.focus({ preventScroll: true }); }
+      }catch(err){
+        btn.disabled = false;
+        msg.textContent = "That password isn’t right. Please try again.";
+        input.select();
+        input.focus();
+      }
+    });
+  }
+
   // Render the rich story (if the project has one) or fall back to the
   // simple Overview / The work pair, and wire up the scroll-reveal.
   function renderStory(project){
@@ -829,6 +898,19 @@ function start(){
     // never let that stop the case study from opening.
     if(!csStory || !csDefault) return;
     if(storyObserver){ storyObserver.disconnect(); storyObserver = null; }
+
+    // Locked and not yet opened: show the password panel instead of the story.
+    if(project.locked && !project.story){
+      csDefault.hidden = true;
+      csStory.hidden   = false;
+      csStory.innerHTML = lockPanel();
+      wireLock(project);
+      if(csNav){
+        csNav.innerHTML = projectNavBlock(project);
+        $$(".reveal", csNav).forEach(el => el.classList.add("in"));
+      }
+      return;
+    }
 
     if(Array.isArray(project.story) && project.story.length){
       csDefault.hidden = true;
