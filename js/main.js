@@ -248,7 +248,7 @@ function start(){
           </button>
         </div>
         <div class="slide-media" aria-hidden="true">
-          <div class="hero"><div class="art"></div></div>
+          <div class="hero" data-open="${i}"><div class="art"></div></div>
         </div>
       </div>`;
     reel.appendChild(slide);
@@ -399,9 +399,13 @@ function start(){
   stage.setAttribute("aria-hidden", "true"); // purely decorative
   document.body.appendChild(stage);
 
-  const reelImgs = PROJECTS.map((project) => {
+  // Each card opens its own project when clicked. Keyboard and screen-reader
+  // users already have the "Open case study" button and the thumbnail, so the
+  // cards stay out of the tab order rather than adding a third stop per slide.
+  const reelImgs = PROJECTS.map((project, i) => {
     const img = document.createElement("div");
     img.className = "reel-img";
+    img.dataset.open = i;
     const art = document.createElement("div");
     art.className = "art";
     img.appendChild(art);
@@ -953,6 +957,11 @@ function start(){
     const project = PROJECTS[i];
     if(!project) return;
     lastFocused = document.activeElement;
+    // Opened from a preview image, which cannot hold focus: return focus to
+    // that project's "Open case study" button on close instead of the page.
+    if(!lastFocused || lastFocused === document.body || lastFocused === reel){
+      lastFocused = $(`.cta[data-open="${i}"]`) || lastFocused;
+    }
 
     $("#csTitle").textContent    = project.name;
     $("#csOverview").textContent = project.overview;
@@ -1015,6 +1024,8 @@ function start(){
     }
   });
   caseClose.addEventListener("click", closeCase);
+  const caseHome = $("#caseHome");
+  if(caseHome) caseHome.addEventListener("click", closeCase);
 
   // The bobbing arrow scrolls down to the written details
   $("#csScroll").addEventListener("click", () => {

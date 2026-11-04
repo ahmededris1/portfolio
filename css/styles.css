@@ -185,6 +185,7 @@ body.case-closing header{opacity:0;pointer-events:none;transition:opacity 250ms}
   box-shadow:0 40px 90px -30px rgba(0,0,0,.55);
 }
 .hero canvas,.hero .art{position:absolute;inset:0;width:100%;height:100%}
+.hero{cursor:pointer}
 
 /* ---------- 6. Floating background artwork (desktop only) ---------- */
 #stage{
@@ -222,6 +223,10 @@ body.browsing .reel-img{width:min(1060px,66vw)}
 /* On wide screens use the floating reel; on narrow screens use the inline hero */
 @media(min-width:861px){ .slide-media{visibility:hidden} }
 @media(max-width:860px){ #stage{display:none} }
+
+/* The floating cards open their project on click (the stage itself still
+   lets clicks pass through its empty space). */
+.reel-img{pointer-events:auto;cursor:pointer}
 
 /* ---------- 7. Thumbnail button ---------- */
 .thumb{
@@ -309,6 +314,19 @@ html:has(body.case-open){overflow:hidden}
 .cs-close:hover{transform:rotate(90deg) scale(1.06);box-shadow:0 16px 36px -12px rgba(0,0,0,.6)}
 .cs-close:focus-visible{outline-color:var(--case-fg,#fff)}
 .cs-close svg{width:20px;height:20px}
+
+/* "Back home" — top-left, level with the close button. It sits on a pill of
+   the case colour so it stays readable when images scroll underneath. */
+.cs-home{
+  position:fixed;top:clamp(16px,3vw,28px);left:clamp(16px,3vw,28px);z-index:10;
+  height:52px;padding:0 18px;border-radius:999px;border:none;cursor:pointer;
+  display:inline-flex;align-items:center;gap:12px;
+  background:var(--case-bg,#111);color:var(--case-fg,#fff);
+  font:inherit;font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:13px;
+}
+.cs-home span{font-size:18px;letter-spacing:0;transition:transform var(--ui)}
+.cs-home:hover span{transform:translateX(-5px)}
+.cs-home:focus-visible{outline-color:var(--case-fg,#fff)}
 
 .cs-hero{
   min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;
