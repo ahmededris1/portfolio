@@ -57,6 +57,17 @@
        it will not break anything. -->
   <link rel="preload" as="image" href="images/cookster-cover.webp" fetchpriority="high">
 
+  <!-- Google Analytics (GA4). "async" lets the page draw first; the tag
+       downloads in the background. To switch analytics off, delete this
+       block. The ID below belongs to the "Portfolio" property. -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-59GGDT41TS"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-59GGDT41TS');
+  </script>
+
   <!-- The look of the site lives in this file -->
   <link rel="stylesheet" href="css/styles.css?v=12">
   <noscript>
