@@ -33,7 +33,7 @@ images/           every raster asset, WebP only (one PNG, see below)
   Pages settings.
 - **Add analytics or any third-party script** without being asked. The only
   third-party requests are Google Fonts and Google Analytics (GA4,
-  `G-59GGDT41TS`, in `index.html` only — not on `404.html`).
+  `G-38SJ5MJGJL`, in `index.html` only — not on `404.html`).
 
 ## Layout conventions
 
