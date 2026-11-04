@@ -32,8 +32,9 @@ images/           every raster asset, WebP only (one PNG, see below)
   and in that mode GitHub ignores one. The domain lives in the repository's
   Pages settings.
 - **Add analytics or any third-party script** without being asked. The only
-  third-party requests are Google Fonts and Google Analytics (GA4,
-  `G-38SJ5MJGJL`, in `index.html` only — not on `404.html`).
+  third-party requests are Google Fonts, Google Analytics (GA4,
+  `G-38SJ5MJGJL`) and Microsoft Clarity (`z8bl211j9w`) — the last two in
+  `index.html` only, not on `404.html`.
 
 ## Layout conventions
 
