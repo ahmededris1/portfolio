@@ -67,7 +67,7 @@ const SITE = {
   },
 
   // The email people can click to reach you
-  email: "ahemdharvoc@gmail.com",
+  email: "ahmedharvoc@gmail.com",
 
   // Social buttons on the Contact screen.
   // Leave the quotes empty ("") to hide a button.
