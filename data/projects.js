@@ -666,7 +666,7 @@ const PROJECTS = [
   {
     name:    "Alrajhi Bank",
     eyebrow: "Banking · Web & Mobile · 2023–24",
-    desc:    "Multiple products for the Kingdom's largest bank — insurance, finance, and a payroll revamp.",
+    desc:    "Multiple products for the Kingdom's largest bank — insurance and business finance.",
 
     img: "images/alrajhi-cover.webp",
     thumb: "images/alrajhi-thumb.webp",  // animated preview (slide + prev/next nav)
