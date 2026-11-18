@@ -917,6 +917,7 @@ function start(){
       csStory.hidden   = false;
       csStory.innerHTML = lockPanel();
       wireLock(project);
+      resetChapters();
       if(csNav){
         csNav.innerHTML = projectNavBlock(project);
         $$(".reveal", csNav).forEach(el => el.classList.add("in"));
@@ -949,7 +950,197 @@ function start(){
       }, { root: caseEl, threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
       reveals.forEach(el => storyObserver.observe(el));
     }
+    if(!csStory.hidden) enhanceStory(); else resetChapters();
   }
+
+  /* ---------- 6a. Case-study motion ----------
+     The interaction language of the Design System page, applied to every
+     case study built from data/projects.js: a scroll progress bar, chapter
+     dots, a lead paragraph that lights up word by word, numbers that count
+     up, screenshots that unmask, cards that tilt under the cursor, a "View"
+     cursor with a click-to-enlarge lightbox, and a title that rises letter
+     by letter. Everything here is decoration on top of content that already
+     works: with reduced motion it all settles into its final state at once. */
+  const FINE = matchMedia("(pointer: fine)").matches;
+  let csWords = [], csLead = null, csChapterIO = null, csTicking = false;
+
+  // Fixed furniture inside the overlay, built once.
+  const csProg = document.createElement("div");
+  csProg.className = "cs-prog";
+  csProg.setAttribute("aria-hidden", "true");
+  const csChapters = document.createElement("nav");
+  csChapters.className = "cs-chapters";
+  csChapters.setAttribute("aria-label", "Case study chapters");
+  const csLb = document.createElement("div");
+  csLb.className = "cs-lb";
+  csLb.hidden = true;
+  csLb.innerHTML = `<img alt=""><p class="cs-lb-cap"></p>
+    <button class="cs-lb-x" type="button" aria-label="Close enlarged image">&times;</button>`;
+  const csCur = document.createElement("div");
+  csCur.className = "cs-cur";
+  csCur.setAttribute("aria-hidden", "true");
+  csCur.innerHTML = "<span>View</span>";
+  caseEl.append(csProg, csChapters, csLb, csCur);
+
+  // Title: each letter rises into place as the overlay opens. Screen readers
+  // get the plain name; the animated letters are hidden from them.
+  function splitTitle(name){
+    const el = $("#csTitle");
+    if(REDUCE){ el.textContent = name; return; }
+    let n = 0;
+    const words = name.split(" ").map(w =>
+      `<span class="w">${[...w].map(ch => `<span class="ch" style="--i:${n++}">${esc(ch)}</span>`).join("")}</span>`);
+    el.innerHTML = `<span class="visually-hidden">${esc(name)}</span><span aria-hidden="true">${words.join(" ")}</span>`;
+  }
+
+  // Count every number in a stat up from zero, keeping the rest of the text
+  // ("45 → 78%", "12 → 7 min", "−60%") exactly as written.
+  function countUp(el){
+    const final = el.textContent;
+    const parts = final.split(/(\d+)/);
+    if(parts.length < 2 || REDUCE) return;
+    const t0 = performance.now(), dur = 1600;
+    (function step(now){
+      const p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 4);
+      el.textContent = parts.map((s, k) => k % 2 ? String(Math.round(Number(s) * e)) : s).join("");
+      if(p < 1) requestAnimationFrame(step); else el.textContent = final;
+    })(t0);
+  }
+
+  // Scroll-driven pieces: progress bar and the lead's word fill. Runs on the
+  // overlay's own scroll, throttled to one update per frame.
+  function onCaseScroll(){
+    csTicking = false;
+    const max = caseEl.scrollHeight - caseEl.clientHeight;
+    csProg.style.transform = `scaleX(${max > 0 ? caseEl.scrollTop / max : 0})`;
+    if(csLead && csWords.length){
+      const r = csLead.getBoundingClientRect(), vh = caseEl.clientHeight;
+      const p = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height + vh * 0.35)));
+      const lit = Math.round(p * csWords.length);
+      csWords.forEach((w, k) => w.classList.toggle("lit", k < lit));
+    }
+  }
+  caseEl.addEventListener("scroll", () => {
+    if(!csTicking){ csTicking = true; requestAnimationFrame(onCaseScroll); }
+  }, { passive: true });
+
+  function resetChapters(){
+    if(csChapterIO){ csChapterIO.disconnect(); csChapterIO = null; }
+    csChapters.innerHTML = "";
+    csChapters.hidden = true;
+  }
+
+  // Called after the story is rendered (and again after a locked one opens).
+  function enhanceStory(){
+    resetChapters();
+
+    // Lead paragraph → words that light up as it scrolls through the view
+    csLead = $(".cs-lead", csStory);
+    csWords = [];
+    if(csLead && !REDUCE){
+      csLead.innerHTML = csLead.textContent.split(/\s+/).filter(Boolean)
+        .map(w => `<span class="wd">${esc(w)}</span>`).join(" ");
+      csWords = $$(".wd", csLead);
+    }
+
+    // Stagger the screenshots inside each block, and mark them zoomable
+    $$(".cs-ggrid, .cs-phones-row, .cs-gallery", csStory).forEach(row =>
+      [...row.children].forEach((c, k) => c.style.setProperty("--d", (k * 0.08) + "s")));
+    $$("img", csStory).forEach(img => img.closest("figure, .cs-split-media, .cs-shot")?.setAttribute("data-zoom", ""));
+
+    // Count-up numbers start when their row is revealed
+    $$(".cs-stats", csStory).forEach(row => {
+      if(REDUCE) return;
+      const io = new IntersectionObserver(es => {
+        if(!es[0].isIntersecting) return;
+        $$("b", row).forEach(countUp);
+        io.disconnect();
+      }, { root: caseEl, threshold: 0.4 });
+      io.observe(row);
+    });
+
+    // Chapter dots from the numbered kickers ("01 — The problem")
+    const seen = new Set(), chapters = [];
+    $$(".cs-kicker", csStory).forEach(k => {
+      const m = k.textContent.match(/^(\d{2})\s*—\s*(.+)$/);
+      if(!m || seen.has(m[1])) return;
+      seen.add(m[1]);
+      chapters.push({ el: k.closest("#csStory > *") || k, label: m[2].replace(/\s*\(cont\.\)$/, "") });
+    });
+    if(chapters.length >= 3){
+      csChapters.innerHTML = chapters.map((c, k) =>
+        `<button type="button" data-ch="${k}"><span>${esc(c.label)}</span><i></i></button>`).join("");
+      csChapters.hidden = false;
+      const btns = $$("button", csChapters);
+      btns.forEach((b, k) => b.addEventListener("click", () =>
+        chapters[k].el.scrollIntoView({ behavior: SCROLL_BEHAVIOR, block: "start" })));
+      csChapterIO = new IntersectionObserver(es => es.forEach(en => {
+        if(!en.isIntersecting) return;
+        const k = chapters.findIndex(c => c.el === en.target);
+        btns.forEach((b, j) => b.classList.toggle("on", j === k));
+      }), { root: caseEl, rootMargin: "-45% 0px -50% 0px" });
+      chapters.forEach(c => csChapterIO.observe(c.el));
+    }
+    onCaseScroll();
+  }
+
+  // Hover tilt on screenshots, phones, principle cards and the hero image
+  if(FINE && !REDUCE){
+    const TILT = ".cs-gcell, .cs-phone-wrap, .cs-g-item, .cs-split-media, .cs-princ-item, .cs-figure";
+    caseEl.addEventListener("mousemove", e => {
+      const t = e.target.closest(TILT);
+      $$(".is-tilting", caseEl).forEach(el => { if(el !== t){ el.classList.remove("is-tilting"); el.style.removeProperty("--tilt"); } });
+      if(!t) return;
+      const b = t.getBoundingClientRect();
+      const x = (e.clientX - b.left) / b.width - 0.5, y = (e.clientY - b.top) / b.height - 0.5;
+      const k = t.classList.contains("cs-figure") ? 6 : 9;
+      t.classList.add("is-tilting");
+      t.style.setProperty("--tilt", `perspective(900px) rotateY(${(x * k).toFixed(2)}deg) rotateX(${(-y * k).toFixed(2)}deg)`);
+    });
+    caseEl.addEventListener("mouseleave", () =>
+      $$(".is-tilting", caseEl).forEach(el => { el.classList.remove("is-tilting"); el.style.removeProperty("--tilt"); }));
+
+    // The "View" cursor follows the pointer with a little lag over images
+    let mx = -100, my = -100, cx = -100, cy = -100, curOn = false;
+    caseEl.addEventListener("mousemove", e => {
+      mx = e.clientX; my = e.clientY;
+      const z = !!e.target.closest("[data-zoom]") && csLb.hidden;
+      if(z !== curOn){ curOn = z; csCur.classList.toggle("big", z); caseEl.classList.toggle("cur-view", z); }
+    });
+    (function follow(){
+      if(document.body.classList.contains("case-open")){
+        cx += (mx - cx) * 0.2; cy += (my - cy) * 0.2;
+        csCur.style.transform = `translate(${cx}px, ${cy}px)`;
+      }
+      requestAnimationFrame(follow);
+    })();
+  }
+
+  // Lightbox: click any screenshot to see it large
+  let lbReturn = null;
+  function openLightbox(fig){
+    const img = $("img", fig);
+    if(!img) return;
+    lbReturn = document.activeElement;
+    $("img", csLb).src = img.currentSrc || img.src;
+    $(".cs-lb-cap", csLb).textContent = $("figcaption", fig)?.textContent || "";
+    csLb.hidden = false;
+    requestAnimationFrame(() => csLb.classList.add("on"));
+    csCur.classList.remove("big"); caseEl.classList.remove("cur-view");
+    $(".cs-lb-x", csLb).focus();
+  }
+  function closeLightbox(){
+    if(csLb.hidden) return false;
+    csLb.classList.remove("on");
+    setTimeout(() => { csLb.hidden = true; $("img", csLb).removeAttribute("src"); }, REDUCE ? 0 : 350);
+    if(lbReturn && lbReturn.focus) lbReturn.focus();
+    return true;
+  }
+  csStory.addEventListener("click", e => {
+    const fig = e.target.closest("[data-zoom]");
+    if(fig) openLightbox(fig);
+  });
+  csLb.addEventListener("click", e => { if(e.target === csLb || e.target.closest(".cs-lb-x")) closeLightbox(); });
 
   // Everything behind the overlay. We switch these off (`inert`) while the
   // case study is open so keyboard focus stays inside the dialog.
@@ -974,7 +1165,7 @@ function start(){
       lastFocused = $(`.cta[data-open="${i}"]`) || lastFocused;
     }
 
-    $("#csTitle").textContent    = project.name;
+    splitTitle(project.name);
     $("#csOverview").textContent = project.overview;
     $("#csWork").textContent     = project.work;
 
@@ -998,6 +1189,7 @@ function start(){
 
     caseEl.style.setProperty("--case-bg", project.bg);
     caseEl.style.setProperty("--case-fg", project.fg);
+    caseEl.style.setProperty("--case-accent", project.accent || project.fg);
     caseEl.scrollTop = 0;
 
     caseEl.inert = false;
@@ -1062,6 +1254,7 @@ function start(){
   // Escape key closes whichever overlay is open
   document.addEventListener("keydown", e => {
     if(e.key !== "Escape") return;
+    if(closeLightbox()) return;                 // an enlarged image closes first
     if(document.body.classList.contains("case-open")) closeCase();
     else if(document.body.classList.contains("about-open")) closeAbout();
   });

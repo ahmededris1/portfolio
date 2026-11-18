@@ -554,6 +554,99 @@ body.case-open .cs-figure{transform:none;opacity:1}
 #csNav .reveal.in{opacity:1;transform:none}
 @media(max-width:640px){#csNav .cs-nav{grid-template-columns:1fr;gap:28px}#csNav .cs-nav-next{align-items:flex-start;text-align:left}}
 
+/* ---- Case-study motion (see section 6a of js/main.js) ----
+   The interaction language of the Design System page, on every case study. */
+#case{--ease-out:cubic-bezier(.2,.8,.2,1)}
+
+/* Scroll progress, along the very top of the overlay */
+.cs-prog{position:fixed;top:0;left:0;right:0;height:3px;z-index:12;transform-origin:0 50%;transform:scaleX(0);
+  background:linear-gradient(90deg,var(--case-fg,#fff),var(--case-accent,#fff));pointer-events:none}
+
+/* Title: letters rise in, one after another, as the overlay opens */
+.cs-title .w{display:inline-block;overflow:hidden;padding-bottom:.08em;vertical-align:top}
+.cs-title .ch{display:inline-block;transform:translateY(105%);transition:transform 1s var(--ease-out);transition-delay:calc(var(--i) * 40ms + .45s)}
+body.case-open .cs-title .ch{transform:none}
+
+/* Chapter dots, built from the numbered kickers; labels appear on hover */
+.cs-chapters{position:fixed;right:clamp(14px,2.2vw,30px);top:50%;transform:translateY(-50%);z-index:11;
+  display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+.cs-chapters[hidden]{display:none}
+.cs-chapters button{display:flex;align-items:center;gap:12px;min-height:18px;padding:0;border:0;background:none;color:inherit;cursor:pointer}
+.cs-chapters i{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.35;flex:none;transition:all .4s var(--ease-out)}
+.cs-chapters span{font-size:12px;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;
+  padding:5px 10px;border-radius:999px;background:var(--case-bg,#111);
+  opacity:0;transform:translateX(8px);transition:all .4s var(--ease-out);pointer-events:none}
+.cs-chapters:hover span{opacity:.75;transform:none}
+.cs-chapters button:hover span,.cs-chapters button:focus-visible span{opacity:1}
+.cs-chapters button.on i{opacity:1;width:11px;height:11px;background:var(--case-accent,#fff);
+  box-shadow:0 0 0 5px color-mix(in srgb,var(--case-accent,#fff) 20%,transparent)}
+.cs-chapters button.on span{color:var(--case-accent,#fff)}
+@media(max-width:860px){.cs-chapters{display:none}}
+
+/* Lead paragraph: words light up as it scrolls through the view */
+#csStory .cs-lead .wd{opacity:.18;transition:opacity .25s linear}
+#csStory .cs-lead .wd.lit{opacity:1}
+
+/* Kickers draw a short rule in as their block arrives */
+#csStory .cs-kicker::before{content:"";display:inline-block;vertical-align:middle;height:2px;width:0;margin-right:0;
+  background:var(--case-accent,currentColor);transition:width .8s var(--ease-out) .2s,margin-right .8s var(--ease-out) .2s}
+#csStory .reveal.in .cs-kicker::before{width:28px;margin-right:12px}
+
+/* Screenshots unmask from a rounded inset, staggered within each row.
+   The clip sits on the image, not its frame, so device shadows stay intact. */
+#csStory .reveal :is(.cs-dev,.cs-browser,.cs-plate,.cs-phone,.cs-shot) img{
+  clip-path:inset(10% 8% 10% 8% round 18px);transform:scale(1.06);
+  transition:clip-path 1.3s var(--ease-out),transform 1.3s var(--ease-out);transition-delay:var(--d,0s)}
+#csStory .reveal.in :is(.cs-dev,.cs-browser,.cs-plate,.cs-phone,.cs-shot) img{clip-path:inset(0 0 0 0 round 0);transform:none}
+#csStory :is(.cs-gcell,.cs-g-item,.cs-phone-wrap){--d:0s}
+#csStory :is(.cs-gcell,.cs-g-item,.cs-phone-wrap) img{transition-delay:var(--d)}
+
+/* Hover tilt (pointer devices only — the script adds --tilt) */
+#csStory :is(.cs-gcell,.cs-phone-wrap,.cs-g-item,.cs-split-media,.cs-princ-item){transition:transform .5s var(--ease-out)}
+#csStory .is-tilting{transform:var(--tilt);transition:transform .15s ease-out}
+body.case-open .cs-figure.is-tilting{transform:var(--tilt);transition:transform .2s ease-out}
+
+/* Principle cards: the rule fills with the accent on hover */
+#csStory .cs-princ-item{position:relative}
+#csStory .cs-princ-item::before{content:"";position:absolute;left:0;top:-2px;height:2px;width:0;background:var(--case-accent,currentColor);transition:width .6s var(--ease-out)}
+#csStory .cs-princ-item:hover::before{width:100%}
+
+/* A big accent quote mark above pull quotes */
+#csStory .cs-quote p::before{content:"\201C";display:block;font-size:2.4em;line-height:.6;margin-bottom:.15em;color:var(--case-accent,currentColor);opacity:.8;font-style:normal}
+
+/* Click-to-enlarge */
+#csStory [data-zoom]{cursor:zoom-in}
+@media(pointer:fine){#case.cur-view [data-zoom]{cursor:none}}
+.cs-lb{position:fixed;inset:0;z-index:20;display:grid;place-items:center;align-content:center;gap:16px;padding:5vw;
+  background:color-mix(in srgb,var(--case-bg,#111) 94%,transparent);opacity:0;transition:opacity .35s}
+.cs-lb[hidden]{display:none}
+.cs-lb.on{opacity:1}
+.cs-lb img{max-width:min(1200px,100%);max-height:82vh;width:auto;height:auto;border-radius:14px;
+  box-shadow:0 40px 90px -30px rgba(0,0,0,.7);transform:scale(.94);transition:transform .5s var(--ease-out)}
+.cs-lb.on img{transform:none}
+.cs-lb-cap{font-size:14px;letter-spacing:.04em;opacity:.7;text-align:center;max-width:60ch}
+.cs-lb-x{position:absolute;top:clamp(16px,3vw,28px);right:clamp(16px,3vw,28px);width:52px;height:52px;border-radius:50%;border:0;cursor:pointer;
+  background:var(--case-fg,#fff);color:var(--case-bg,#111);font-size:26px;line-height:1}
+.cs-lb-x:focus-visible{outline:3px solid var(--case-fg,#fff);outline-offset:3px}
+
+/* The "View" cursor */
+.cs-cur{position:fixed;left:0;top:0;z-index:19;width:0;height:0;pointer-events:none}
+.cs-cur span{position:absolute;left:0;top:0;width:78px;height:78px;margin:-39px 0 0 -39px;border-radius:50%;
+  display:grid;place-items:center;background:var(--case-accent,#fff);color:var(--case-bg,#111);
+  font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  transform:scale(0);transition:transform .35s var(--ease-out)}
+.cs-cur.big span{transform:scale(1)}
+@media(pointer:coarse){.cs-cur{display:none}}
+
+/* Reduced motion: everything in its final state, nothing follows the pointer */
+@media(prefers-reduced-motion:reduce){
+  .cs-title .ch{transform:none}
+  #csStory .cs-lead .wd{opacity:1}
+  #csStory .reveal :is(.cs-dev,.cs-browser,.cs-plate,.cs-phone,.cs-shot) img{clip-path:none;transform:none}
+  .cs-cur{display:none}
+  #csStory .is-tilting,body.case-open .cs-figure.is-tilting{transform:none}
+}
+
 /* ---------- 11. About page (full-screen overlay, editorial layout) ---------- */
 #about{
   --red:#f5054f;
