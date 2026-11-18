@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design System, Ahmed Edris</title>
+<link rel="canonical" href="https://ahmededris.com/design-system/">
+<meta name="theme-color" content="#0b1d18">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="../pika.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Ahmed Edris">
+<meta property="og:title" content="Design System — Ahmed Edris">
+<meta property="og:description" content="A bilingual, light and dark design system built on tokens, from audit to developer handoff.">
+<meta property="og:url" content="https://ahmededris.com/design-system/">
+<meta property="og:image" content="https://ahmededris.com/images/social-preview.png">
+<meta name="twitter:card" content="summary_large_image">
+<!-- Google Analytics (GA4) and Microsoft Clarity, the same tags as the home
+     page, so visits to this case study are counted too. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-38SJ5MJGJL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-38SJ5MJGJL');
+</script>
+<script>
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "z8bl211j9w");
+</script>
+<meta name="description" content="Case study: a bilingual, light and dark design system built on tokens, from audit to developer handoff.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Space+Grotesk:wght@400;500;600&family=Alexandria:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: a principal designer's field notes, calm and confident.
+   IDEA: the case study behaves like the system itself: tokens, states, directions, themes.
+   PICTURE: real screens from the Figma library, tilted and stacked, switchable live.
+   COLOUR and TYPE: deep green field, bone ink, one pink accent; Fraunces display, Space Grotesk text.
+   LAYOUT: one long editorial column with wide image bands and a pinned component reel. */
+:root{color-scheme:dark;--bg:#0b1d18;--bg2:#10271f;--bg3:#163329;--ink:#f1ebe2;--mut:rgba(241,235,226,.64);--dim:rgba(241,235,226,.38);--line:rgba(241,235,226,.12);--pink:#f4b8cf;--pink2:#e98fb3;--mint:#7fe0b4;--ease:cubic-bezier(.2,.8,.2,1);--max:1180px}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "Space Grotesk",system-ui,sans-serif;overflow-x:clip;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:700;line-height:1.05;margin:0;text-wrap:balance}
+h2{font-size:clamp(34px,4.6vw,60px);letter-spacing:-.01em}
+h3{font-size:clamp(22px,2vw,28px);font-weight:600}
+p{margin:0 0 1em}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 max(5vw,20px)}
+.band{padding:clamp(72px,10vw,150px) 0;position:relative}
+.eyebrow{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--pink);font-weight:500;margin-bottom:18px;display:block}
+.lead{font-size:clamp(19px,1.7vw,23px);color:var(--mut);max-width:62ch}
+.mut{color:var(--mut)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(24px,4vw,64px);align-items:start}
+@media(max-width:860px){.grid2{grid-template-columns:minmax(0,1fr)}}
+
+/* loader */
+#codeo{white-space:pre}
+.top{background:linear-gradient(rgba(11,29,24,.9),rgba(11,29,24,0))}
+#ld{position:fixed;inset:0;z-index:100;background:var(--bg);display:grid;place-items:center;transition:transform 1s var(--ease) .1s}
+#ld b{font:900 clamp(60px,12vw,150px)/1 Fraunces,serif;color:var(--pink);font-variant-numeric:tabular-nums}
+body.ready #ld{transform:translateY(-100%)}
+
+/* top */
+.top{position:fixed;inset:0 0 auto;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:22px max(4vw,20px);pointer-events:none}
+.top a,.top button{pointer-events:auto}
+.back{display:inline-flex;gap:10px;align-items:center;text-decoration:none;font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;padding:10px 0}
+.back span{transition:transform .4s var(--ease)}.back:hover span{transform:translateX(-6px)}
+.prog{position:fixed;top:0;left:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--pink),var(--mint));z-index:60}
+.dots{transition:opacity .4s;position:fixed;right:max(2.4vw,14px);top:50%;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column;gap:14px;align-items:flex-end}
+.dots a{display:flex;align-items:center;gap:12px;text-decoration:none;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);min-height:18px}
+.dots a i{width:7px;height:7px;border-radius:50%;background:currentColor;transition:all .4s var(--ease)}
+.dots a span{opacity:0;transform:translateX(8px);transition:all .4s var(--ease);white-space:nowrap}
+.dots:hover a span,.dots a.on span{opacity:1;transform:none}
+.dots a.on{color:var(--pink)}.dots a.on i{width:12px;height:12px;box-shadow:0 0 0 5px rgba(244,184,207,.15)}
+@media(max-width:1100px){.dots{display:none}}
+
+/* hero */
+.hero{min-height:100svh;display:grid;align-content:center;padding:120px 0 60px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:-20%;background:radial-gradient(40% 40% at 70% 40%,rgba(31,174,122,.28),transparent 70%),radial-gradient(30% 30% at 20% 80%,rgba(244,184,207,.10),transparent 70%);pointer-events:none}
+.hero h1{font-size:clamp(70px,14vw,210px);font-weight:900;letter-spacing:-.02em;line-height:.9;color:var(--pink);position:relative;z-index:2}
+.hero h1 .ch{display:inline-block;background:linear-gradient(180deg,#fbe3ec 20%,var(--pink2));-webkit-background-clip:text;background-clip:text;color:transparent;transform:translateY(105%);opacity:0;transition:transform 1.1s var(--ease),opacity 1.1s var(--ease);transition-delay:calc(var(--i)*45ms + .9s)}
+.hero h1 .w{display:inline-block;overflow:hidden;padding-bottom:.08em;vertical-align:top}
+body.ready .hero h1 .ch{transform:none;opacity:1}
+.hero .sub{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px;align-items:end;margin-top:28px;position:relative;z-index:2}
+@media(max-width:860px){.hero .sub{grid-template-columns:minmax(0,1fr)}}
+.stage{perspective:1600px;height:clamp(300px,42vw,520px);position:relative;margin-top:clamp(28px,4vw,56px);z-index:1}
+.stack{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .6s var(--ease)}
+.card{position:absolute;border-radius:18px;overflow:hidden;box-shadow:0 40px 80px -30px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.06);background:#111}
+.card img{width:100%}
+.c1{width:58%;left:2%;top:6%;transform:translateZ(-80px) rotate(-5deg);animation:fl 9s ease-in-out infinite}
+.c2{width:56%;right:2%;top:0;transform:translateZ(40px) rotate(4deg);animation:fl 8s ease-in-out -2s infinite}
+.c3{width:46%;left:26%;bottom:-4%;transform:translateZ(120px);animation:fl 10s ease-in-out -4s infinite}
+@keyframes fl{50%{translate:0 -14px}}
+.fade{opacity:0;transform:translateY(30px);transition:opacity 1s var(--ease),transform 1s var(--ease);transition-delay:var(--d,0s)}
+body.ready .hero .fade{opacity:1;transform:none}
+.cue{position:absolute;left:50%;bottom:24px;translate:-50% 0;width:52px;height:52px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;text-decoration:none;z-index:3;animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{translate:-50% 8px}}
+
+/* meta */
+.meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line)}
+.meta div{padding:22px 0;border-bottom:1px solid var(--line)}
+.meta small{display:block;color:var(--dim);font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
+.meta strong{font-weight:500}
+@media(max-width:700px){.meta{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* reveal */
+[data-r]{opacity:0;transform:translateY(40px);transition:opacity 1s var(--ease),transform 1s var(--ease);transition-delay:var(--d,0s)}
+[data-r].in{opacity:1;transform:none}
+.clip{clip-path:inset(12% 6% 12% 6% round 22px);transition:clip-path 1.4s var(--ease)}
+.clip.in{clip-path:inset(0 0 0 0 round 22px)}
+.shot{border-radius:22px;overflow:hidden;background:#fff;box-shadow:0 30px 70px -40px rgba(0,0,0,.8)}
+.shot img{width:100%;transition:transform 1.2s var(--ease)}
+.shot:hover img{transform:scale(1.025)}
+.cap{font-size:14px;color:var(--dim);margin-top:14px}
+
+/* statement */
+.stmt{font:500 clamp(30px,4.2vw,58px)/1.18 Fraunces,serif;letter-spacing:-.01em;max-width:22ch}
+.stmt .wd{opacity:.14;transition:opacity .25s linear}
+.stmt .wd.lit{opacity:1}
+.stmt em{font-style:italic;color:var(--pink)}
+
+/* numbers */
+.nums{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2px;margin-top:64px;background:var(--line);border-radius:22px;overflow:hidden}
+.nums div{background:var(--bg2);padding:32px 26px}
+.nums b{display:block;font:900 clamp(44px,5vw,72px)/1 Fraunces,serif;color:var(--ink);font-variant-numeric:tabular-nums}
+.nums span{color:var(--mut);font-size:15px}
+@media(max-width:800px){.nums{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* pains */
+.pains{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:18px;margin-top:56px}
+.pain{background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:28px;transition:transform .5s var(--ease),border-color .5s,background .5s}
+.pain:hover{transform:translateY(-6px);border-color:rgba(244,184,207,.4);background:var(--bg3)}
+.pain svg{width:28px;height:28px;color:var(--pink);margin-bottom:18px}
+.pain h3{font-size:21px;margin-bottom:10px}
+.pain p{color:var(--mut);font-size:15.5px;margin:0}
+.hmw{margin-top:56px;padding:clamp(28px,4vw,56px);border-radius:26px;background:linear-gradient(135deg,rgba(244,184,207,.16),rgba(127,224,180,.08));border:1px solid rgba(244,184,207,.25);font:500 clamp(22px,2.4vw,32px)/1.3 Fraunces,serif}
+.hmw small{display:block;font:500 13px/1 "Space Grotesk";letter-spacing:.16em;text-transform:uppercase;color:var(--pink);margin-bottom:16px}
+
+/* principles */
+.prin{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:16px;margin-top:48px}
+.pr{position:relative;border-radius:20px;padding:26px;min-height:230px;background:var(--bg2);overflow:hidden;border:1px solid var(--line);transform-style:preserve-3d;transition:transform .4s var(--ease)}
+.pr b{font:900 46px/1 Fraunces,serif;color:rgba(244,184,207,.22)}
+.pr h3{font-size:20px;margin:22px 0 8px}
+.pr p{font-size:15px;color:var(--mut);margin:0}
+.pr::after{content:"";position:absolute;inset:auto -40% -60% auto;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(127,224,180,.25),transparent 70%);transition:transform .6s var(--ease)}
+.pr:hover::after{transform:scale(1.8)}
+
+/* timeline */
+.tl{position:relative;margin-top:56px;padding-left:44px}
+.tl::before,.tl::after{content:"";position:absolute;left:11px;top:6px;bottom:6px;width:2px;background:var(--line)}
+.tl::after{background:linear-gradient(var(--pink),var(--mint));transform-origin:top;transform:scaleY(var(--p,0))}
+.st{position:relative;padding:0 0 46px}
+.st::before{content:"";position:absolute;left:-41px;top:6px;width:16px;height:16px;border-radius:50%;background:var(--bg);border:2px solid var(--dim);transition:all .5s var(--ease)}
+.st.in::before{border-color:var(--pink);background:var(--pink);box-shadow:0 0 0 6px rgba(244,184,207,.15)}
+.st small{color:var(--pink);font-size:13px;letter-spacing:.16em;text-transform:uppercase}
+.st h3{margin:6px 0 8px}
+.st p{color:var(--mut);max-width:62ch;margin:0}
+
+/* token anatomy */
+.tok{margin-top:48px;background:var(--bg2);border:1px solid var(--line);border-radius:24px;padding:clamp(24px,4vw,48px)}
+.tokname{font:500 clamp(18px,2.6vw,34px)/1.4 ui-monospace,"SF Mono",Menlo,monospace;display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.tokname button{font:inherit;color:var(--ink);background:none;border:1px dashed transparent;border-radius:10px;padding:4px 8px;cursor:pointer;transition:all .3s var(--ease)}
+.tokname button.on,.tokname button:hover,.tokname button:focus-visible{background:rgba(244,184,207,.14);border-color:var(--pink);color:var(--pink);outline:none}
+.tokname i{color:var(--dim);font-style:normal}
+.tokinfo{margin-top:22px;min-height:60px;color:var(--mut);display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start}
+.tokinfo b{color:var(--ink);font-size:13px;letter-spacing:.16em;text-transform:uppercase;padding-top:3px}
+.tiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:30px}
+.tier{border-radius:16px;padding:20px;border:1px solid var(--line)}
+.tier small{color:var(--dim);font-size:12px;letter-spacing:.16em;text-transform:uppercase}
+.tier code{display:block;margin-top:8px;font-size:14px;color:var(--mint)}
+.tier p{font-size:14px;color:var(--mut);margin:8px 0 0}
+@media(max-width:700px){.tiers{grid-template-columns:minmax(0,1fr)}}
+
+/* live demo */
+.demo{margin-top:56px;border-radius:28px;padding:clamp(18px,3vw,36px);background:linear-gradient(160deg,var(--bg3),var(--bg2));border:1px solid var(--line)}
+.ctrls{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:22px;align-items:center;justify-content:space-between}
+.seg{display:inline-flex;background:rgba(0,0,0,.25);border-radius:999px;padding:4px;position:relative;border:1px solid var(--line)}
+.seg button{position:relative;z-index:1;font:600 14px "Space Grotesk";color:var(--mut);background:none;border:0;padding:10px 20px;min-height:44px;border-radius:999px;cursor:pointer;transition:color .3s}
+.seg button.on{color:var(--bg)}
+.seg .pill{position:absolute;top:4px;bottom:4px;border-radius:999px;background:var(--pink);transition:all .5s var(--ease)}
+.seg button:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+.screens{position:relative;aspect-ratio:1418/640;border-radius:18px;overflow:hidden}
+.screens img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.03);transition:opacity .7s var(--ease),transform 1s var(--ease)}
+.screens img.on{opacity:1;transform:none}
+.demo .note{font-size:14px;color:var(--dim);margin-top:14px}
+
+/* marquee */
+.mq{overflow:hidden;border-block:1px solid var(--line);padding:22px 0;margin:0;mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.mq div{display:flex;gap:48px;width:max-content;animation:mq 40s linear infinite;font:500 clamp(26px,3vw,40px)/1 Fraunces,serif}
+.mq span:nth-child(even){color:var(--pink);font-style:italic}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* pinned reel */
+.reel{position:relative}
+.reel .pin{position:sticky;top:0;height:100svh;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+.reel .track{display:flex;gap:28px;padding:0 max(5vw,20px);will-change:transform}
+.rc{flex:none;width:min(78vw,620px);border-radius:24px;background:var(--bg2);border:1px solid var(--line);padding:18px;display:flex;flex-direction:column;gap:14px}
+.rc .im{border-radius:14px;overflow:hidden;background:#fff;height:min(52vh,420px);position:relative}
+.rc .im img{position:absolute;inset:0;height:100%;width:100%;object-fit:contain;padding:12px}
+.rc h3{font-size:22px}.rc p{font-size:15px;color:var(--mut);margin:0}
+.reel .hd{padding:0 max(5vw,20px);margin-bottom:32px;max-width:var(--max);width:100%;margin-inline:auto}
+@media(max-width:700px){.reel .pin{position:relative;height:auto;padding:40px 0}.reel{height:auto!important}.reel .track{overflow-x:auto;scroll-snap-type:x mandatory;transform:none!important}.rc{scroll-snap-align:center}}
+
+/* rows vs columns */
+.rvc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-top:40px}
+.rvc>div{background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:24px}
+.rvc h3{font-size:19px;margin-bottom:16px}
+.gridviz{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.gridviz i{height:22px;border-radius:5px;background:rgba(241,235,226,.12);transition:all .8s var(--ease)}
+.bad i:nth-child(4n+2){transform:translateX(var(--j,0))}
+.bad.in i:nth-child(4n+2){--j:9px;background:rgba(233,143,179,.45)}
+.bad.in i:nth-child(8n+3){transform:translateX(-7px);background:rgba(233,143,179,.3)}
+.good .gridviz{grid-template-columns:repeat(4,1fr)}
+.good.in i{background:rgba(127,224,180,.28)}
+.good.in i:nth-child(4n+1){background:rgba(127,224,180,.5)}
+.rvc p{font-size:15px;color:var(--mut);margin:16px 0 0}
+@media(max-width:700px){.rvc{grid-template-columns:minmax(0,1fr)}}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.chips span{padding:9px 16px;border-radius:999px;border:1px solid var(--line);font-size:14px;transition:all .3s var(--ease)}
+.chips span:hover{background:var(--pink);color:var(--bg);border-color:var(--pink)}
+
+/* compare */
+.cmp{position:relative;margin-top:48px;border-radius:24px;overflow:hidden;aspect-ratio:1418/640;user-select:none;touch-action:pan-y;cursor:ew-resize;--x:50%}
+.cmp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cmp .tp{clip-path:inset(0 calc(100% - var(--x)) 0 0)}
+.cmp .hd{position:absolute;top:0;bottom:0;left:var(--x);width:2px;background:var(--pink);translate:-1px 0}
+.cmp .hd::after{content:"⇆";position:absolute;top:50%;left:50%;translate:-50% -50%;width:52px;height:52px;border-radius:50%;background:var(--pink);color:var(--bg);display:grid;place-items:center;font-size:20px;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.cmp .lb{position:absolute;top:16px;padding:6px 12px;border-radius:999px;background:rgba(11,29,24,.8);font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+.cmp input{position:absolute;inset:0;opacity:0;width:100%;cursor:ew-resize}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px;margin-top:36px}
+.rules div{padding:20px;border-radius:16px;background:var(--bg2);border:1px solid var(--line);font-size:15px}
+.rules b{display:block;margin-bottom:6px;font-size:16px}
+.rules span{color:var(--mut)}
+.ar{font-family:Alexandria,sans-serif;direction:rtl}
+
+/* doc device */
+.dev{border-radius:26px;background:#e9eaec;padding:14px;box-shadow:0 40px 90px -40px rgba(0,0,0,.8)}
+.dev .scr{height:min(70vh,620px);overflow:hidden;border-radius:14px;background:#fff;position:relative}
+.dev .scr img{width:100%;transform:translateY(0);transition:transform 9s cubic-bezier(.45,0,.55,1)}
+.dev:hover .scr img,.dev.auto .scr img{transform:translateY(calc(-100% + min(70vh,620px)))}
+.dev .bar{display:flex;gap:6px;padding:0 4px 10px}.dev .bar i{width:10px;height:10px;border-radius:50%;background:#c9cbd0}
+
+/* tabs */
+.tabs{margin-top:44px}
+.tablist{display:flex;flex-wrap:wrap;gap:8px;border-bottom:1px solid var(--line);margin-bottom:34px}
+.tablist button{font:600 15px "Space Grotesk";color:var(--mut);background:none;border:0;padding:14px 18px;min-height:44px;cursor:pointer;position:relative}
+.tablist button::after{content:"";position:absolute;left:12px;right:12px;bottom:-1px;height:2px;background:var(--pink);transform:scaleX(0);transition:transform .5s var(--ease)}
+.tablist button[aria-selected=true]{color:var(--ink)}.tablist button[aria-selected=true]::after{transform:scaleX(1)}
+.tablist button:focus-visible{outline:2px solid var(--mint)}
+.panel{display:none;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:40px;animation:pin .7s var(--ease)}
+.panel.on{display:grid}
+@keyframes pin{from{opacity:0;transform:translateY(16px)}}
+.panel ul{list-style:none;padding:0;margin:0;display:grid;gap:14px}
+.panel li{padding:18px 20px;border-radius:16px;background:var(--bg2);border:1px solid var(--line)}
+.panel li b{display:block;margin-bottom:4px}
+.panel li span{color:var(--mut);font-size:15px}
+.quote{font:500 clamp(22px,2.3vw,30px)/1.3 Fraunces,serif;position:relative;padding-top:40px;align-self:center}
+.quote::before{content:"\201C";position:absolute;top:-30px;left:-6px;font:900 110px/1 Fraunces,serif;color:var(--pink);opacity:.6}
+.quote cite{display:block;font:400 15px "Space Grotesk";color:var(--dim);margin-top:18px;font-style:normal}
+@media(max-width:860px){.panel{grid-template-columns:minmax(0,1fr)}}
+
+/* testing */
+.tests{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:16px;margin-top:44px}
+.test{background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:24px;position:relative;overflow:hidden}
+.test .ring{width:54px;height:54px;margin-bottom:16px}
+.test .ring circle{fill:none;stroke-width:4}
+.test .ring .bgc{stroke:var(--line)}
+.test .ring .fg{stroke:var(--mint);stroke-dasharray:151;stroke-dashoffset:151;transition:stroke-dashoffset 1.6s var(--ease) var(--d,0s);transform:rotate(-90deg);transform-origin:center}
+.test.in .ring .fg{stroke-dashoffset:0}
+.test h3{font-size:20px;margin-bottom:8px}.test p{font-size:15px;color:var(--mut);margin:0}
+
+/* code + checklist */
+.code{background:#08140f;border:1px solid var(--line);border-radius:20px;padding:22px;font:14.5px/1.7 ui-monospace,"SF Mono",Menlo,monospace;color:#cfe9dc;min-height:300px;position:relative;overflow-x:auto}
+.code .k{color:var(--pink)}.code .v{color:var(--mint)}.code .c{color:var(--dim)}
+.code .caret{display:inline-block;width:8px;height:1.1em;background:var(--pink);vertical-align:-3px;animation:bl 1s steps(1) infinite}
+@keyframes bl{50%{opacity:0}}
+.copy{position:absolute;top:12px;right:12px;font:600 12px "Space Grotesk";background:var(--bg3);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:8px 14px;cursor:pointer;min-height:36px}
+.check{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+.check li{display:flex;gap:14px;align-items:center;padding:16px 18px;border-radius:14px;background:var(--bg2);border:1px solid var(--line);opacity:.45;transition:opacity .5s,border-color .5s}
+.check li svg{flex:none;width:24px;height:24px}
+.check li path{stroke-dasharray:24;stroke-dashoffset:24;transition:stroke-dashoffset .6s var(--ease)}
+.check li.done{opacity:1;border-color:rgba(127,224,180,.35)}
+.check li.done path{stroke-dashoffset:0}
+
+/* flow */
+.flow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:36px}
+.flow span{padding:12px 18px;border-radius:999px;background:var(--bg2);border:1px solid var(--line);font-weight:500;transition:all .5s var(--ease)}
+.flow span.on{background:var(--pink);color:var(--bg);border-color:var(--pink);transform:translateY(-3px)}
+.flow em{color:var(--dim);font-style:normal}
+
+/* outcomes */
+.outs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:2px;background:var(--line);border-radius:22px;overflow:hidden;margin-top:44px}
+.outs div{background:var(--bg2);padding:28px;display:flex;gap:16px}
+.outs b{font:900 26px/1 Fraunces;color:var(--pink)}
+.outs p{margin:0}
+.big-q{font:500 clamp(28px,3.6vw,50px)/1.2 Fraunces,serif;max-width:24ch;margin:0 auto;text-align:center}
+.big-q cite{display:block;margin-top:22px;font:400 16px "Space Grotesk";color:var(--dim);font-style:normal}
+
+/* next */
+.next{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--line)}
+.next a{padding:clamp(36px,6vw,80px) max(5vw,20px);text-decoration:none;display:block;transition:background .5s}
+.next a:hover{background:var(--bg2)}
+.next a+a{border-left:1px solid var(--line);text-align:right}
+.next small{color:var(--dim);font-size:13px;letter-spacing:.16em;text-transform:uppercase}
+.next strong{display:block;font:700 clamp(28px,4vw,56px)/1.1 Fraunces;margin-top:10px;transition:color .4s}
+.next a:hover strong{color:var(--pink)}
+footer{padding:28px max(5vw,20px);color:var(--dim);font-size:14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;border-top:1px solid var(--line)}
+
+/* lightbox & cursor */
+.lb-o{position:fixed;inset:0;z-index:90;background:rgba(6,16,13,.92);display:grid;place-items:center;padding:4vw;opacity:0;pointer-events:none;transition:opacity .4s}
+.lb-o.on{opacity:1;pointer-events:auto}
+.lb-o img{max-height:90vh;width:auto;border-radius:14px;transform:scale(.94);transition:transform .5s var(--ease);background:#fff}
+.lb-o.on img{transform:none}
+.lb-o button{position:absolute;top:20px;right:20px;width:52px;height:52px;border-radius:50%;border:0;background:var(--ink);color:var(--bg);font-size:22px;cursor:pointer}
+.cur{position:fixed;left:0;top:0;z-index:95;pointer-events:none;width:12px;height:12px;border-radius:50%;background:var(--pink);translate:-50% -50%;transition:width .35s var(--ease),height .35s var(--ease),background .35s;display:grid;place-items:center;font:600 12px "Space Grotesk";color:var(--bg);mix-blend-mode:normal}
+.cur span{opacity:0;transition:opacity .2s}
+.cur.big{width:78px;height:78px}.cur.big span{opacity:1}
+@media(pointer:coarse){.cur{display:none}}
+[data-zoom]{cursor:zoom-in}
+@media(pointer:fine){[data-zoom]{cursor:none}}
+
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}[data-r],.fade,.hero h1 .ch{opacity:1!important;transform:none!important}.clip{clip-path:none!important}#ld{display:none}.stmt .wd{opacity:1}.cur{display:none}}
+</style>
+</head>
+<body>
+<div id="ld" aria-hidden="true"><b id="ldn">0</b></div>
+<div class="prog" id="prog"></div>
+<header class="top"><a class="back" href="/"><span>←</span> Back home</a></header>
+<nav class="dots" id="dots" aria-label="Case study sections"></nav>
+<div class="cur" id="cur"><span>View</span></div>
+
+<main>
+<section class="hero" id="top" data-ch="Intro">
+  <div class="wrap">
+    <span class="eyebrow fade" style="--d:.8s">Design Systems · 2026</span>
+    <h1 id="ttl">Design System</h1>
+    <div class="sub">
+      <p class="lead fade" style="--d:1.5s">One token-based system for a bilingual product. Arabic and English, light and dark, from the first color variable to the last line of developer handoff.</p>
+      <p class="mut fade" style="--d:1.65s;font-size:15px;margin:0">I led it end to end: audit, research, foundations, a 49-component library, documentation, testing and handoff, working closely with engineering and product.</p>
+    </div>
+    <div class="stage fade" style="--d:1.2s" id="stage">
+      <div class="stack" id="stack">
+        <div class="card c1"><img src="img/foundation-cover.webp" alt="Foundation Tokens cover with ten-step color ramps" width="1800" height="1013"></div>
+        <div class="card c2"><img src="img/components-cover.webp" alt="Component Library cover with buttons, inputs, toggles and an alert" width="1800" height="1013"></div>
+        <div class="card c3"><img src="img/table-dark-rtl.webp" alt="Arabic data table in dark mode" width="1418" height="640"></div>
+      </div>
+    </div>
+  </div>
+  <a class="cue" href="#overview" aria-label="Scroll to the overview"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
+</section>
+
+<section class="band" id="overview" data-ch="Overview">
+  <div class="wrap">
+    <div class="meta" data-r>
+      <div><small>Role</small><strong>Senior Product Designer, design system lead</strong></div>
+      <div><small>Year</small><strong>2026</strong></div>
+      <div><small>Platform</small><strong>Web and mobile</strong></div>
+      <div><small>Team</small><strong>Design, frontend, product, QA</strong></div>
+      <div><small>Languages</small><strong>Arabic and English</strong></div>
+      <div><small>Tools</small><strong>Figma variables, tokens, Dev Mode</strong></div>
+    </div>
+    <p class="stmt" id="stmt" style="margin-top:90px">Every team was solving the same problems in its own way. Buttons that looked alike but behaved differently, colors picked by eye, and Arabic screens <em>flipped by hand</em> the night before a release.</p>
+    <div class="nums" data-r>
+      <div><b data-count="255">0</b><span>color variables, light and dark</span></div>
+      <div><b data-count="49">0</b><span>components, atoms to organisms</span></div>
+      <div><b data-count="500" data-suf="+">0</b><span>variants with every state</span></div>
+      <div><b data-count="2" data-pre="2×">0</b><span>themes and reading directions</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="problem" data-ch="Problem" style="background:var(--bg2)">
+  <div class="wrap">
+    <span class="eyebrow" data-r>The problem</span>
+    <h2 data-r>Several products, no shared language</h2>
+    <p class="lead" data-r style="margin-top:22px">The platform grew fast. Each product team built its own screens, so the same pattern ended up designed and coded several times. That cost us speed, consistency and trust, and it hit Arabic users hardest.</p>
+    <div class="pains">
+      <div class="pain" data-r><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="4"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="3"/></svg><h3>Inconsistent UI</h3><p>The same action looked and behaved differently from one product to the next.</p></div>
+      <div class="pain" data-r style="--d:.08s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><h3>Slow delivery</h3><p>Designers redrew and developers rebuilt the same components every sprint.</p></div>
+      <div class="pain" data-r style="--d:.16s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h11M4 7l3-3M4 7l3 3M20 17H9m11 0-3-3m3 3-3 3"/></svg><h3>Arabic as an afterthought</h3><p>RTL screens were mirrored by hand, with icons pointing the wrong way and fonts swapped late.</p></div>
+      <div class="pain" data-r style="--d:.24s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h10M4 18h6"/><path d="m16 15 4 4m0-4-4 4"/></svg><h3>No shared names</h3><p>Figma layers did not match code, so handoff meant redlines and long threads.</p></div>
+      <div class="pain" data-r style="--d:.32s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/></svg><h3>No dark mode, weak contrast</h3><p>Hard-coded colors made dark mode impossible and contrast was checked late, if at all.</p></div>
+    </div>
+    <div class="hmw" data-r><small>How might we</small>give every team one source of truth that speaks Arabic and English, works in light and dark, and is as easy for a developer to use as it is for a designer?</div>
+  </div>
+</section>
+
+<section class="band" id="principles" data-ch="Principles">
+  <div class="wrap">
+    <span class="eyebrow" data-r>Principles</span>
+    <h2 data-r>Five rules we agreed on before drawing a single button</h2>
+    <div class="prin">
+      <div class="pr tilt" data-r><b>1</b><h3>Tokens first</h3><p>No raw values. If it is not a token, it is a bug.</p></div>
+      <div class="pr tilt" data-r style="--d:.06s"><b>2</b><h3>Bilingual by default</h3><p>Every component ships in LTR and RTL, not just English.</p></div>
+      <div class="pr tilt" data-r style="--d:.12s"><b>3</b><h3>Accessible by default</h3><p>AA contrast verified in both themes before anything ships.</p></div>
+      <div class="pr tilt" data-r style="--d:.18s"><b>4</b><h3>One name everywhere</h3><p>The same name in Figma, in code and in conversation.</p></div>
+      <div class="pr tilt" data-r style="--d:.24s"><b>5</b><h3>Never detach</h3><p>Switches and slots cover real cases, so nobody has to break a component.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="process" data-ch="Process" style="background:var(--bg2)">
+  <div class="wrap grid2">
+    <div style="position:sticky;top:120px">
+      <span class="eyebrow" data-r>Process</span>
+      <h2 data-r>From audit to adoption</h2>
+      <p class="lead" data-r style="margin-top:22px">A design system is a product that serves other products. I ran it like one: research, a roadmap, releases and feedback loops.</p>
+    </div>
+    <div class="tl" id="tl">
+      <div class="st" data-r><small>Phase 1</small><h3>Audit</h3><p>I collected every screen across the products and grouped them by pattern. Seeing near-duplicate buttons, tables and date pickers side by side made the case without a slide deck.</p></div>
+      <div class="st" data-r><small>Phase 2</small><h3>Research</h3><p>I benchmarked Material 3, IBM Carbon, Atlassian and Shopify Polaris for naming and structure, and interviewed designers and developers about where work got stuck.</p></div>
+      <div class="st" data-r><small>Phase 3</small><h3>Foundations</h3><p>Ten-step color ramps, semantic tokens, type, spacing, radius and elevation, with Light and Dark modes and an Arabic typography mode.</p></div>
+      <div class="st" data-r><small>Phase 4</small><h3>Components</h3><p>An atomic library, built atoms first: every state, size and direction, all bound to tokens.</p></div>
+      <div class="st" data-r><small>Phase 5</small><h3>Documentation</h3><p>Every component page explains anatomy, usage, do's and don'ts, accessibility and the tokens it uses. Written for designers, developers and AI tools.</p></div>
+      <div class="st" data-r><small>Phase 6</small><h3>Testing</h3><p>Accessibility checks, usability sessions with designers, RTL reviews with native Arabic speakers and visual QA with engineering.</p></div>
+      <div class="st" data-r><small>Phase 7</small><h3>Handoff and governance</h3><p>Tokens exported to CSS and JSON, code names on every variable, versioned releases and an open contribution model.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="foundations" data-ch="Foundations">
+  <div class="wrap">
+    <span class="eyebrow" data-r>Foundations</span>
+    <h2 data-r>A language before a library</h2>
+    <p class="lead" data-r style="margin-top:22px">Components change. Decisions should not. So the system starts with three layers of tokens, and a naming pattern anyone can read out loud.</p>
+    <div class="tiers" data-r>
+      <div class="tier"><small>Primitive</small><code>primary/70</code><p>The raw palette. Hidden from designers so nobody picks a hex by eye.</p></div>
+      <div class="tier"><small>Semantic</small><code>background/primary/bold</code><p>The meaning. It points to a different primitive in Light and Dark.</p></div>
+      <div class="tier"><small>Component</small><code>Button / Primary</code><p>Components only use semantic tokens, so a theme change reaches everything.</p></div>
+    </div>
+    <div class="tok" data-r>
+      <span class="eyebrow" style="margin-bottom:14px">Try it: tap each part of the token name</span>
+      <div class="tokname" id="tokname">
+        <button data-k="0">color</button><i>/</i><button data-k="1">background</button><i>/</i><button data-k="2">primary</button><i>/</i><button data-k="3">bold</button><i>-</i><button data-k="4">hover</button>
+      </div>
+      <div class="tokinfo" aria-live="polite"><b id="tokk">Element</b><span id="tokv">What you paint: background, text, icon or border.</span></div>
+    </div>
+    <div class="grid2" style="margin-top:56px">
+      <figure style="margin:0"><div class="shot clip" data-r data-zoom><img src="img/theme-scale.webp" alt="Light and Dark theme scale, mirrored ramps" loading="lazy" width="1280" height="578"></div><figcaption class="cap">Dark mode mirrors each ramp, so step 100 in Light becomes step 10 in Dark.</figcaption></figure>
+      <figure style="margin:0"><div class="shot clip" data-r data-zoom style="--d:.1s"><img src="img/text-on-color.webp" alt="Verified text and background pairs with contrast ratios" loading="lazy" width="1280" height="924"></div><figcaption class="cap">Every same-hue pair is verified for 4.5:1 contrast in both themes.</figcaption></figure>
+      <figure style="margin:0"><div class="shot clip" data-r data-zoom><img src="img/elevation.webp" alt="Elevation levels in light and dark mode" loading="lazy" width="1280" height="1072"></div><figcaption class="cap">Six elevation levels, each paired with the surface token it belongs on.</figcaption></figure>
+      <figure style="margin:0"><div class="shot clip" data-r data-zoom style="--d:.1s;max-height:600px"><img src="img/type-scale.webp" alt="Type scale from display to code" loading="lazy" width="575" height="1400"></div><figcaption class="cap">Font family and weight are variables. Switching to Arabic is one mode change, to Alexandria.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="live" data-ch="Themes" style="background:var(--bg2)">
+  <div class="wrap">
+    <span class="eyebrow" data-r>One component, four contexts</span>
+    <h2 data-r>Light or dark. Arabic or English. Same component.</h2>
+    <p class="lead" data-r style="margin-top:22px">Designers never redraw for a theme or a language. They flip a mode or a property and the tokens do the rest. Switch it yourself.</p>
+    <div class="demo" data-r>
+      <div class="ctrls">
+        <div class="seg" data-g="t"><span class="pill"></span><button class="on" data-v="light">Light</button><button data-v="dark">Dark</button></div>
+        <div class="seg" data-g="d"><span class="pill"></span><button class="on" data-v="ltr">English · LTR</button><button data-v="rtl"><span dir="rtl" lang="ar">العربية</span> · RTL</button></div>
+      </div>
+      <div class="screens" id="screens">
+        <img class="on" data-k="light-ltr" src="img/table-light-ltr.webp" alt="Data table, light, English" width="1418" height="640">
+        <img data-k="light-rtl" src="img/table-light-rtl.webp" alt="Data table, light, Arabic" loading="lazy" width="1418" height="640">
+        <img data-k="dark-ltr" src="img/table-dark-ltr.webp" alt="Data table, dark, English" loading="lazy" width="1418" height="640">
+        <img data-k="dark-rtl" src="img/table-dark-rtl.webp" alt="Data table, dark, Arabic" loading="lazy" width="1418" height="640">
+      </div>
+      <p class="note">Real screens from the Figma library. The data is sample content.</p>
+    </div>
+  </div>
+</section>
+
+<div class="mq" aria-hidden="true"><div id="mq"></div></div>
+
+<section class="reel" id="components" data-ch="Components">
+  <div class="pin">
+    <div class="hd">
+      <span class="eyebrow">Components</span>
+      <h2>Atoms, molecules, organisms</h2>
+      <p class="lead" style="margin-top:16px">Built in dependency order, so a fix to Button reaches every modal, table and toolbar that uses it.</p>
+    </div>
+    <div class="track" id="track">
+      <div class="rc"><div class="im"><img decoding="async" src="img/button-states.webp" alt="Button hierarchy and states"></div><h3>Button</h3><p>Primary, Secondary, Tertiary and Danger, with six states and a loading state that keeps its width.</p></div>
+      <div class="rc"><div class="im"><img decoding="async" src="img/input-states.webp" alt="Input field states"></div><h3>Input field</h3><p>Eight states including error, success and read-only, with helper text tied to each one.</p></div>
+      <div class="rc"><div class="im"><img decoding="async" src="img/dropdown.webp" alt="Dropdown menu in English and Arabic"></div><h3>Dropdown menu</h3><p>Nested items switch to RTL automatically, keeping their icons and shortcuts.</p></div>
+      <div class="rc"><div class="im"><img decoding="async" src="img/calendar.webp" alt="Calendar in English and Arabic"></div><h3>Date picker</h3><p>The grid, weekdays and navigation arrows all follow the reading direction.</p></div>
+      <div class="rc"><div class="im"><img decoding="async" src="img/modal.webp" alt="Modal variants"></div><h3>Modal</h3><p>Three sizes, a danger variant and a content slot, in both directions.</p></div>
+      <div class="rc"><div class="im"><img decoding="async" src="img/sidebar.webp" alt="Sidebar expanded and collapsed"></div><h3>Sidebar</h3><p>Expanded and collapsed, with nested navigation items and badges.</p></div>
+      <div class="rc"><div class="im"><img decoding="async" src="img/alert.webp" alt="Alert variants"></div><h3>Alert and toast</h3><p>Four status colors in subtle and bold, each pair contrast-checked.</p></div>
+      <div class="rc"><div class="im"><img decoding="async" src="img/slider.webp" alt="Slider variants"></div><h3>Slider</h3><p>Single and range, where the fill runs from the right in Arabic.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="table" data-ch="Data table">
+  <div class="wrap">
+    <span class="eyebrow" data-r>Deep dive</span>
+    <h2 data-r>Tables were the hardest problem, so I rebuilt them around columns</h2>
+    <p class="lead" data-r style="margin-top:22px">Most Figma tables are built in rows. Change one cell and its column drifts out of line. Designers ended up detaching tables to fix alignment, which broke every future update.</p>
+    <div class="rvc">
+      <div class="bad" data-r><h3>Row based</h3><div class="gridviz"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>Each row sizes itself, so cells drift and nobody trusts the table.</p></div>
+      <div class="good" data-r style="--d:.1s"><h3>Column based</h3><div class="gridviz"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>One component per column holds the header and up to ten cells, so alignment is locked.</p></div>
+    </div>
+    <div class="grid2" style="margin-top:56px;align-items:center">
+      <div>
+        <h3 data-r>Pick a type per column</h3>
+        <p class="mut" data-r style="margin-top:12px">Each column has a Type property. Rows stay in sync through one Rows setting on the table, and each column can be turned on or off, up to ten side by side.</p>
+        <div class="chips" data-r><span>Avatar</span><span>Name</span><span>Status</span><span>Tags</span><span>Date</span><span>Text</span><span>Number</span><span>Actions</span><span>Checkbox</span></div>
+        <h3 data-r style="margin-top:44px">A toolbar made of switches</h3>
+        <p class="mut" data-r style="margin-top:12px">The toolbar is its own component, exposed inside the table. Title, search, filter and both buttons are switches, and a slot takes tabs or a date range. No detaching needed.</p>
+      </div>
+      <div class="shot clip" data-r data-zoom><img src="img/column-types.webp" alt="Column types in the Table column component" loading="lazy" width="1280" height="1416"></div>
+    </div>
+    <div class="shot clip" data-r data-zoom style="margin-top:44px"><img src="img/toolbar.webp" alt="Table toolbar options" loading="lazy" width="1000" height="741"></div>
+  </div>
+</section>
+
+<section class="band" id="rtl" data-ch="Arabic" style="background:var(--bg2)">
+  <div class="wrap">
+    <span class="eyebrow" data-r>Right to left</span>
+    <h2 data-r>Arabic is not a translation. It is a direction.</h2>
+    <p class="lead" data-r style="margin-top:22px">Every component has a Direction property. RTL is not a flipped image: each variant is rebuilt with the right rules, so designers get production-ready Arabic screens. Drag to compare.</p>
+    <div class="cmp" id="cmp" data-r>
+      <img src="img/table-light-rtl.webp" alt="Arabic data table" loading="lazy" width="1418" height="640">
+      <img class="tp" src="img/table-light-ltr.webp" alt="English data table" loading="lazy" width="1418" height="640">
+      <span class="lb" style="left:16px">LTR</span><span class="lb" style="right:16px">RTL</span>
+      <div class="hd"></div>
+      <input type="range" min="0" max="100" value="50" aria-label="Compare English and Arabic tables">
+    </div>
+    <div class="rules">
+      <div data-r><b>Layout mirrors</b><span>Rows reverse, start and end padding swap, text aligns to the right.</span></div>
+      <div data-r style="--d:.06s"><b>Direction icons flip</b><span>Arrows and chevrons follow reading order. Logos, media controls and check marks stay put.</span></div>
+      <div data-r style="--d:.12s"><b>Arabic content built in</b><span>Each text property has an Arabic twin, so one instance switches cleanly between languages.</span></div>
+      <div data-r style="--d:.18s"><b>Arabic type</b><span class="ar" style="display:block;font-size:20px;margin-top:6px;color:var(--ink)">خط الإسكندرية للنصوص العربية</span><span>Alexandria arrives through a typography mode, no manual font swaps.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="docs" data-ch="Docs">
+  <div class="wrap grid2" style="align-items:center">
+    <div>
+      <span class="eyebrow" data-r>Documentation</span>
+      <h2 data-r>Docs people actually open</h2>
+      <p class="lead" data-r style="margin-top:22px">Every component lives on its own page with the same structure, so people learn where to look once.</p>
+      <ul class="check" style="margin-top:28px" data-r>
+        <li class="done"><svg viewBox="0 0 24 24" fill="none" stroke="#7fe0b4" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Hierarchy, states and sizes</li>
+        <li class="done"><svg viewBox="0 0 24 24" fill="none" stroke="#7fe0b4" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Anatomy and usage, with do's and don'ts</li>
+        <li class="done"><svg viewBox="0 0 24 24" fill="none" stroke="#7fe0b4" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Accessibility notes and the tokens used</li>
+        <li class="done"><svg viewBox="0 0 24 24" fill="none" stroke="#7fe0b4" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>An Arabic RTL example on every page</li>
+      </ul>
+    </div>
+    <div class="dev auto" data-r data-zoom-src="img/button-doc.webp" id="dev"><div class="bar"><i></i><i></i><i></i></div><div class="scr"><img src="img/button-doc.webp" alt="The Button documentation page" loading="lazy" width="506" height="1800"></div></div>
+  </div>
+  <div class="wrap" style="margin-top:56px"><div class="shot clip" data-r data-zoom><img src="img/button-rules.webp" alt="Button do and don't rules" loading="lazy" width="1280" height="568"></div><p class="cap">Rules are written as pairs: what to do and the mistake it prevents.</p></div>
+</section>
+
+<section class="band" id="team" data-ch="Collaboration" style="background:var(--bg2)">
+  <div class="wrap">
+    <span class="eyebrow" data-r>Collaboration</span>
+    <h2 data-r>A system is only as good as its conversations</h2>
+    <p class="lead" data-r style="margin-top:22px">I spent as much time with engineers, product managers and stakeholders as I did in Figma. Each group needed something different from the system.</p>
+    <div class="tabs" data-r>
+      <div class="tablist" role="tablist">
+        <button role="tab" aria-selected="true" aria-controls="p1" id="t1">Developers</button>
+        <button role="tab" aria-selected="false" aria-controls="p2" id="t2" tabindex="-1">Product managers</button>
+        <button role="tab" aria-selected="false" aria-controls="p3" id="t3" tabindex="-1">Stakeholders</button>
+        <button role="tab" aria-selected="false" aria-controls="p4" id="t4" tabindex="-1">Designers</button>
+      </div>
+      <div class="panel on" role="tabpanel" id="p1" aria-labelledby="t1">
+        <ul><li><b>Same names in Figma and code</b><span>Every variable carries its CSS name, so background/primary/bold is var(--color-background-primary-bold) in code.</span></li>
+        <li><b>Component properties match props</b><span>Type, Size, State and Direction in Figma map one to one to component props.</span></li>
+        <li><b>A weekly design and dev sync</b><span>We reviewed what shipped, what drifted and what was next, in 30 minutes, with Figma and the browser side by side.</span></li>
+        <li><b>Pairing on hard components</b><span>Table, date picker and RTL rules were designed with a frontend engineer, not handed over.</span></li></ul>
+        <p class="quote">If a developer has to ask what a color is called, the system failed, not the developer.<cite>How I framed naming for the team</cite></p>
+      </div>
+      <div class="panel" role="tabpanel" id="p2" aria-labelledby="t2">
+        <ul><li><b>A roadmap ordered by reuse</b><span>Components used across the most screens came first, so the system paid off early.</span></li>
+        <li><b>One-page proposals</b><span>New components start as a short proposal: the problem, the screens that need it and the cost of not building it.</span></li>
+        <li><b>Release notes in plain language</b><span>What changed, who is affected and what to do, with no jargon.</span></li>
+        <li><b>Trade-offs made visible</b><span>Build now or later, custom or shared. Product managers made the call with the facts on the table.</span></li></ul>
+        <p class="quote">I never pitched the system as design work. I pitched it as fewer bugs and faster releases.<cite>My line in roadmap reviews</cite></p>
+      </div>
+      <div class="panel" role="tabpanel" id="p3" aria-labelledby="t3">
+        <ul><li><b>Show, do not present</b><span>Live demos of a screen switching to Arabic or dark mode in one click did more than any slide.</span></li>
+        <li><b>Adoption tracked openly</b><span>We tracked which screens used library components, so progress was visible to everyone.</span></li>
+        <li><b>Brand and accessibility reviews</b><span>Brand owners and accessibility reviewers signed off on foundations before components were built.</span></li></ul>
+        <p class="quote">Stakeholders do not buy tokens. They buy confidence that every product looks and works like one organization.<cite>What I kept in mind for leadership updates</cite></p>
+      </div>
+      <div class="panel" role="tabpanel" id="p4" aria-labelledby="t4">
+        <ul><li><b>Office hours</b><span>A weekly open slot for questions, reviews and ideas for the library.</span></li>
+        <li><b>A clear way to contribute</b><span>Propose, review, design, build, document, release. Anyone can start the flow.</span></li>
+        <li><b>Onboarding in one file</b><span>A Read me page explains structure, naming and how to use the library in the first hour.</span></li></ul>
+        <p class="quote">A component nobody asked for is clutter. Every addition starts from a real screen.<cite>Our rule for new components</cite></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="testing" data-ch="Testing">
+  <div class="wrap">
+    <span class="eyebrow" data-r>Testing</span>
+    <h2 data-r>Tested by the people who use it</h2>
+    <p class="lead" data-r style="margin-top:22px">A system has two kinds of users: the people building with it and the people using what gets built. I tested for both.</p>
+    <div class="tests">
+      <div class="test" data-r><svg class="ring" viewBox="0 0 54 54"><circle class="bgc" cx="27" cy="27" r="24"/><circle class="fg" cx="27" cy="27" r="24"/></svg><h3>Accessibility</h3><p>Every text and background pair checked against WCAG 2.2 AA in both themes: 4.5:1 for text, 3:1 for icons and borders.</p></div>
+      <div class="test" data-r style="--d:.1s"><svg class="ring" viewBox="0 0 54 54"><circle class="bgc" cx="27" cy="27" r="24"/><circle class="fg" cx="27" cy="27" r="24"/></svg><h3>Usability with designers</h3><p>Designers built a real screen with the library while I watched where they searched, hesitated or wanted to detach.</p></div>
+      <div class="test" data-r style="--d:.2s"><svg class="ring" viewBox="0 0 54 54"><circle class="bgc" cx="27" cy="27" r="24"/><circle class="fg" cx="27" cy="27" r="24"/></svg><h3>RTL review</h3><p>Native Arabic speakers reviewed mirrored screens for icon direction, dates, numbers and font readability.</p></div>
+      <div class="test" data-r style="--d:.3s"><svg class="ring" viewBox="0 0 54 54"><circle class="bgc" cx="27" cy="27" r="24"/><circle class="fg" cx="27" cy="27" r="24"/></svg><h3>Visual QA with engineering</h3><p>Coded components compared against Figma in light, dark, LTR and RTL before each release.</p></div>
+      <div class="test" data-r style="--d:.4s"><svg class="ring" viewBox="0 0 54 54"><circle class="bgc" cx="27" cy="27" r="24"/><circle class="fg" cx="27" cy="27" r="24"/></svg><h3>Pilot team</h3><p>One product team adopted the library first. Their feedback shaped the release the other teams got.</p></div>
+    </div>
+    <div class="shot clip" data-r data-zoom style="margin-top:44px"><img src="img/contrast-matrix.webp" alt="Verified contrast matrix" loading="lazy" width="1280" height="815"></div>
+    <p class="cap">The verified matrix: every foreground token on every surface, Light and Dark.</p>
+  </div>
+</section>
+
+<section class="band" id="handoff" data-ch="Handoff" style="background:var(--bg2)">
+  <div class="wrap">
+    <span class="eyebrow" data-r>Developer handoff</span>
+    <h2 data-r>Handoff became a conversation about behavior, not pixels</h2>
+    <p class="lead" data-r style="margin-top:22px">Because every value is a token with a code name, developers read the design instead of measuring it. Logical CSS properties meant RTL came almost for free.</p>
+    <div class="grid2" style="margin-top:44px">
+      <div class="code" id="code" data-r><button class="copy" id="copy" type="button">Copy</button><span id="codeo"></span><span class="caret"></span></div>
+      <ul class="check" id="check">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#7fe0b4" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Tokens exported as CSS variables and JSON</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#7fe0b4" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Code name on every Figma variable</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#7fe0b4" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Anatomy and specs on every component page</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#7fe0b4" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>States, sizes, LTR and RTL all covered</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#7fe0b4" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Accessibility notes for each component</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#7fe0b4" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Changelog and a version tag on every release</li>
+      </ul>
+    </div>
+    <h3 data-r style="margin-top:72px">How a new component gets in</h3>
+    <div class="flow" id="flow"><span>Propose</span><em>→</em><span>Review</span><em>→</em><span>Design</span><em>→</em><span>Build</span><em>→</em><span>Document</span><em>→</em><span>Release</span></div>
+  </div>
+</section>
+
+<section class="band" id="outcome" data-ch="Outcome">
+  <div class="wrap">
+    <span class="eyebrow" data-r>Outcome</span>
+    <h2 data-r>What changed</h2>
+    <div class="outs" data-r>
+      <div><b>→</b><p>One source of truth for every product team, in Figma and in code.</p></div>
+      <div><b>→</b><p>Arabic and English from the same component, with no manual mirroring.</p></div>
+      <div><b>→</b><p>Dark mode became a setting, not a project.</p></div>
+      <div><b>→</b><p>Accessibility built into the tokens instead of checked at the end.</p></div>
+      <div><b>→</b><p>Tables that stay aligned, and toolbars nobody needs to detach.</p></div>
+      <div><b>→</b><p>New team members productive from the Read me on day one.</p></div>
+    </div>
+    <div style="margin-top:110px" data-r><p class="big-q">A design system isn't a project. It's a product, serving products.<cite>Nathan Curtis, design systems consultant</cite></p></div>
+    <div class="grid2" style="margin-top:110px">
+      <div data-r><h3>What I learned</h3><p class="mut" style="margin-top:12px">Start with naming. Every hard argument later was really a naming argument. Ship small and early: a pilot team taught me more than a month of planning. And governance is product work. A system without an owner and a release rhythm slowly drifts back into chaos.</p></div>
+      <div data-r style="--d:.1s"><h3>What is next</h3><p class="mut" style="margin-top:12px">Code Connect, so developers see real code next to every component in Figma. Motion tokens for consistent transitions. And a data visualization palette tested for color blindness in both themes.</p></div>
+    </div>
+  </div>
+</section>
+
+<nav class="next" aria-label="More projects">
+  <a href="/#vehicle-route-management"><small>← Previous</small><strong>Vehicle Route Management</strong></a>
+  <a href="/#cookster"><small>Next →</small><strong>Cookster</strong></a>
+</nav>
+</main>
+<footer><span>© 2026 Ahmed Edris, Product Designer</span><span>Screens from the Figma design system. Data is sample content.</span></footer>
+
+<div class="lb-o" id="lbo" role="dialog" aria-modal="true" aria-label="Image preview"><button type="button" id="lbx" aria-label="Close preview">✕</button><img id="lbi" alt=""></div>
+
+<script>
+{
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+
+/* title split */
+const ttl=$('#ttl');let i=0;
+ttl.innerHTML=ttl.textContent.split(' ').map(w=>'<span class="w">'+[...w].map(c=>'<span class="ch" style="--i:'+(i++)+'">'+c+'</span>').join('')+'</span>').join(' ');
+
+/* loader */
+const go=()=>document.body.classList.add('ready');
+if(RM){go();}else{const n=$('#ldn');let v=0;const t0=performance.now();const tick=t=>{v=Math.min(100,Math.round((t-t0)/9));n.textContent=v;v<100?requestAnimationFrame(tick):setTimeout(go,120);};requestAnimationFrame(tick);}
+
+/* chapters */
+const chs=$$('[data-ch]'),dots=$('#dots');
+dots.innerHTML=chs.map(s=>'<a href="#'+s.id+'"><span>'+s.dataset.ch+'</span><i></i></a>').join('');
+const dl=$$('#dots a');
+const co=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const k=chs.indexOf(e.target);dl.forEach((a,j)=>a.classList.toggle('on',j===k));}}),{rootMargin:'-45% 0px -50% 0px'});
+chs.forEach(s=>co.observe(s));
+
+/* reveal + counters */
+const count=el=>{const to=+el.dataset.count,pre=el.dataset.pre||'',suf=el.dataset.suf||'';if(RM){el.textContent=pre+to+suf;return;}const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/1600),e=1-Math.pow(1-p,4);el.textContent=pre+Math.round(to*e)+suf;if(p<1)requestAnimationFrame(f);};requestAnimationFrame(f);};
+const ro=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const t=e.target;t.classList.add('in');t.querySelectorAll('[data-count]').forEach(count);ro.unobserve(t);}),{threshold:.15});
+$$('[data-r],.st').forEach(el=>ro.observe(el));
+
+/* statement word fill */
+const stmt=$('#stmt');
+stmt.innerHTML=stmt.innerHTML.replace(/(<em>.*?<\/em>)|([^\s<]+)/g,(m,em,w)=>em?em.replace(/<em>(.*)<\/em>/,(x,inner)=>'<em>'+inner.split(' ').map(z=>'<span class="wd">'+z+'</span>').join(' ')+'</em>'):'<span class="wd">'+w+'</span>');
+const wds=$$('#stmt .wd');
+
+/* marquee */
+const names=['Button','Input field','Select','Multi select','Date picker','Data table','Toolbar','Modal','Sidebar','Top bar','Tabs','Accordion','Toast','Slider','Toggle','Tooltip','Breadcrumb','Pagination','File upload','Avatar'];
+const half=names.map(n=>'<span>'+n+'</span>').join('');$('#mq').innerHTML=half+half;
+
+/* scroll loop */
+const prog=$('#prog'),tl=$('#tl'),reel=$('#components'),track=$('#track'),stack=$('#stack');
+const sizeReel=()=>{if(innerWidth<=700){reel.style.height='';return;}const extra=track.scrollWidth-innerWidth;reel.style.height=(innerHeight+Math.max(0,extra))+'px';};
+sizeReel();addEventListener('resize',sizeReel);addEventListener('load',sizeReel);
+let ticking=false;
+const onScroll=()=>{ticking=false;const y=scrollY,h=document.documentElement.scrollHeight-innerHeight;
+ prog.style.transform='scaleX('+(h>0?y/h:0)+')';
+ const r=stmt.getBoundingClientRect();const p=Math.min(1,Math.max(0,(innerHeight*.85-r.top)/(r.height+innerHeight*.35)));const lit=Math.round(p*wds.length);wds.forEach((w,j)=>w.classList.toggle('lit',RM||j<lit));
+ const tr=tl.getBoundingClientRect();tl.style.setProperty('--p',Math.min(1,Math.max(0,(innerHeight*.6-tr.top)/tr.height)));
+ if(innerWidth>700){const rr=reel.getBoundingClientRect();const tot=reel.offsetHeight-innerHeight;const q=Math.min(1,Math.max(0,-rr.top/(tot||1)));track.style.transform='translateX('+(-q*Math.max(0,track.scrollWidth-innerWidth))+'px)';dots.style.opacity=(rr.top<innerHeight*.5&&rr.bottom>innerHeight*.5)?0:1;}
+};
+addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(onScroll);}},{passive:true});onScroll();
+
+/* hero tilt */
+if(!RM&&matchMedia('(pointer:fine)').matches){const stg=$('#stage');stg.addEventListener('mousemove',e=>{const b=stg.getBoundingClientRect();const x=(e.clientX-b.left)/b.width-.5,y=(e.clientY-b.top)/b.height-.5;stack.style.transform='rotateY('+(x*14)+'deg) rotateX('+(-y*10)+'deg)';});stg.addEventListener('mouseleave',()=>stack.style.transform='');
+ $$('.tilt').forEach(c=>{c.addEventListener('mousemove',e=>{const b=c.getBoundingClientRect();const x=(e.clientX-b.left)/b.width-.5,y=(e.clientY-b.top)/b.height-.5;c.style.transform='perspective(700px) rotateY('+(x*10)+'deg) rotateX('+(-y*10)+'deg) translateY(-4px)';});c.addEventListener('mouseleave',()=>c.style.transform='');});}
+
+/* token anatomy */
+const TK=[['Prefix','The collection. Every color token starts here, so code and Figma group them the same way.'],['Element','What you paint: background, text, icon or border. Each one is scoped, so a border token never shows up in the fill picker.'],['Role','The meaning: neutral, primary, secondary, success, warning, error or info. Primary and secondary always mean the brand colors.'],['Emphasis','How loud it is. Subtle is a tinted fill, bold is a solid fill. Text goes default, subtle, subtlest.'],['State','The interaction: hover or pressed. Left out when it does not apply.']];
+const tb=$$('#tokname button');let tki=1,tkAuto=true;
+const showTk=k=>{tb.forEach((b,j)=>b.classList.toggle('on',j===k));$('#tokk').textContent=TK[k][0];$('#tokv').textContent=TK[k][1];};
+tb.forEach((b,j)=>{b.addEventListener('click',()=>{tkAuto=false;showTk(j);});b.addEventListener('mouseenter',()=>{tkAuto=false;showTk(j);});});
+showTk(1);if(!RM)setInterval(()=>{if(tkAuto){tki=(tki+1)%5;showTk(tki);}},2600);
+
+/* segmented controls + screens */
+const st={t:'light',d:'ltr'};
+const pill=s=>{const b=s.querySelector('button.on'),p=s.querySelector('.pill');p.style.left=b.offsetLeft+'px';p.style.width=b.offsetWidth+'px';};
+$$('.seg').forEach(s=>{pill(s);s.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{s.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));pill(s);st[s.dataset.g]=b.dataset.v;$$('#screens img').forEach(im=>im.classList.toggle('on',im.dataset.k===st.t+'-'+st.d));}));});
+addEventListener('resize',()=>$$('.seg').forEach(pill));document.fonts&&document.fonts.ready.then(()=>$$('.seg').forEach(pill));
+
+/* compare */
+const cmp=$('#cmp'),rng=cmp.querySelector('input');
+rng.addEventListener('input',()=>cmp.style.setProperty('--x',rng.value+'%'));
+if(!RM){const cio=new IntersectionObserver(es=>{if(es[0].isIntersecting){let t0=null;const a=t=>{t0=t0||t;const p=Math.min(1,(t-t0)/1800);const v=50+Math.sin(p*Math.PI*2)*28*(1-p);cmp.style.setProperty('--x',v+'%');rng.value=v;if(p<1)requestAnimationFrame(a);};requestAnimationFrame(a);cio.disconnect();}},{threshold:.5});cio.observe(cmp);}
+
+/* tabs */
+const tabs=$$('[role=tab]');
+const sel=t=>{tabs.forEach(x=>{const on=x===t;x.setAttribute('aria-selected',on);x.tabIndex=on?0:-1;$('#'+x.getAttribute('aria-controls')).classList.toggle('on',on);});};
+tabs.forEach((t,j)=>{t.addEventListener('click',()=>sel(t));t.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){const n=tabs[(j+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length];sel(n);n.focus();}});});
+
+/* code typing */
+const CODE=[['c','/* Primary button, built only from tokens */'],['k','.button--primary'],['','  {'],['','  background: '],['v','var(--color-background-primary-bold);'],['','  color: '],['v','var(--color-text-on-primary);'],['','  border-radius: '],['v','var(--radius-md);'],['','  padding-inline: '],['v','var(--space-200);'],['','}'],['k','.button--primary:focus-visible'],['','  {'],['','  outline: 2px solid '],['v','var(--color-border-focus);'],['','}'],['c','/* Logical properties: RTL needs no extra rules */']];
+const raw=CODE.map(c=>c[1]).join('').replace(/;/g,';\n').replace(/\*\//g,'*/\n').replace(/\{/g,'{\n').replace(/\}/g,'}\n');
+const html=CODE.map(([c,t])=>{const e=t.replace(/</g,'&lt;');return c?'<span class="'+c+'">'+e+'</span>':e;}).join('').replace(/;<\/span>/g,';</span>\n').replace(/\*\/<\/span>/g,'*/</span>\n').replace(/\{/g,'{\n').replace(/\}/g,'}\n');
+const out=$('#codeo');
+const type=()=>{if(RM){out.innerHTML=html;return;}const tmp=document.createElement('div');tmp.innerHTML=html;const txt=tmp.textContent;let n=0;const step=()=>{n+=3;let left=n,built='';const walk=node=>{for(const ch of node.childNodes){if(left<=0)break;if(ch.nodeType===3){const s=ch.textContent.slice(0,left);built+=s.replace(/</g,'&lt;');left-=s.length;}else{const s=ch.textContent.slice(0,left);built+='<span class="'+ch.className+'">'+s+'</span>';left-=s.length;}}};walk(tmp);out.innerHTML=built;if(n<txt.length)setTimeout(step,16);};step();};
+const kio=new IntersectionObserver(es=>{if(es[0].isIntersecting){type();kio.disconnect();}},{threshold:.4});kio.observe($('#code'));
+$('#copy').addEventListener('click',async e=>{try{await navigator.clipboard.writeText(raw);e.target.textContent='Copied';}catch(x){e.target.textContent='Select and copy';}setTimeout(()=>e.target.textContent='Copy',1800);});
+
+/* checklist + flow */
+const chk=$$('#check li');
+const qio=new IntersectionObserver(es=>{if(es[0].isIntersecting){chk.forEach((l,j)=>setTimeout(()=>l.classList.add('done'),RM?0:j*260));qio.disconnect();}},{threshold:.3});qio.observe($('#check'));
+const fl=$$('#flow span');let fi=0;
+const fio=new IntersectionObserver(es=>{if(es[0].isIntersecting&&!RM){setInterval(()=>{fl.forEach((s,j)=>s.classList.toggle('on',j===fi));fi=(fi+1)%fl.length;},900);fio.disconnect();}else if(RM){fl.forEach(s=>s.classList.add('on'));}},{threshold:.5});fio.observe($('#flow'));
+
+/* lightbox */
+const lbo=$('#lbo'),lbi=$('#lbi');
+const open=(src,alt)=>{lbi.src=src;lbi.alt=alt||'';lbo.classList.add('on');$('#lbx').focus();};
+const close=()=>lbo.classList.remove('on');
+$$('[data-zoom]').forEach(el=>el.addEventListener('click',()=>{const im=el.querySelector('img');open(im.src,im.alt);}));
+$('#dev').addEventListener('click',()=>open('img/button-doc.webp','The Button documentation page'));
+$('#lbx').addEventListener('click',close);lbo.addEventListener('click',e=>{if(e.target===lbo)close();});
+addEventListener('keydown',e=>{if(e.key==='Escape')close();});
+
+/* cursor */
+if(matchMedia('(pointer:fine)').matches&&!RM){const cur=$('#cur');let mx=-100,my=-100,cx=-100,cy=-100;addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+ const loop=()=>{cx+=(mx-cx)*.2;cy+=(my-cy)*.2;cur.style.transform='translate('+cx+'px,'+cy+'px)';requestAnimationFrame(loop);};loop();
+ $$('[data-zoom],#dev').forEach(el=>{el.addEventListener('mouseenter',()=>cur.classList.add('big'));el.addEventListener('mouseleave',()=>cur.classList.remove('big'));});}
+}
+</script>
+</body>
+</html>

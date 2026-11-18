@@ -12,6 +12,8 @@ plain text editor. Anything that breaks that is a regression.
 ```
 index.html        structure, head metadata, structured data
 404.html          self-contained; must work if the CSS or JS is what broke
+design-system/    a standalone case-study page (its own HTML, CSS, JS and img/),
+                  linked from the reel through `link:` in data/projects.js
 css/styles.css    14 numbered sections, listed at the top of the file
 js/main.js        sections A-D, listed at the top of the file
 data/projects.js  ALL content: projects, colours, links, the About page
@@ -34,7 +36,7 @@ images/           every raster asset, WebP only (one PNG, see below)
 - **Add analytics or any third-party script** without being asked. The only
   third-party requests are Google Fonts, Google Analytics (GA4,
   `G-38SJ5MJGJL`) and Microsoft Clarity (`z8bl211j9w`) — the last two in
-  `index.html` only, not on `404.html`.
+  `index.html` and `design-system/index.html`, not on `404.html`.
 
 ## Layout conventions
 
@@ -110,7 +112,8 @@ These were expensive to find. Do not undo them.
 
 The live address appears in **three files**: `index.html` (canonical,
 `og:url`, `og:image`, `twitter:image`, and the JSON-LD `url` and `image`),
-`robots.txt`, and `sitemap.xml`. Change them together — social networks
+`robots.txt`, `sitemap.xml`, and `design-system/index.html` (canonical,
+`og:url`, `og:image`). Change them together — social networks
 fetch the preview by absolute URL, so a stale one fails silently.
 
 The JSON-LD repeats the name, role, location, employer and links from

@@ -239,13 +239,21 @@ function start(){
           <p class="eyebrow">${esc(project.eyebrow)}</p>
           <h2 class="slide-title">${esc(project.name)}</h2>
           <p class="slide-desc">${esc(project.desc)}</p>
+          ${project.link ? `
+          <a class="cta" href="${esc(project.link)}">
+            Open case study<span class="visually-hidden"> for ${esc(project.name)}</span>
+            <span class="arrow" aria-hidden="true">&rarr;</span>
+          </a>
+          <a class="thumb" href="${esc(project.link)}" aria-label="Open ${esc(project.name)} case study">
+            <span class="art thumbart" aria-hidden="true"></span>
+          </a>` : `
           <button class="cta" type="button" data-open="${i}">
             Open case study<span class="visually-hidden"> for ${esc(project.name)}</span>
             <span class="arrow" aria-hidden="true">&rarr;</span>
           </button>
           <button class="thumb" type="button" data-open="${i}" aria-label="Open ${esc(project.name)} case study">
             <span class="art thumbart" aria-hidden="true"></span>
-          </button>
+          </button>`}
         </div>
         <div class="slide-media" aria-hidden="true">
           <div class="hero" data-open="${i}"><div class="art"></div></div>
@@ -662,7 +670,7 @@ function start(){
       // render, and fade the neighbours in.
       introActive = false;
       introReel = 0;
-      window.scrollTo(0, 0);   // ensure the page is on the first project (SC Bank)
+      window.scrollTo(0, 0);   // ensure the page is on the first project
       current = -1;            // force the theme/dots to re-sync to project 0
       const f0 = performance.now();
       (function fadeIn(n){
@@ -956,6 +964,9 @@ function start(){
   function openCase(i){
     const project = PROJECTS[i];
     if(!project) return;
+    // A project with its own page (`link` in data/projects.js) goes there
+    // instead — from the preview images and the previous/next links alike.
+    if(project.link){ window.location.href = project.link; return; }
     lastFocused = document.activeElement;
     // Opened from a preview image, which cannot hold focus: return focus to
     // that project's "Open case study" button on close instead of the page.
@@ -1024,6 +1035,21 @@ function start(){
     }
   });
   caseClose.addEventListener("click", closeCase);
+
+  // Deep link: /#cookster opens that case study on arrival. Used by the
+  // previous/next links on pages that live outside this one, such as
+  // /design-system/. The hash is then cleared so a reload starts fresh.
+  const slug = s => String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  function openFromHash(){
+    const want = decodeURIComponent(location.hash.slice(1));
+    if(!want) return;
+    const i = PROJECTS.findIndex(p => slug(p.name) === want);
+    if(i < 0 || PROJECTS[i].link) return;
+    openCase(i);
+    history.replaceState(null, "", location.pathname + location.search);
+  }
+  openFromHash();
+  window.addEventListener("hashchange", openFromHash);
   const caseHome = $("#caseHome");
   if(caseHome) caseHome.addEventListener("click", closeCase);
 

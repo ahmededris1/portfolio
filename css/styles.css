@@ -176,6 +176,7 @@ body.case-closing header{opacity:0;pointer-events:none;transition:opacity 250ms}
   cursor:pointer;background:none;border:none;color:inherit;
 }
 .cta .arrow{display:inline-block;transition:transform var(--ui)}
+a.cta,a.thumb{text-decoration:none}   /* projects with their own page use links */
 .cta:hover .arrow{transform:translateX(10px)}
 
 .slide-media{position:relative;justify-self:end;width:100%;max-width:640px;aspect-ratio:16/11;transform-style:preserve-3d}
