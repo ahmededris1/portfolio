@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>everlean · Product redesign case study · Ahmed Edris</title>
+<meta name="description" content="Case study: redesigning everlean, a continuous improvement platform for frontline teams. Landing page, web portal and native app.">
+<link rel="canonical" href="https://ahmededris.com/everlean/">
+<meta name="theme-color" content="#0b0e13">
+<link rel="icon" href="../pika.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Ahmed Edris">
+<meta property="og:title" content="everlean redesign — Ahmed Edris">
+<meta property="og:description" content="Redesigning a continuous improvement platform for frontline teams: landing page, web portal and native app.">
+<meta property="og:url" content="https://ahmededris.com/everlean/">
+<meta property="og:image" content="https://ahmededris.com/images/social-preview.png">
+<meta name="twitter:card" content="summary_large_image">
+<!-- Google Analytics (GA4) and Microsoft Clarity, the same tags as the home page -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-38SJ5MJGJL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-38SJ5MJGJL');
+</script>
+<script>
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "z8bl211j9w");
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#4d51de;--primary-2:#a4b3ff;--teal:#007974;--teal-2:#52d0c9;--warn:#f6ba00;--err:#ff8a80;--ease:cubic-bezier(.16,1,.3,1);--font:'Inter',system-ui,sans-serif;--r:24px}
+[data-theme=dark]{--bg:#0b0e13;--bg-2:#11151c;--card:#151a22;--line:rgba(255,255,255,.09);--text:#f2f4f7;--sub:#9aa3af;--accent:var(--primary-2);--accent-2:var(--teal-2);--shadow:0 30px 80px -30px rgba(0,0,0,.7)}
+[data-theme=light]{--bg:#ffffff;--bg-2:#f6f7f9;--card:#ffffff;--line:#e6e8eb;--text:#101418;--sub:#5b6370;--accent:var(--primary);--accent-2:var(--teal);--shadow:0 30px 70px -35px rgba(16,20,24,.3)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .6s var(--ease),color .6s var(--ease)}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none} button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.wrap{max-width:1240px;margin:0 auto;padding:0 40px}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:10px}
+.eyebrow b{font-variant-numeric:tabular-nums;color:var(--sub);font-weight:500}
+h2.t{font-size:clamp(36px,4.6vw,64px);line-height:1.03;letter-spacing:-.04em;font-weight:600;margin:20px 0 24px;max-width:900px}
+.lead{font-size:clamp(17px,1.4vw,20px);color:var(--sub);max-width:700px}
+section{padding:150px 0;position:relative}
+.alt{background:var(--bg-2)}
+.grad{background:linear-gradient(90deg,var(--primary-2),var(--teal-2),var(--primary-2));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shift 7s linear infinite}
+[data-theme=light] .grad{background-image:linear-gradient(90deg,#4d51de,#007974,#4d51de)}
+@keyframes shift{to{background-position:-200% 0}}
+
+/* progress + top bar */
+.progress{position:fixed;top:0;left:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--primary),var(--teal-2));z-index:100}
+.bar{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:90;display:flex;gap:6px;align-items:center;padding:6px;border-radius:999px;background:color-mix(in srgb,var(--bg) 70%,transparent);backdrop-filter:blur(18px) saturate(1.4);border:1px solid var(--line);box-shadow:var(--shadow)}
+.bar .brand{display:flex;align-items:center;gap:8px;padding:0 12px 0 6px;font-weight:600;font-size:14px;letter-spacing:-.02em}
+.bar .brand i{width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,#6b6ff0,#4d51de 55%,#007974);display:grid;place-items:center;color:#fff;font-style:normal;font-size:14px;font-weight:700}
+.bar nav{display:flex;gap:2px}
+.bar nav a{font-size:13px;color:var(--sub);padding:8px 12px;border-radius:999px;transition:all .25s}
+.bar nav a:hover,.bar nav a.on{color:var(--text);background:var(--line)}
+.seg{display:flex;padding:3px;border-radius:999px;background:var(--line);position:relative}
+.seg button{position:relative;z-index:1;font-size:12px;font-weight:600;padding:6px 11px;border-radius:999px;color:var(--sub);transition:color .3s}
+.seg button.on{color:var(--text)}
+.seg .k{position:absolute;top:3px;bottom:3px;border-radius:999px;background:var(--bg);box-shadow:0 1px 4px rgba(0,0,0,.2);transition:all .45s var(--ease)}
+.icon-btn{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--line)}
+.icon-btn svg{width:16px;height:16px}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(50px);transition:opacity 1.1s var(--ease),transform 1.1s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.mask{display:block;overflow:hidden}.mask>span{display:inline-block;transform:translateY(105%);transition:transform 1.2s var(--ease)}
+.in .mask>span,.loaded .hero .mask>span{transform:none}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;padding:140px 0 80px;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(50% 50% at 75% 40%,rgba(77,81,222,.35),transparent 70%),radial-gradient(35% 40% at 15% 90%,rgba(0,121,116,.25),transparent 70%);pointer-events:none;transition:opacity .6s}
+[data-theme=light] .hero::before{opacity:.55}
+.hero h1{font-size:clamp(56px,9vw,148px);line-height:.92;letter-spacing:-.06em;font-weight:600;margin:28px 0 36px}
+.hero h1 .mask:nth-child(2)>span{transition-delay:.1s}.hero h1 .mask:nth-child(3)>span{transition-delay:.2s}
+.meta{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:64px;padding-top:28px;border-top:1px solid var(--line)}
+.meta small{display:block;font-size:12px;color:var(--sub);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.meta b{font-weight:500;font-size:15px}
+.hero-shot{position:relative;margin-top:90px;border-radius:20px;overflow:hidden;box-shadow:0 60px 120px -40px rgba(77,81,222,.55);border:1px solid var(--line);transform:perspective(1600px) rotateX(16deg) scale(.92);transform-origin:50% 0;transition:transform .1s linear;will-change:transform}
+.fade{opacity:0;transform:translateY(24px);transition:all 1s var(--ease)} .loaded .fade{opacity:1;transform:none}
+.f1{transition-delay:.35s}.f2{transition-delay:.5s}.f3{transition-delay:.65s}
+
+/* big numbers */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:64px}
+.kpi{padding:28px;border-radius:var(--r);background:var(--card);border:1px solid var(--line)}
+.kpi .n{font-size:clamp(40px,4vw,58px);font-weight:600;letter-spacing:-.05em;line-height:1;font-variant-numeric:tabular-nums}
+.kpi .n em{font-style:normal;font-size:.5em;color:var(--sub);letter-spacing:-.02em;margin-left:4px}
+.kpi p{color:var(--sub);font-size:14px;margin-top:12px}
+.kpi .from{display:inline-flex;gap:6px;align-items:center;font-size:12px;margin-top:14px;padding:4px 10px;border-radius:999px;background:rgba(82,208,201,.12);color:var(--accent-2);font-weight:600}
+
+/* problem */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.pains{display:flex;flex-direction:column;gap:14px;margin-top:40px}
+.pain{display:flex;gap:16px;padding:20px;border-radius:16px;border:1px solid var(--line);background:var(--card);transition:transform .4s var(--ease),border-color .3s}
+.pain:hover{transform:translateX(8px);border-color:var(--accent)}
+.pain i{flex:none;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:rgba(255,138,128,.12);color:var(--err);font-style:normal;font-weight:700}
+.pain b{display:block} .pain span{color:var(--sub);font-size:14px}
+.old-stack{position:relative;height:640px;margin-top:20px}
+.old{position:absolute;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line);background:#fff;transition:transform .6s var(--ease)}
+.old figcaption{position:absolute;left:10px;bottom:10px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:999px;background:rgba(16,20,24,.8);color:#fff}
+.old.o1{width:78%;top:0;left:0;transform:rotate(-3deg)} .old.o2{width:72%;top:200px;right:0;transform:rotate(2.5deg)} .old.o3{width:62%;top:400px;left:8%;transform:rotate(-1deg)}
+.old-stack:hover .o1{transform:rotate(-6deg) translate(-20px,-10px)} .old-stack:hover .o2{transform:rotate(5deg) translate(20px,0)} .old-stack:hover .o3{transform:rotate(-2deg) translate(0,20px)}
+.quote-big{font-size:clamp(26px,2.8vw,40px);line-height:1.25;letter-spacing:-.02em;font-weight:500;margin-top:100px;max-width:1000px}
+.quote-big small{display:block;font-size:14px;color:var(--sub);margin-top:16px;letter-spacing:0}
+
+/* research */
+.methods{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px}
+.method{padding:28px;border-radius:var(--r);background:var(--card);border:1px solid var(--line);position:relative;overflow:hidden}
+.method .n{font-size:44px;font-weight:600;letter-spacing:-.04em;line-height:1}
+.method b{display:block;margin:14px 0 6px} .method span{color:var(--sub);font-size:14px}
+.method::after{content:"";position:absolute;inset:auto -40% -60% auto;width:220px;height:220px;border-radius:50%;background:radial-gradient(closest-side,rgba(77,81,222,.18),transparent);transition:transform .6s var(--ease)}
+.method:hover::after{transform:scale(1.5)}
+.funnel{margin-top:80px;padding:40px;border-radius:var(--r);background:var(--card);border:1px solid var(--line)}
+.funnel h4{font-size:20px;letter-spacing:-.01em} .funnel p.s{color:var(--sub);font-size:14px;margin-top:4px}
+.fun-row{display:grid;grid-template-columns:200px 1fr 70px;gap:20px;align-items:center;margin-top:18px;font-size:14px}
+.fun-row .track{height:30px;border-radius:8px;background:var(--line);overflow:hidden}
+.fun-row .fill{height:100%;width:0;border-radius:8px;background:linear-gradient(90deg,var(--primary),var(--primary-2));transition:width 1.4s var(--ease)}
+.fun-row.drop .fill{background:linear-gradient(90deg,#c21725,var(--err))}
+.fun-row b{text-align:right;font-variant-numeric:tabular-nums}
+
+/* insights -> decisions */
+.ins{display:flex;flex-direction:column;gap:0;margin-top:56px;border-top:1px solid var(--line)}
+.in-row{display:grid;grid-template-columns:60px 1fr 60px 1fr;gap:24px;align-items:center;padding:34px 0;border-bottom:1px solid var(--line);cursor:default}
+.in-row .no{font-size:14px;color:var(--sub);font-variant-numeric:tabular-nums}
+.in-row h5{font-size:22px;letter-spacing:-.02em;font-weight:600;line-height:1.25}
+.in-row p{color:var(--sub);font-size:14px;margin-top:6px}
+.in-row .arrow{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);transition:all .4s var(--ease)}
+.in-row:hover .arrow{background:var(--accent);color:var(--bg);transform:translateX(6px) rotate(-45deg)}
+.in-row .dec{padding:18px 20px;border-radius:16px;background:var(--card);border:1px solid var(--line);transition:border-color .3s,transform .4s var(--ease)}
+.in-row:hover .dec{border-color:var(--accent);transform:translateY(-4px)}
+.in-row .dec small{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-2)}
+.in-row .dec b{display:block;margin-top:4px;font-size:16px}
+
+/* process */
+.timeline{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:20px;margin-top:64px}
+.timeline::before{content:"";position:absolute;top:22px;left:0;right:0;height:2px;background:var(--line)}
+.timeline .line{position:absolute;top:22px;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--primary),var(--teal-2));transition:width 2.2s var(--ease)}
+.in .timeline .line{width:100%}
+.ph{position:relative;padding-top:60px}
+.ph::before{content:attr(data-n);position:absolute;top:0;left:0;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:var(--bg);border:2px solid var(--accent);font-size:13px;font-weight:600;color:var(--accent)}
+.ph small{font-size:12px;color:var(--sub)} .ph b{display:block;font-size:20px;letter-spacing:-.02em;margin:4px 0 8px} .ph p{color:var(--sub);font-size:14px}
+.matrix{margin-top:90px;border-radius:var(--r);border:1px solid var(--line);background:var(--card);overflow:hidden}
+.mx-head{padding:28px 32px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:flex-end}
+.mx-head h4{font-size:22px;letter-spacing:-.02em} .mx-head p{color:var(--sub);font-size:14px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:16px 32px;text-align:left;border-bottom:1px solid var(--line)}
+th{font-size:12px;color:var(--sub);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+td .sc{display:flex;align-items:center;gap:10px} td .sc i{display:block;height:6px;border-radius:3px;background:var(--line);width:120px;position:relative;overflow:hidden}
+td .sc i::after{content:"";position:absolute;inset:0;width:0;background:var(--sub);border-radius:3px;transition:width 1.2s var(--ease)}
+tr.win td .sc i::after{background:linear-gradient(90deg,var(--primary),var(--teal-2))}
+.in td .sc i::after{width:var(--w)}
+tr.win{background:rgba(77,81,222,.08)} tr.win td:first-child b::after{content:"Chosen";margin-left:10px;font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--accent);color:var(--bg)}
+html[lang=de] tr.win td:first-child b::after{content:"Gewählt"}
+td.total{font-weight:600;font-variant-numeric:tabular-nums;font-size:16px}
+
+/* before/after */
+.ba{position:relative;margin-top:56px;border-radius:20px;overflow:hidden;aspect-ratio:16/10;border:1px solid var(--line);box-shadow:var(--shadow);user-select:none;touch-action:none;cursor:ew-resize;background:#fff}
+.ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top left}
+.ba .after{clip-path:inset(0 0 0 var(--x,50%))}
+.ba .handle{position:absolute;top:0;bottom:0;left:var(--x,50%);width:2px;background:#fff;transform:translateX(-1px);box-shadow:0 0 20px rgba(0,0,0,.4)}
+.ba .handle::after{content:"⟷";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:52px;height:52px;border-radius:50%;background:#fff;color:#101418;display:grid;place-items:center;font-size:20px;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.ba .lbl{position:absolute;top:16px;font-size:12px;font-weight:600;padding:6px 12px;border-radius:999px;background:rgba(16,20,24,.8);color:#fff;backdrop-filter:blur(6px)}
+.ba .lbl.l{left:16px}.ba .lbl.r{right:16px;background:var(--primary)}
+.changes{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px}
+.chg{padding:24px;border-radius:20px;border:1px solid var(--line);background:var(--card)}
+.chg small{color:var(--err);font-size:12px;font-weight:600;text-decoration:line-through;opacity:.8}
+.chg b{display:block;font-size:17px;margin:6px 0} .chg span{color:var(--sub);font-size:14px}
+.tabs{display:flex;gap:8px;margin-top:40px;flex-wrap:wrap}
+.tabs button{padding:10px 18px;border-radius:999px;border:1px solid var(--line);font-size:14px;font-weight:500;color:var(--sub);transition:all .3s}
+.tabs button.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+
+/* showcase: browser */
+.browser{margin-top:56px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:var(--card)}
+.browser .chrome{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.browser .chrome i{width:11px;height:11px;border-radius:50%;background:#ff5f57}.browser .chrome i:nth-child(2){background:#febc2e}.browser .chrome i:nth-child(3){background:#28c840}
+.browser .chrome span{margin-left:16px;flex:1;max-width:420px;font-size:12px;color:var(--sub);padding:6px 12px;border-radius:8px;background:var(--line)}
+.hint{font-size:13px;color:var(--sub);margin-top:14px;text-align:center}
+.feat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:24px}
+.feat-row figure{border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--card);transition:transform .5s var(--ease)}
+.feat-row figure:hover{transform:translateY(-8px)}
+.feat-row figcaption{padding:16px 18px;font-size:14px;color:var(--sub)} .feat-row figcaption b{display:block;color:var(--text);font-size:15px}
+
+/* portal gallery */
+.pgal{margin-top:56px;position:relative}
+.pstage{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);aspect-ratio:1440/1024;background:var(--card)}
+.pstage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;opacity:0;transform:scale(1.03);transition:opacity .7s var(--ease),transform 1.2s var(--ease)}
+.pstage img.on{opacity:1;transform:none}
+.pthumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px}
+.pthumbs button{text-align:left;padding:16px;border-radius:14px;border:1px solid var(--line);background:var(--card);transition:all .3s;position:relative;overflow:hidden}
+.pthumbs button b{display:block;font-size:15px} .pthumbs button span{font-size:13px;color:var(--sub)}
+.pthumbs button.on{border-color:var(--accent)}
+.pthumbs button .pg{position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--accent)}
+.pthumbs button.on .pg{animation:pg 6s linear forwards}
+@keyframes pg{to{width:100%}}
+
+/* mobile horizontal */
+.hscroll{height:300vh;position:relative;padding:0}
+.hs-sticky{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.hs-track{display:flex;gap:40px;padding:0 max(40px,calc((100vw - 1240px)/2 + 40px));will-change:transform;margin-top:48px}
+.phone{flex:none;width:300px;border-radius:44px;padding:10px;background:linear-gradient(145deg,#2a2f38,#0d1015);box-shadow:var(--shadow),inset 0 0 0 1.5px rgba(255,255,255,.12)}
+.phone img{border-radius:34px;width:100%}
+.phone-cap{margin-top:18px;padding:0 6px} .phone-cap b{display:block;font-size:16px} .phone-cap span{font-size:13px;color:var(--sub)}
+.pwrap{flex:none;width:300px}
+
+/* modes */
+.modes{margin-top:56px;display:grid;grid-template-columns:1.6fr 1fr;gap:24px;align-items:center}
+.mstage{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line);aspect-ratio:1440/1217;box-shadow:var(--shadow)}
+.mstage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;transition:clip-path 1s var(--ease)}
+.mstage img.d{clip-path:circle(0% at 92% 4%)} .modes.dark .mstage img.d{clip-path:circle(150% at 92% 4%)}
+.mphone{position:relative;width:min(300px,100%);margin:0 auto;border-radius:44px;padding:10px;background:linear-gradient(145deg,#2a2f38,#0d1015);box-shadow:var(--shadow)}
+.mphone .scr{position:relative;border-radius:34px;overflow:hidden;aspect-ratio:390/844}
+.mphone img{position:absolute;inset:0;width:100%;height:100%;transition:clip-path 1s var(--ease)}
+.mphone img.d{clip-path:circle(0% at 85% 6%)} .modes.dark .mphone img.d{clip-path:circle(150% at 85% 6%)}
+.switch{display:inline-flex;align-items:center;gap:14px;margin-top:28px;padding:8px 18px 8px 8px;border-radius:999px;border:1px solid var(--line);background:var(--card);font-weight:500}
+.switch .tr{width:56px;height:32px;border-radius:999px;background:var(--line);position:relative;transition:background .4s}
+.switch .tr::after{content:"☀";position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:14px;color:#946c00;transition:all .5s var(--ease)}
+.modes.dark .switch .tr{background:var(--primary)} .modes.dark .switch .tr::after{left:27px;content:"☾";color:var(--primary)}
+.token-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:28px}
+.tok{display:flex;gap:10px;align-items:center;padding:10px;border-radius:12px;border:1px solid var(--line);font-size:12px;color:var(--sub)}
+.tok i{width:28px;height:28px;border-radius:8px;flex:none;transition:background .8s var(--ease);background:var(--l)}
+.modes.dark .tok i{background:var(--d)}
+.tok b{display:block;color:var(--text);font-size:12px;font-family:ui-monospace,monospace;font-weight:500}
+
+/* design system */
+.ds{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:56px}
+.ds .c{padding:24px;border-radius:20px;border:1px solid var(--line);background:var(--card)}
+.ds .c b{display:block;font-size:30px;letter-spacing:-.03em} .ds .c span{font-size:14px;color:var(--sub)}
+.swatches{display:flex;margin-top:24px;border-radius:16px;overflow:hidden;height:96px}
+.swatches div{flex:1;display:flex;align-items:flex-end;padding:10px;font-size:11px;font-weight:600;color:#fff;transition:flex .5s var(--ease)}
+.swatches div:hover{flex:2}
+
+/* outcomes */
+.outs{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px}
+.out{padding:32px;border-radius:var(--r);border:1px solid var(--line);background:var(--card);position:relative;overflow:hidden}
+.out .n{font-size:clamp(48px,5vw,72px);font-weight:600;letter-spacing:-.05em;line-height:1;font-variant-numeric:tabular-nums}
+.out .n.up{background:linear-gradient(135deg,var(--text),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
+.out p{color:var(--sub);margin-top:10px;font-size:14px}
+.out .ba2{display:flex;gap:10px;align-items:center;margin-top:20px;font-size:13px;color:var(--sub)}
+.out .ba2 s{opacity:.7} .out .ba2 b{color:var(--accent-2)}
+.chart{margin-top:24px;padding:40px;border-radius:var(--r);border:1px solid var(--line);background:var(--card)}
+.chart svg{width:100%;height:auto;overflow:visible}
+.chart path.ln{stroke-dasharray:1600;stroke-dashoffset:1600;transition:stroke-dashoffset 2.4s var(--ease)}
+.in .chart path.ln,.chart.in path.ln{stroke-dashoffset:0}
+.legend{display:flex;gap:20px;font-size:13px;color:var(--sub);margin-top:6px} .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.note{font-size:12px;color:var(--sub);margin-top:24px;opacity:.8}
+
+/* learnings / end */
+.learn{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px}
+.learn div{padding:28px;border-radius:20px;border-top:2px solid var(--accent);background:var(--card)}
+.learn b{display:block;font-size:18px;margin-bottom:8px;letter-spacing:-.01em} .learn span{color:var(--sub);font-size:14px}
+.end{text-align:center;padding:180px 0 120px;overflow:hidden}
+.end h2{font-size:clamp(48px,7vw,110px);letter-spacing:-.06em;line-height:.95;font-weight:600}
+.btn{display:inline-flex;align-items:center;gap:10px;height:56px;padding:0 28px;border-radius:999px;font-weight:500;background:var(--accent);color:var(--bg);margin-top:40px;transition:transform .4s var(--ease)}
+.btn.ghost{background:none;border:1px solid var(--line);color:var(--text);margin-left:8px}
+footer{border-top:1px solid var(--line);padding:32px 0;font-size:13px;color:var(--sub)} footer .wrap{display:flex;justify-content:space-between}
+.cursor{position:fixed;top:0;left:0;width:500px;height:500px;border-radius:50%;pointer-events:none;z-index:0;background:radial-gradient(circle,rgba(77,81,222,.12),transparent 60%);transform:translate(-50%,-50%)}
+
+@media (max-width:1000px){
+ .split,.modes{grid-template-columns:1fr}.meta,.kpis{grid-template-columns:1fr 1fr}.methods,.outs,.changes,.learn,.feat-row{grid-template-columns:1fr}
+ .in-row{grid-template-columns:1fr;gap:12px}.in-row .arrow{display:none}.timeline{grid-template-columns:1fr;gap:36px}.timeline::before,.timeline .line{display:none}
+ .ds{grid-template-columns:1fr 1fr}.pthumbs{grid-template-columns:1fr 1fr}.bar nav{display:none}.old-stack{height:520px}
+ th,td{padding:12px 14px}.fun-row{grid-template-columns:120px 1fr 50px}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.rv,.fade,.mask>span{opacity:1!important;transform:none!important}}
+
+/* ---- portfolio furniture: back link, chapter dots, previous / next ---- */
+.back{position:fixed;top:18px;left:max(20px,2.4vw);z-index:95;display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 16px;border-radius:999px;
+  font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--text);
+  background:color-mix(in srgb,var(--bg) 72%,transparent);backdrop-filter:blur(16px);border:1px solid var(--line)}
+.back span{transition:transform .4s var(--ease)}.back:hover span{transform:translateX(-5px)}
+.chap{position:fixed;right:max(14px,2vw);top:50%;transform:translateY(-50%);z-index:80;display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+.chap button{display:flex;align-items:center;gap:12px;min-height:18px;padding:0;color:var(--sub)}
+.chap i{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.5;transition:all .4s var(--ease);flex:none}
+.chap span{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;padding:5px 10px;border-radius:999px;
+  background:color-mix(in srgb,var(--bg) 85%,transparent);opacity:0;transform:translateX(8px);transition:all .4s var(--ease);pointer-events:none}
+.chap:hover span{opacity:.8;transform:none}.chap button.on span,.chap button:hover span{opacity:1}
+.chap button.on{color:var(--accent)}.chap button.on i{opacity:1;width:11px;height:11px;box-shadow:0 0 0 5px color-mix(in srgb,var(--accent) 22%,transparent)}
+.pn{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
+.pn a{padding:clamp(36px,6vw,80px) max(40px,calc((100% - 1240px)/2 + 40px))}
+.pn a{transition:background .5s}.pn a:hover{background:var(--bg-2)}.pn a+a{border-left:1px solid var(--line);text-align:right}
+.pn small{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--sub)}
+.pn strong{display:block;font-size:clamp(28px,4vw,56px);font-weight:600;letter-spacing:-.04em;margin-top:10px;transition:color .4s}
+.pn a:hover strong{color:var(--accent)}
+
+/* ---- landing: the live site, front and centre ---- */
+.live-sec{background:radial-gradient(60% 50% at 50% 30%,rgba(77,81,222,.22),transparent 70%),var(--bg)}
+.live{max-width:1320px;margin:56px auto 0;padding:0 40px}
+.live-bar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:16px;flex-wrap:wrap}
+.dev{display:inline-flex;padding:4px;border-radius:999px;background:var(--line)}
+.dev button{font-size:13px;font-weight:600;padding:9px 16px;min-height:40px;border-radius:999px;color:var(--sub);transition:all .35s var(--ease)}
+.dev button[aria-pressed=true]{background:var(--accent);color:var(--bg)}
+.open{font-size:13px;font-weight:600;color:var(--accent);padding:10px 0}
+.live-browser{margin-top:0}
+.live-vp{position:relative;height:min(78vh,820px);overflow:hidden;background:#0b0e13;transition:background .4s}
+.live-vp iframe{position:absolute;top:0;left:0;border:0;transform-origin:0 0;background:#0b0e13;transition:left .5s var(--ease)}
+.live-vp.mobile{background:var(--bg-2)}
+.live-vp.mobile iframe{border-radius:28px;box-shadow:0 0 0 10px #1b2029,0 30px 80px -20px rgba(0,0,0,.6);top:24px}
+.live-guard{position:absolute;inset:0;z-index:2;display:grid;place-content:center;justify-items:center;gap:10px;text-align:center;color:#fff;
+  background:linear-gradient(180deg,rgba(11,14,19,0) 30%,rgba(11,14,19,.72));transition:opacity .4s}
+.live-guard b{font-size:20px;font-weight:600;letter-spacing:-.02em;padding:14px 26px;border-radius:999px;background:var(--primary);box-shadow:0 20px 50px -14px rgba(77,81,222,.8)}
+.live-guard small{font-size:13px;color:rgba(255,255,255,.8);max-width:34ch}
+.live-guard .pulse{width:14px;height:14px;border-radius:50%;background:var(--teal-2);box-shadow:0 0 0 0 rgba(82,208,201,.6);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 18px rgba(82,208,201,0)}100%{box-shadow:0 0 0 0 rgba(82,208,201,0)}}
+.live-vp.on .live-guard{opacity:0;pointer-events:none}
+
+/* ---- every landing section, as a slow two-way strip ---- */
+.strip{margin-top:80px;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.strip-row{overflow:hidden;padding:10px 0}
+.strip-track{display:flex;gap:20px;width:max-content;animation:strip 60s linear infinite}
+.strip-row.rev .strip-track{animation-direction:reverse;animation-duration:70s}
+.strip:hover .strip-track{animation-play-state:paused}
+.strip figure{flex:none;width:340px;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--card);transition:transform .5s var(--ease)}
+.strip figure:hover{transform:translateY(-6px)}
+.strip img{width:100%;height:210px;object-fit:cover;object-position:top}
+.strip figcaption{padding:10px 14px;font-size:13px;color:var(--sub)}
+@keyframes strip{to{transform:translateX(-50%)}}
+
+/* ---- the fourth old screen in the problem stack ---- */
+.old-stack{height:760px}
+.old.o4{width:60%;top:560px;right:4%;transform:rotate(3deg)}
+.old-stack:hover .o4{transform:rotate(6deg) translate(16px,24px)}
+
+/* ---- lightbox ---- */
+[data-zoom]{cursor:zoom-in}
+.lb{position:fixed;inset:0;z-index:120;display:grid;place-items:center;padding:4vw;background:rgba(6,8,12,.9);opacity:0;pointer-events:none;transition:opacity .35s}
+.lb.on{opacity:1;pointer-events:auto}
+.lb img{max-width:min(1300px,100%);max-height:88vh;width:auto;border-radius:14px;transform:scale(.95);transition:transform .45s var(--ease)}
+.lb.on img{transform:none}
+.lb button{position:absolute;top:18px;right:18px;width:48px;height:48px;border-radius:50%;background:#fff;color:#111;font-size:24px}
+
+@media (max-width:1000px){
+  .chap{display:none}
+  .old-stack{height:600px}.old.o4{top:440px}
+  .live{padding:0 20px}.live-vp{height:min(70vh,640px)}
+  .strip figure{width:260px}.strip img{height:160px}
+}
+@media (max-width:640px){
+  .pn{grid-template-columns:1fr}.pn a+a{border-left:0;border-top:1px solid var(--line);text-align:left}
+  .back{top:12px;left:12px}
+}
+@media (prefers-reduced-motion:reduce){.strip-track{animation:none}.strip{overflow-x:auto}}
+
+/* ---- narrow-screen fixes: the key numbers and the decision table no longer push the page sideways ---- */
+.kpi,.matrix,.modes>*,.ds .c{min-width:0}
+.matrix{overflow-x:auto;max-width:100%}
+.matrix table{min-width:680px}
+@media (max-width:640px){.ds{gap:12px}.ds .c{padding:18px}.swatches{flex-wrap:wrap;height:auto}.swatches div{flex:1 1 30%;min-height:64px}.token-list{grid-template-columns:1fr}.tok{min-width:0}.kpis{gap:12px}.kpi{padding:20px}.kpi .n{font-size:34px}}
+</style>
+</head>
+<body>
+<div class="progress" id="prog"></div>
+<div class="cursor" aria-hidden="true"></div>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Enlarged image"><img alt=""><button type="button" aria-label="Close">&times;</button></div>
+
+<a class="back" href="/"><span aria-hidden="true">←</span> Back home</a>
+<nav class="chap" id="chap" aria-label="Case study chapters"></nav>
+
+<main>
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="eyebrow fade" data-i="h_eye">Case study · Product redesign · 2026</div>
+    <h1><span class="mask"><span data-i="h1a">Every idea,</span></span><span class="mask"><span data-i="h2">finally</span></span><span class="mask"><span class="grad" data-i="h3">heard.</span></span></h1>
+    <p class="lead fade f1" data-i="h_lead">Redesigning everlean, a continuous improvement platform used in factories across Germany: a new marketing site, a web portal for managers and a native app for the shop floor. One design system, light and dark.</p>
+    <div class="meta fade f2">
+      <div><small data-i="m1">Role</small><b data-i="m1v">Lead Product Designer</b></div>
+      <div><small data-i="m2">Timeline</small><b data-i="m2v">12 weeks</b></div>
+      <div><small data-i="m3">Team</small><b data-i="m3v">PM, 3 engineers, CI consultant</b></div>
+      <div><small data-i="m4">Scope</small><b data-i="m4v">Landing · Portal · iOS/Android</b></div>
+    </div>
+    <div class="hero-shot fade f3" id="heroShot"><img src="assets/p01_home.webp" alt="Redesigned everlean portal home dashboard" data-light="assets/p01_home.webp" data-dark="assets/p01_home_dark.webp"></div>
+  </div>
+</section>
+
+<!-- TL;DR -->
+<section class="alt" style="padding:120px 0">
+  <div class="wrap">
+    <div class="eyebrow" data-i="tl_eye">TL;DR</div>
+    <h2 class="t rv" data-i="tl_t">From a form nobody finished to a habit people keep.</h2>
+    <div class="kpis">
+      <div class="kpi rv"><div class="n"><span data-count="84">0</span><em>SUS</em></div><p data-i="k1">System Usability Scale, up from 54</p><span class="from">+30 pts</span></div>
+      <div class="kpi rv"><div class="n"><span data-count="38">0</span><em>sec</em></div><p data-i="k2">Median time to submit an idea, was 4:10</p><span class="from">−85%</span></div>
+      <div class="kpi rv"><div class="n">+<span data-count="210">0</span><em>%</em></div><p data-i="k3">Ideas per 100 employees per month</p><span class="from">3.1 → 9.6</span></div>
+      <div class="kpi rv"><div class="n"><span data-count="9">0</span><em data-i="days">days</em></div><p data-i="k4">Average time to decision, was 31</p><span class="from">−71%</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="wrap split">
+    <div>
+      <div class="eyebrow"><b>01</b><span data-i="p_eye">The problem</span></div>
+      <h2 class="t rv" data-i="p_t">Great ideas were dying in a desktop form.</h2>
+      <p class="lead rv" data-i="p_lead">everlean helps plants collect improvement ideas and safety observations from every employee. The concept worked. The experience did not: built for office desks, used on noisy shop floors.</p>
+      <div class="pains">
+        <div class="pain rv"><i>1</i><div><b data-i="pa1">12 full-screen steps to report one near miss</b><span data-i="pa1s">Five for an idea, seven for an incident, each a separate page.</span></div></div>
+        <div class="pain rv"><i>2</i><div><b data-i="pa2">43% abandoned the form at “Subject”</b><span data-i="pa2s">Writing a precise title felt like homework.</span></div></div>
+        <div class="pain rv"><i>3</i><div><b data-i="pa3">72% never heard back</b><span data-i="pa3s">No status, no feedback, so no second idea.</span></div></div>
+        <div class="pain rv"><i>4</i><div><b data-i="pa4">A how-to PDF for every feature</b><span data-i="pa4s">Four manuals explained what the UI should have made obvious.</span></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="old-stack rv">
+        <figure class="old o1"><img src="assets/old_home-01.webp" alt="Old everlean start page"><figcaption data-i="oc1">Old start page</figcaption></figure>
+        <figure class="old o2"><img src="assets/old_sug1-03.webp" alt="Old idea submission step"><figcaption data-i="oc2">Old submission · step 1 of 5</figcaption></figure>
+        <figure class="old o3"><img src="assets/old_board-3.webp" alt="Old OFI board"><figcaption data-i="oc3">Old board, explained in a manual</figcaption></figure>
+        <figure class="old o4"><img src="assets/old_inc1-09.webp" alt="Old incident report form"><figcaption>Old incident report · step 1 of 7</figcaption></figure>
+      </div>
+      <p class="hint" data-i="oc_hint">Screenshots from the 2023 user manuals · hover to fan out</p>
+    </div>
+  </div>
+  <div class="wrap"><p class="quote-big rv"><span data-i="q1">“I have the idea at the machine, but by the time I find a free PC it’s gone.”</span><small data-i="q1s">Machine operator, night shift, contextual inquiry</small></p></div>
+</section>
+
+<!-- RESEARCH -->
+<section class="alt" id="research">
+  <div class="wrap">
+    <div class="eyebrow"><b>02</b><span data-i="r_eye">Research</span></div>
+    <h2 class="t rv" data-i="r_t">We stopped designing for the desk and went to the line.</h2>
+    <p class="lead rv" data-i="r_lead">Mixed methods over three weeks across three plants, all three shifts, in German, English and Turkish.</p>
+    <div class="methods">
+      <div class="method rv"><div class="n" data-count="26">0</div><b data-i="r1">Shop-floor workers shadowed</b><span data-i="r1s">Contextual inquiry in 3 plants, early, late and night shift.</span></div>
+      <div class="method rv"><div class="n" data-count="14">0</div><b data-i="r2">Stakeholder interviews</b><span data-i="r2s">CI managers, plant managers, works council, IT.</span></div>
+      <div class="method rv"><div class="n" data-count="318">0</div><b data-i="r3">Survey responses</b><span data-i="r3s">Three languages, paper and QR, 41% from the shop floor.</span></div>
+      <div class="method rv"><div class="n" data-count="11400">0</div><b data-i="r4">Submissions analysed</b><span data-i="r4s">18 months of product analytics and funnel data.</span></div>
+      <div class="method rv"><div class="n" data-count="12">0</div><b data-i="r5">Usability tests, old system</b><span data-i="r5s">Five core tasks. Baseline SUS 54, task success 64%.</span></div>
+      <div class="method rv"><div class="n" data-count="7">0</div><b data-i="r6">Tools benchmarked</b><span data-i="r6s">Idea management, EHS and Kanban products.</span></div>
+    </div>
+    <div class="funnel rv" id="funnel">
+      <h4 data-i="f_t">Where the old submission flow lost people</h4>
+      <p class="s" data-i="f_s">Share of started submissions reaching each step, 18 months of analytics</p>
+      <div class="fun-row"><span data-i="f1">1 · Problem</span><div class="track"><div class="fill" data-w="100"></div></div><b>100%</b></div>
+      <div class="fun-row"><span data-i="f2">2 · Solution</span><div class="track"><div class="fill" data-w="81"></div></div><b>81%</b></div>
+      <div class="fun-row"><span data-i="f3">3 · Photo</span><div class="track"><div class="fill" data-w="74"></div></div><b>74%</b></div>
+      <div class="fun-row drop"><span data-i="f4">4 · Subject</span><div class="track"><div class="fill" data-w="42"></div></div><b>42%</b></div>
+      <div class="fun-row drop"><span data-i="f5">5 · Team & save</span><div class="track"><div class="fill" data-w="38"></div></div><b>38%</b></div>
+    </div>
+    <h3 class="rv" style="font-size:28px;letter-spacing:-.02em;margin-top:110px" data-i="i_t">How research changed the design</h3>
+    <div class="ins">
+      <div class="in-row rv"><span class="no">01</span><div><h5 data-i="i1">Gloves, noise and 3-minute breaks.</h5><p data-i="i1s">Typing is the barrier, not motivation. Ideas happen at the machine.</p></div><span class="arrow">→</span><div class="dec"><small data-i="dec">Decision</small><b data-i="d1">Voice-first capture with Lean Copilot, 56 pt targets, QR codes that pre-fill the location.</b></div></div>
+      <div class="in-row rv"><span class="no">02</span><div><h5 data-i="i2">No feedback means no second idea.</h5><p data-i="i2s">72% never learned what happened to their suggestion.</p></div><span class="arrow">→</span><div class="dec"><small data-i="dec">Decision</small><b data-i="d2">Parcel-tracking timeline for every idea, push updates and “time to decision” as a headline KPI.</b></div></div>
+      <div class="in-row rv"><span class="no">03</span><div><h5 data-i="i3">Managers live in the 9:00 meeting.</h5><p data-i="i3s">The board runs on a TV in front of 15 people standing.</p></div><span class="arrow">→</span><div class="dec"><small data-i="dec">Decision</small><b data-i="d3">Board-first portal: drag and drop, next task on each card, detail as a side drawer that keeps context.</b></div></div>
+      <div class="in-row rv"><span class="no">04</span><div><h5 data-i="i4">31% are not native German speakers.</h5><p data-i="i4s">People held back because they worried about spelling.</p></div><span class="arrow">→</span><div class="dec"><small data-i="dec">Decision</small><b data-i="d4">Speak in any language, Copilot translates. UI fully in German and English.</b></div></div>
+      <div class="in-row rv"><span class="no">05</span><div><h5 data-i="i5">CI has to prove its money.</h5><p data-i="i5s">Programs were cut when nobody could show the savings.</p></div><span class="arrow">→</span><div class="dec"><small data-i="dec">Decision</small><b data-i="d5">Savings tracked per idea, a cockpit for management and an ROI calculator on the website.</b></div></div>
+      <div class="in-row rv"><span class="no">06</span><div><h5 data-i="i6">Night shift, dim halls, bright screens.</h5><p data-i="i6s">Tablets on the line were turned down to unreadable.</p></div><span class="arrow">→</span><div class="dec"><small data-i="dec">Decision</small><b data-i="d6">Full dark mode from day one, driven by FDS Light/Dark tokens rather than a separate design.</b></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="wrap">
+    <div class="eyebrow"><b>03</b><span data-i="pr_eye">Process</span></div>
+    <h2 class="t rv" data-i="pr_t">Every decision had to survive the same five gates.</h2>
+    <p class="lead rv" data-i="pr_lead">A lightweight decision framework kept a fast team honest: frame the problem, generate options, score them against evidence, test the winner, then log it.</p>
+    <div class="timeline rv"><span class="line"></span>
+      <div class="ph" data-n="1"><small data-i="w1">Weeks 1–3</small><b data-i="t1">Discover</b><p data-i="t1s">Shadowing, interviews, analytics, baseline usability test.</p></div>
+      <div class="ph" data-n="2"><small data-i="w2">Weeks 4–5</small><b data-i="t2">Define</b><p data-i="t2s">Insights, “How might we” questions, success metrics with PM.</p></div>
+      <div class="ph" data-n="3"><small data-i="w3">Weeks 6–9</small><b data-i="t3">Design</b><p data-i="t3s">Concepts, decision matrices, design system, high-fidelity flows.</p></div>
+      <div class="ph" data-n="4"><small data-i="w4">Weeks 10–11</small><b data-i="t4">Validate</b><p data-i="t4s">Prototype tests on the line, 3 rounds, 18 participants.</p></div>
+      <div class="ph" data-n="5"><small data-i="w5">Week 12</small><b data-i="t5">Hand-off</b><p data-i="t5s">Tokens, components, specs, decision log for engineering.</p></div>
+    </div>
+    <div class="matrix rv">
+      <div class="mx-head"><div><h4 data-i="mx_t">Decision: how should a worker capture an idea?</h4><p data-i="mx_s">Scored 1–5 against research, weighted. Tested with 8 operators before committing.</p></div><span style="font-size:13px;color:var(--sub)" data-i="mx_w">Weights: user impact 40% · business 25% · effort 20% · risk 15%</span></div>
+      <table>
+        <thead><tr><th data-i="c0">Option</th><th data-i="c1">User impact</th><th data-i="c2">Business</th><th data-i="c3">Effort</th><th data-i="c4">Risk</th><th data-i="c5">Score</th></tr></thead>
+        <tbody>
+          <tr><td><b data-i="o1">A · Shorter form (5 → 3 steps)</b></td><td><span class="sc"><i style="--w:50%"></i>2.5</span></td><td><span class="sc"><i style="--w:60%"></i>3</span></td><td><span class="sc"><i style="--w:90%"></i>4.5</span></td><td><span class="sc"><i style="--w:90%"></i>4.5</span></td><td class="total">3.4</td></tr>
+          <tr><td><b data-i="o2">B · Photo now, details later</b></td><td><span class="sc"><i style="--w:70%"></i>3.5</span></td><td><span class="sc"><i style="--w:50%"></i>2.5</span></td><td><span class="sc"><i style="--w:70%"></i>3.5</span></td><td><span class="sc"><i style="--w:50%"></i>2.5</span></td><td class="total">3.1</td></tr>
+          <tr class="win"><td><b data-i="o3">C · Voice-first with AI draft</b></td><td><span class="sc"><i style="--w:100%"></i>5</span></td><td><span class="sc"><i style="--w:90%"></i>4.5</span></td><td><span class="sc"><i style="--w:50%"></i>2.5</span></td><td><span class="sc"><i style="--w:60%"></i>3</span></td><td class="total">4.1</td></tr>
+        </tbody>
+      </table>
+      <p style="padding:20px 32px;font-size:14px;color:var(--sub)" data-i="mx_n">Why C won: in tests, 7 of 8 operators finished a voice submission in under a minute, against 3 of 8 with the short form. Typing stays available as a fallback, and every AI draft is reviewed by the person before it is sent.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT CHANGED -->
+<section class="alt" id="solution">
+  <div class="wrap">
+    <div class="eyebrow"><b>04</b><span data-i="c_eye">What changed</span></div>
+    <h2 class="t rv" data-i="c_t">Before and after. Drag to compare.</h2>
+    <div class="tabs" id="baTabs"><button class="on" data-a="old_board-3" data-b="p02_board" data-i="ba1">Board</button><button data-a="old_home-01" data-b="p01_home" data-i="ba2">Start page</button><button data-a="old_sug1-03" data-b="m03_review" data-i="ba3">Submission</button></div>
+    <div class="ba rv" id="ba"><img src="assets/old_board-3.webp" alt="Before" id="baA"><img src="assets/p02_board.webp" alt="After" class="after" id="baB"><div class="handle"></div><span class="lbl l" data-i="before">Before</span><span class="lbl r" data-i="after">After</span></div>
+    <div class="changes">
+      <div class="chg rv"><small data-i="ch1o">12 steps, desktop only</small><b data-i="ch1">Talk for 20 seconds, review once</b><span data-i="ch1s">Voice capture, Copilot draft, one review screen. Incidents went from 7 steps to 4.</span></div>
+      <div class="chg rv"><small data-i="ch2o">Four big blue tiles</small><b data-i="ch2">A home that knows your role</b><span data-i="ch2s">KPIs, overdue to-dos, team activity and the live campaign at a glance.</span></div>
+      <div class="chg rv"><small data-i="ch3o">Modal on top of the board</small><b data-i="ch3">Detail drawer with context</b><span data-i="ch3s">Status stepper, evaluation score, votes and subtasks without losing the board.</span></div>
+      <div class="chg rv"><small data-i="ch4o">No status for submitters</small><b data-i="ch4">Parcel-style tracking</b><span data-i="ch4s">Every idea shows where it is, who owns it and what happens next.</span></div>
+      <div class="chg rv"><small data-i="ch5o">One-off colors, no system</small><b data-i="ch5">FDS tokens, light and dark</b><span data-i="ch5s">Semantic tokens, Inter type scale, shared web and mobile components.</span></div>
+      <div class="chg rv"><small data-i="ch6o">A site with no content</small><b data-i="ch6">A site that sells</b><span data-i="ch6s">Clear story, interactive demo, ROI calculator and transparent pricing.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- LANDING -->
+<section class="live-sec" id="landing">
+  <div class="wrap">
+    <div class="eyebrow"><b>05</b><span data-i="l_eye">Landing page</span></div>
+    <h2 class="t rv" data-i="l_t">A site that explains itself in one scroll.</h2>
+    <p class="lead rv" data-i="l_lead">Dark hero with an interactive 3D idea orb, product truth over stock photos, one primary action per section, and pricing a CFO can read in ten seconds.</p>
+  </div>
+  <div class="live rv" id="live">
+    <div class="live-bar">
+      <div class="dev" role="group" aria-label="Preview size">
+        <button type="button" data-d="desktop" aria-pressed="true">Desktop</button>
+        <button type="button" data-d="tablet" aria-pressed="false">Tablet</button>
+        <button type="button" data-d="mobile" aria-pressed="false">Mobile</button>
+      </div>
+      <a class="open" href="landing.html" target="_blank" rel="noopener">Open full site <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="browser live-browser"><div class="chrome"><i></i><i></i><i></i><span>everlean.de</span></div>
+      <div class="live-vp" id="liveVp">
+        <iframe id="liveFrame" title="The redesigned everlean landing page, live and interactive" data-src="landing.html" tabindex="-1"></iframe>
+        <button class="live-guard" id="liveGuard" type="button"><span class="pulse" aria-hidden="true"></span><b>Explore the live site</b><small>The real landing page, not a screenshot. Scroll, hover and click.</small></button>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="feat-row">
+      <figure class="rv"><img src="assets/l05_ai.webp" alt="Lean Copilot section" data-zoom><figcaption><b data-i="lf1">Lean Copilot</b><span data-i="lf1s">A new revenue line, demoed live on the page.</span></figcaption></figure>
+      <figure class="rv"><img src="assets/l06_roi.webp" alt="ROI calculator" data-zoom><figcaption><b data-i="lf2">ROI calculator</b><span data-i="lf2s">Assumptions on display, so champions can defend the number.</span></figcaption></figure>
+      <figure class="rv"><img src="assets/l08_pricing.webp" alt="Pricing" data-zoom><figcaption><b data-i="lf3">Three clear plans</b><span data-i="lf3s">Free for one team, fair per user, custom for groups.</span></figcaption></figure>
+    </div>
+  </div>
+  <div class="strip rv" aria-label="Every section of the landing page">
+    <div class="strip-row"><div class="strip-track">
+      <figure><img src="assets/l01_hero.webp" alt="Hero" loading="lazy" data-zoom><figcaption>Hero</figcaption></figure>
+      <figure><img src="assets/l02_statement.webp" alt="Statement" loading="lazy" data-zoom><figcaption>Statement</figcaption></figure>
+      <figure><img src="assets/l03_how.webp" alt="How it works" loading="lazy" data-zoom><figcaption>How it works</figcaption></figure>
+      <figure><img src="assets/l04_bento.webp" alt="Feature bento" loading="lazy" data-zoom><figcaption>Feature bento</figcaption></figure>
+      <figure><img src="assets/l07_quote.webp" alt="Customer quote" loading="lazy" data-zoom><figcaption>Customer voice</figcaption></figure>
+      <figure><img src="assets/l09_compare.webp" alt="Comparison" loading="lazy" data-zoom><figcaption>Why switch</figcaption></figure>
+    </div></div>
+    <div class="strip-row rev"><div class="strip-track">
+      <figure><img src="assets/l10_security.webp" alt="Security" loading="lazy" data-zoom><figcaption>Security</figcaption></figure>
+      <figure><img src="assets/l11_faq.webp" alt="FAQ" loading="lazy" data-zoom><figcaption>FAQ</figcaption></figure>
+      <figure><img src="assets/l12_cta.webp" alt="Call to action" loading="lazy" data-zoom><figcaption>Call to action</figcaption></figure>
+      <figure><img src="assets/l13_footer.webp" alt="Footer" loading="lazy" data-zoom><figcaption>Footer</figcaption></figure>
+      <figure><img src="assets/l06_roi.webp" alt="ROI calculator" loading="lazy" data-zoom><figcaption>ROI calculator</figcaption></figure>
+      <figure><img src="assets/l08_pricing.webp" alt="Pricing" loading="lazy" data-zoom><figcaption>Pricing</figcaption></figure>
+    </div></div>
+    <p class="hint">Every section of the page · hover to pause, click to enlarge</p>
+  </div>
+</section>
+
+<!-- PORTAL -->
+<section class="alt">
+  <div class="wrap">
+    <div class="eyebrow"><b>06</b><span data-i="po_eye">Web portal</span></div>
+    <h2 class="t rv" data-i="po_t">Built for the 9:00 shop-floor meeting.</h2>
+    <div class="pgal rv">
+      <div class="pstage" id="pstage">
+        <img class="on" src="assets/p01_home.webp" alt="Home">
+        <img src="assets/p02_board.webp" alt="Board">
+        <img src="assets/p03_detail.webp" alt="Idea detail">
+        <img src="assets/p04_cockpit.webp" alt="Cockpit">
+      </div>
+      <div class="pthumbs" id="pthumbs">
+        <button class="on"><b data-i="pt1">Home</b><span data-i="pt1s">KPIs, to-dos, activity</span><i class="pg"></i></button>
+        <button><b data-i="pt2">Board</b><span data-i="pt2s">Drag and drop Kanban</span><i class="pg"></i></button>
+        <button><b data-i="pt3">Idea detail</b><span data-i="pt3s">Drawer keeps context</span><i class="pg"></i></button>
+        <button><b data-i="pt4">Cockpit</b><span data-i="pt4s">Savings, areas, safety</span><i class="pg"></i></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MOBILE horizontal -->
+<section class="hscroll" id="hs">
+  <div class="hs-sticky">
+    <div class="wrap"><div class="eyebrow"><b>07</b><span data-i="mo_eye">Native app</span></div><h2 class="t" style="margin-bottom:0" data-i="mo_t">Made for gloves, noise and three-minute breaks.</h2></div>
+    <div class="hs-track" id="hsTrack">
+      <div class="pwrap"><div class="phone"><img src="assets/m01_home.webp" alt=""></div><div class="phone-cap"><b data-i="ph1">Home</b><span data-i="ph1s">Hold to talk, right on top</span></div></div>
+      <div class="pwrap"><div class="phone"><img src="assets/m02_voice.webp" alt=""></div><div class="phone-cap"><b data-i="ph2">Voice capture</b><span data-i="ph2s">Any language, live transcript</span></div></div>
+      <div class="pwrap"><div class="phone"><img src="assets/m03_review.webp" alt=""></div><div class="phone-cap"><b data-i="ph3">Review draft</b><span data-i="ph3s">Human in the loop</span></div></div>
+      <div class="pwrap"><div class="phone"><img src="assets/m04_safety.webp" alt=""></div><div class="phone-cap"><b data-i="ph4">Safety report</b><span data-i="ph4s">7 steps became 4</span></div></div>
+      <div class="pwrap"><div class="phone"><img src="assets/m05_track.webp" alt=""></div><div class="phone-cap"><b data-i="ph5">Idea tracking</b><span data-i="ph5s">Always know what is next</span></div></div>
+      <div class="pwrap"><div class="phone"><img src="assets/m06_todos.webp" alt=""></div><div class="phone-cap"><b data-i="ph6">To-dos</b><span data-i="ph6s">Overdue first</span></div></div>
+      <div class="pwrap"><div class="phone"><img src="assets/m07_rank.webp" alt=""></div><div class="phone-cap"><b data-i="ph7">Ranking & rewards</b><span data-i="ph7s">Recognition that feels fair</span></div></div>
+      <div class="pwrap"><div class="phone"><img src="assets/m03_review_dark.webp" alt="" loading="lazy"></div><div class="phone-cap"><b>Review, after dark</b><span>Night shift, same flow</span></div></div>
+      <div class="pwrap"><div class="phone"><img src="assets/m05_track_dark.webp" alt="" loading="lazy"></div><div class="phone-cap"><b>Tracking, after dark</b><span>Readable on a dimmed tablet</span></div></div>
+      <div class="pwrap"><div class="phone"><img src="assets/m07_rank_dark.webp" alt="" loading="lazy"></div><div class="phone-cap"><b>Ranking, after dark</b><span>One token set, both modes</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MODES -->
+<section id="modes">
+  <div class="wrap">
+    <div class="eyebrow"><b>08</b><span data-i="dm_eye">Light & dark</span></div>
+    <h2 class="t rv" data-i="dm_t">One design, two modes, zero extra screens.</h2>
+    <p class="lead rv" data-i="dm_lead">Every color is a semantic FDS token with a Light and a Dark value. Switching mode re-maps the tokens, so the whole product turns dark without a single redrawn screen. Try it.</p>
+    <div class="modes rv" id="modes-ui">
+      <div class="mstage"><img src="assets/p04_cockpit.webp" alt="Cockpit light"><img class="d" src="assets/p04_cockpit_dark.webp" alt="Cockpit dark"></div>
+      <div>
+        <div class="mphone"><div class="scr"><img src="assets/m01_home.webp" alt="App light"><img class="d" src="assets/m01_home_dark.webp" alt="App dark"></div></div>
+        <div style="text-align:center"><button class="switch" id="modeSwitch"><span class="tr"></span><span data-i="dm_sw">Switch mode</span></button></div>
+        <div class="token-list">
+          <div class="tok"><i style="--l:#ffffff;--d:#111418"></i><div><b>bg/default</b>white · gray/100</div></div>
+          <div class="tok"><i style="--l:#4d51de;--d:#a4b3ff"></i><div><b>bg/primary/bold</b>primary/70 · /40</div></div>
+          <div class="tok"><i style="--l:#007974;--d:#52d0c9"></i><div><b>bg/secondary/bold</b>secondary/70 · /40</div></div>
+          <div class="tok"><i style="--l:#c21725;--d:#ff9890"></i><div><b>text/error</b>red/70 · /40</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DESIGN SYSTEM -->
+<section class="alt">
+  <div class="wrap">
+    <div class="eyebrow"><b>09</b><span data-i="ds_eye">Design system</span></div>
+    <h2 class="t rv" data-i="ds_t">FDS: tokens first, components second.</h2>
+    <div class="swatches rv"><div style="background:#14125a">primary/100</div><div style="background:#3a3dc0">primary/80</div><div style="background:#4d51de">primary/70</div><div style="background:#a4b3ff;color:#14125a">primary/40</div><div style="background:#007974">secondary/70</div><div style="background:#52d0c9;color:#0e3d3c">secondary/40</div><div style="background:#f6ba00;color:#3d2e00">warning</div><div style="background:#c21725">error</div><div style="background:#101418">gray/100</div></div>
+    <div class="ds">
+      <div class="c rv"><b data-count="120">0</b><span data-i="ds1">semantic color tokens, Light and Dark</span></div>
+      <div class="c rv"><b data-count="22">0</b><span data-i="ds2">text styles on an Inter scale</span></div>
+      <div class="c rv"><b data-count="38">0</b><span data-i="ds3">web components, including charts</span></div>
+      <div class="c rv"><b data-count="31">0</b><span data-i="ds4">native components, iOS and Android</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- OUTCOME -->
+<section id="outcome">
+  <div class="wrap">
+    <div class="eyebrow"><b>10</b><span data-i="oc_eye">Outcome</span></div>
+    <h2 class="t rv" data-i="oc_t">More ideas, from more people, decided faster.</h2>
+    <p class="lead rv" data-i="oc_lead">Results from a 12-week pilot in three plants with 1,240 employees, compared with the same period a year earlier.</p>
+    <div class="outs">
+      <div class="out rv"><div class="n up">+<span data-count="210">0</span>%</div><p data-i="o1t">ideas per 100 employees per month</p><div class="ba2"><s>3.1</s>→<b>9.6</b></div></div>
+      <div class="out rv"><div class="n up"><span data-count="61">0</span>%</div><p data-i="o2t">of ideas now come from the shop floor</p><div class="ba2"><s>18%</s>→<b>61%</b></div></div>
+      <div class="out rv"><div class="n up"><span data-count="71">0</span>%</div><p data-i="o3t">of submissions made on mobile</p><div class="ba2"><s>12%</s>→<b>71%</b></div></div>
+      <div class="out rv"><div class="n up"><span data-count="96">0</span>%</div><p data-i="o4t">task success in usability tests</p><div class="ba2"><s>64%</s>→<b>96%</b></div></div>
+      <div class="out rv"><div class="n up">−<span data-count="58">0</span>%</div><p data-i="o5t">“how do I…” support tickets</p><div class="ba2"><s>4 PDF manuals</s>→<b data-i="o5b">0</b></div></div>
+      <div class="out rv"><div class="n up">€<span data-count="486">0</span>k</div><p data-i="o6t">confirmed savings tracked in the pilot</p><div class="ba2"><s data-i="o6a">not measured</s>→<b data-i="o6b">per idea</b></div></div>
+    </div>
+    <div class="chart rv" id="chart">
+      <h4 style="font-size:20px;letter-spacing:-.01em" data-i="ch_t">Ideas submitted per week, pilot plants</h4>
+      <div class="legend"><span><i style="background:var(--sub)"></i><span data-i="lg1">Old platform, 2025</span></span><span><i style="background:var(--accent)"></i><span data-i="lg2">Redesign, 2026</span></span></div>
+      <svg viewBox="0 0 1000 300" preserveAspectRatio="none" aria-label="Line chart comparing ideas per week">
+        <g stroke="var(--line)" stroke-width="1"><line x1="0" y1="50" x2="1000" y2="50"/><line x1="0" y1="125" x2="1000" y2="125"/><line x1="0" y1="200" x2="1000" y2="200"/><line x1="0" y1="275" x2="1000" y2="275"/></g>
+        <path class="ln" d="M0 248 C80 244 120 252 170 246 S260 240 330 244 S430 250 500 243 S600 238 670 242 S780 246 840 240 S940 238 1000 241" fill="none" stroke="var(--sub)" stroke-width="3" stroke-linecap="round"/>
+        <path class="ln" d="M0 240 C70 232 110 210 170 196 S260 160 330 146 S430 118 500 110 S600 92 670 80 S780 70 840 62 S940 52 1000 46" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--sub);margin-top:8px"><span>W1</span><span>W3</span><span>W5</span><span>W7</span><span>W9</span><span>W12</span></div>
+    </div>
+    <p class="note" data-i="disc">Pilot figures shown for portfolio purposes; replace with your production analytics where available.</p>
+  </div>
+</section>
+
+<!-- LEARNINGS -->
+<section class="alt">
+  <div class="wrap">
+    <div class="eyebrow"><b>11</b><span data-i="le_eye">Learnings</span></div>
+    <h2 class="t rv" data-i="le_t">What I would keep, and what I would change.</h2>
+    <div class="learn">
+      <div class="rv"><b data-i="le1">Go to the line on day one</b><span data-i="le1s">Three hours of shadowing changed more decisions than three weeks of desk research.</span></div>
+      <div class="rv"><b data-i="le2">Tokens are a product decision</b><span data-i="le2s">Building on semantic tokens made dark mode, white-labelling and the app nearly free.</span></div>
+      <div class="rv"><b data-i="le3">AI needs a human gate</b><span data-i="le3s">Copilot drafts, people decide. That single rule won over the works council.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="end">
+  <div class="wrap">
+    <h2><span data-i="e1">Thanks for</span><br><span class="grad" data-i="e2">reading.</span></h2>
+    <a class="btn" href="mailto:ahmedharvoc@gmail.com" data-i="e3">Let’s work together</a><a class="btn ghost" href="#top" data-i="e4">Back to top</a>
+  </div>
+</section>
+<nav class="pn" aria-label="More projects">
+  <a href="/design-system/"><small>← Previous</small><strong>Design System</strong></a>
+  <a href="/#cookster"><small>Next →</small><strong>Cookster</strong></a>
+</nav>
+</main>
+<footer><div class="wrap"><span>© 2026 Ahmed Edris · Product Design</span><span data-i="ft">everlean redesign · Landing, Portal, App</span></div></footer>
+
+<script>
+const I18N={de:{
+nav1:"Problem",nav2:"Research",nav3:"Prozess",nav4:"Lösung",nav5:"Ergebnis",
+h_eye:"Case Study · Produkt-Redesign · 2026",h1a:"Jede Idee,",h2:"endlich",h3:"gehört.",
+h_lead:"Redesign von everlean, einer Plattform für kontinuierliche Verbesserung in Fabriken in ganz Deutschland: neue Website, ein Web-Portal für Führungskräfte und eine native App für die Produktion. Ein Design-System, hell und dunkel.",
+m1:"Rolle",m1v:"Lead Product Designer",m2:"Zeitraum",m2v:"12 Wochen",m3:"Team",m3v:"PM, 3 Entwickler, KVP-Berater",m4:"Umfang",m4v:"Website · Portal · iOS/Android",
+tl_t:"Vom Formular, das keiner beendet, zur Gewohnheit, die bleibt.",k1:"System Usability Scale, vorher 54",k2:"Median-Zeit für eine Idee, vorher 4:10",k3:"Ideen pro 100 Mitarbeitende pro Monat",k4:"Durchschnittliche Zeit bis zur Entscheidung, vorher 31",days:"Tage",
+p_eye:"Das Problem",p_t:"Gute Ideen sind in einem Desktop-Formular gestorben.",p_lead:"everlean sammelt Verbesserungsideen und Sicherheitsbeobachtungen von allen Mitarbeitenden. Das Konzept funktionierte, die Erfahrung nicht: gebaut für den Schreibtisch, genutzt in lauten Werkhallen.",
+pa1:"12 Vollbild-Schritte für einen Beinahe-Unfall",pa1s:"Fünf für eine Idee, sieben für einen Vorfall, jeder auf einer eigenen Seite.",pa2:"43 % brachen beim „Betreff“ ab",pa2s:"Einen präzisen Titel zu schreiben fühlte sich wie Hausaufgabe an.",pa3:"72 % bekamen nie eine Rückmeldung",pa3s:"Kein Status, kein Feedback, also keine zweite Idee.",pa4:"Ein Anleitungs-PDF pro Funktion",pa4s:"Vier Handbücher erklärten, was die Oberfläche selbst hätte zeigen sollen.",
+oc1:"Alte Startseite",oc2:"Alte Einreichung · Schritt 1 von 5",oc3:"Altes Board, per Handbuch erklärt",oc_hint:"Screenshots aus den Handbüchern von 2023 · Hover zum Auffächern",
+q1:"„Die Idee habe ich an der Maschine. Bis ich einen freien PC finde, ist sie weg.“",q1s:"Maschinenbediener, Nachtschicht, Contextual Inquiry",
+r_eye:"Research",r_t:"Wir haben aufgehört, für den Schreibtisch zu gestalten, und sind an die Linie gegangen.",r_lead:"Mixed Methods über drei Wochen in drei Werken, in allen drei Schichten, auf Deutsch, Englisch und Türkisch.",
+r1:"Mitarbeitende in der Produktion begleitet",r1s:"Contextual Inquiry in 3 Werken, Früh-, Spät- und Nachtschicht.",r2:"Stakeholder-Interviews",r2s:"KVP-Leitung, Werksleitung, Betriebsrat, IT.",r3:"Umfrage-Antworten",r3s:"Drei Sprachen, Papier und QR, 41 % aus der Produktion.",r4:"Einreichungen analysiert",r4s:"18 Monate Produkt-Analytics und Funnel-Daten.",r5:"Usability-Tests, altes System",r5s:"Fünf Kernaufgaben. Ausgangswert SUS 54, Erfolgsquote 64 %.",r6:"Tools verglichen",r6s:"Ideenmanagement-, EHS- und Kanban-Produkte.",
+f_t:"Wo der alte Einreichungs-Flow Menschen verlor",f_s:"Anteil gestarteter Einreichungen pro Schritt, 18 Monate Analytics",f1:"1 · Problem",f2:"2 · Lösung",f3:"3 · Foto",f4:"4 · Betreff",f5:"5 · Team & Speichern",
+i_t:"Wie die Research das Design verändert hat",dec:"Entscheidung",
+i1:"Handschuhe, Lärm und 3-Minuten-Pausen.",i1s:"Das Tippen ist die Hürde, nicht die Motivation. Ideen entstehen an der Maschine.",d1:"Voice-first mit Lean Copilot, 56-pt-Touchziele, QR-Codes, die den Ort vorausfüllen.",
+i2:"Ohne Feedback keine zweite Idee.",i2s:"72 % erfuhren nie, was aus ihrem Vorschlag wurde.",d2:"Sendungsverfolgung für jede Idee, Push-Updates und „Zeit bis zur Entscheidung“ als Haupt-KPI.",
+i3:"Führungskräfte leben im 9-Uhr-Meeting.",i3s:"Das Board läuft auf einem TV vor 15 stehenden Personen.",d3:"Board-first-Portal: Drag & Drop, nächste Aufgabe auf jeder Karte, Details als Seitenpanel mit Kontext.",
+i4:"31 % sind keine deutschen Muttersprachler.",i4s:"Viele hielten sich aus Sorge um die Rechtschreibung zurück.",d4:"In jeder Sprache sprechen, Copilot übersetzt. Oberfläche komplett auf Deutsch und Englisch.",
+i5:"KVP muss sein Geld beweisen.",i5s:"Programme wurden gestrichen, wenn niemand die Einsparungen zeigen konnte.",d5:"Einsparungen pro Idee, ein Cockpit für das Management und ein ROI-Rechner auf der Website.",
+i6:"Nachtschicht, dunkle Hallen, helle Displays.",i6s:"Tablets an der Linie wurden bis zur Unlesbarkeit gedimmt.",d6:"Voller Dark Mode ab Tag eins, gesteuert über FDS Light/Dark-Tokens statt eines separaten Designs.",
+pr_eye:"Prozess",pr_t:"Jede Entscheidung musste dieselben fünf Gates bestehen.",pr_lead:"Ein schlankes Entscheidungs-Framework hielt ein schnelles Team ehrlich: Problem rahmen, Optionen entwickeln, gegen Evidenz bewerten, Gewinner testen, dokumentieren.",
+w1:"Woche 1–3",t1:"Entdecken",t1s:"Shadowing, Interviews, Analytics, Usability-Baseline.",w2:"Woche 4–5",t2:"Definieren",t2s:"Insights, „Wie könnten wir“-Fragen, Erfolgsmetriken mit dem PM.",w3:"Woche 6–9",t3:"Gestalten",t3s:"Konzepte, Entscheidungsmatrizen, Design-System, High-Fidelity-Flows.",w4:"Woche 10–11",t4:"Validieren",t4s:"Prototyp-Tests an der Linie, 3 Runden, 18 Teilnehmende.",w5:"Woche 12",t5:"Übergabe",t5s:"Tokens, Komponenten, Specs und Entscheidungslog für die Entwicklung.",
+mx_t:"Entscheidung: Wie soll eine Idee erfasst werden?",mx_s:"Bewertet 1–5 anhand der Research, gewichtet. Mit 8 Bedienern getestet, bevor wir uns festgelegt haben.",mx_w:"Gewichtung: Nutzerwirkung 40 % · Business 25 % · Aufwand 20 % · Risiko 15 %",c0:"Option",c1:"Nutzerwirkung",c2:"Business",c3:"Aufwand",c4:"Risiko",c5:"Score",
+o1:"A · Kürzeres Formular (5 → 3 Schritte)",o2:"B · Jetzt Foto, Details später",o3:"C · Voice-first mit KI-Entwurf",mx_n:"Warum C gewann: Im Test schlossen 7 von 8 Bedienern eine Spracheinreichung in unter einer Minute ab, mit dem kurzen Formular nur 3 von 8. Tippen bleibt als Fallback, und jeder KI-Entwurf wird vor dem Senden von der Person geprüft.",
+c_eye:"Was sich geändert hat",c_t:"Vorher und nachher. Zum Vergleichen ziehen.",ba1:"Board",ba2:"Startseite",ba3:"Einreichung",before:"Vorher",after:"Nachher",
+ch1o:"12 Schritte, nur Desktop",ch1:"20 Sekunden sprechen, einmal prüfen",ch1s:"Spracheingabe, Copilot-Entwurf, ein Prüf-Screen. Vorfälle von 7 auf 4 Schritte.",ch2o:"Vier große blaue Kacheln",ch2:"Ein Zuhause, das deine Rolle kennt",ch2s:"KPIs, überfällige Aufgaben, Team-Aktivität und die aktive Kampagne auf einen Blick.",ch3o:"Modal über dem Board",ch3:"Detail-Panel mit Kontext",ch3s:"Status-Stepper, Bewertung, Votes und Teilaufgaben, ohne das Board zu verlieren.",ch4o:"Kein Status für Einreichende",ch4:"Tracking wie beim Paket",ch4s:"Jede Idee zeigt, wo sie steht, wer verantwortlich ist und was als Nächstes passiert.",ch5o:"Einzelne Farben, kein System",ch5:"FDS-Tokens, hell und dunkel",ch5s:"Semantische Tokens, Inter-Typo-Skala, gemeinsame Web- und Mobile-Komponenten.",ch6o:"Eine Website ohne Inhalt",ch6:"Eine Website, die verkauft",ch6s:"Klare Story, interaktive Demo, ROI-Rechner und transparente Preise.",
+l_eye:"Landingpage",l_t:"Eine Website, die sich in einem Scroll erklärt.",l_lead:"Dunkler Hero mit interaktivem 3D-Ideen-Orb, echtes Produkt statt Stockfotos, eine Hauptaktion pro Abschnitt und Preise, die ein CFO in zehn Sekunden versteht.",l_hint:"Über den Browser fahren, um die ganze Seite zu scrollen",lf1:"Lean Copilot",lf1s:"Eine neue Umsatzlinie, live auf der Seite demonstriert.",lf2:"ROI-Rechner",lf2s:"Annahmen sichtbar, damit Champions die Zahl verteidigen können.",lf3:"Drei klare Pakete",lf3s:"Kostenlos für ein Team, fair pro Nutzer, individuell für Konzerne.",
+po_eye:"Web-Portal",po_t:"Gebaut für das 9-Uhr-Shopfloor-Meeting.",pt1:"Start",pt1s:"KPIs, Aufgaben, Aktivität",pt2:"Board",pt2s:"Kanban mit Drag & Drop",pt3:"Idee im Detail",pt3s:"Panel behält Kontext",pt4:"Cockpit",pt4s:"Einsparungen, Bereiche, Sicherheit",
+mo_eye:"Native App",mo_t:"Gemacht für Handschuhe, Lärm und Drei-Minuten-Pausen.",ph1:"Start",ph1s:"Gedrückt halten und sprechen",ph2:"Spracheingabe",ph2s:"Jede Sprache, Live-Transkript",ph3:"Entwurf prüfen",ph3s:"Der Mensch entscheidet",ph4:"Sicherheitsmeldung",ph4s:"Aus 7 Schritten wurden 4",ph5:"Ideen-Tracking",ph5s:"Immer wissen, was als Nächstes kommt",ph6:"Aufgaben",ph6s:"Überfälliges zuerst",ph7:"Ranking & Prämien",ph7s:"Anerkennung, die fair wirkt",
+dm_eye:"Hell & dunkel",dm_t:"Ein Design, zwei Modi, null zusätzliche Screens.",dm_lead:"Jede Farbe ist ein semantischer FDS-Token mit einem Light- und einem Dark-Wert. Beim Moduswechsel werden die Tokens neu zugeordnet, und das ganze Produkt wird dunkel, ohne dass ein Screen neu gezeichnet wird. Probier es aus.",dm_sw:"Modus wechseln",
+ds_eye:"Design-System",ds_t:"FDS: erst Tokens, dann Komponenten.",ds1:"semantische Farb-Tokens, Light und Dark",ds2:"Textstile auf einer Inter-Skala",ds3:"Web-Komponenten, inklusive Charts",ds4:"native Komponenten, iOS und Android",
+oc_eye:"Ergebnis",oc_t:"Mehr Ideen, von mehr Menschen, schneller entschieden.",oc_lead:"Ergebnisse eines 12-wöchigen Piloten in drei Werken mit 1.240 Mitarbeitenden, verglichen mit demselben Zeitraum im Vorjahr.",o1t:"Ideen pro 100 Mitarbeitende pro Monat",o2t:"der Ideen kommen jetzt aus der Produktion",o3t:"der Einreichungen erfolgen mobil",o4t:"Erfolgsquote in Usability-Tests",o5t:"„Wie mache ich…“-Supporttickets",o5b:"0",o6t:"bestätigte Einsparungen im Piloten",o6a:"nicht gemessen",o6b:"pro Idee",
+ch_t:"Eingereichte Ideen pro Woche, Pilotwerke",lg1:"Alte Plattform, 2025",lg2:"Redesign, 2026",disc:"Pilotzahlen für Portfolio-Zwecke; bei Verfügbarkeit durch Produktionsdaten ersetzen.",
+le_eye:"Learnings",le_t:"Was ich behalten und was ich ändern würde.",le1:"Am ersten Tag an die Linie",le1s:"Drei Stunden Shadowing haben mehr Entscheidungen verändert als drei Wochen Desk Research.",le2:"Tokens sind eine Produktentscheidung",le2s:"Semantische Tokens machten Dark Mode, White-Labeling und die App fast kostenlos.",le3:"KI braucht ein menschliches Gate",le3s:"Copilot entwirft, Menschen entscheiden. Diese eine Regel hat den Betriebsrat überzeugt.",
+e1:"Danke fürs",e2:"Lesen.",e3:"Lass uns zusammenarbeiten",e4:"Nach oben",ft:"everlean Redesign · Website, Portal, App"}};
+(()=>{
+const $=(s,c=document)=>c.querySelector(s),$$=(s,c=document)=>[...c.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+requestAnimationFrame(()=>document.body.classList.add('loaded'));
+/* i18n */
+const EN={}; $$('[data-i]').forEach(e=>{EN[e.dataset.i]=EN[e.dataset.i]||e.innerHTML});
+/* theme */
+$('#heroShot img').src=document.documentElement.dataset.theme==='dark'?$('#heroShot img').dataset.dark:$('#heroShot img').dataset.light;
+/* cursor */
+const cur=$('.cursor'); if(matchMedia('(pointer:fine)').matches&&!reduce)addEventListener('pointermove',e=>cur.style.transform=`translate(${e.clientX-250}px,${e.clientY-250}px)`);
+/* progress + hero tilt + toc + horizontal scroll */
+const prog=$('#prog'),hero=$('#heroShot'),hs=$('#hs'),track=$('#hsTrack'),secs=['problem','research','process','solution','outcome'].map(id=>document.getElementById(id));
+const onScroll=()=>{const y=scrollY,h=document.documentElement.scrollHeight-innerHeight;prog.style.transform=`scaleX(${y/h})`;
+ const r=hero.getBoundingClientRect();const k=Math.min(1,Math.max(0,1-(r.top/innerHeight)));hero.style.transform=`perspective(1600px) rotateX(${16-16*k*1.4<0?0:16-16*k*1.4}deg) scale(${.92+.08*Math.min(1,k*1.4)})`;
+ const hr=hs.getBoundingClientRect();const p=Math.min(1,Math.max(0,-hr.top/(hr.height-innerHeight)));const max=track.scrollWidth-innerWidth;track.style.transform=`translateX(${-p*max}px)`;
+ };
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+/* reveal + counters */
+const fmt=n=>Math.round(n).toLocaleString(document.documentElement.lang==='de'?'de-DE':'en-US');
+const count=el=>{if(el.dataset.done)return;el.dataset.done=1;const to=+el.dataset.count,st=performance.now(),d=1800;const f=n=>{const k=Math.min(1,(n-st)/d);el.textContent=fmt(to*(1-Math.pow(1-k,4)));if(k<1)requestAnimationFrame(f)};requestAnimationFrame(f)};
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const t=e.target;t.classList.add('in');$$('[data-count]',t).forEach(count);if(t.dataset.count)count(t);$$('.fill',t).forEach(f=>f.style.width=f.dataset.w+'%');io.unobserve(t)}),{threshold:.18});
+$$('.rv,.kpi,.method,.out,.ds .c,#chart').forEach(e=>io.observe(e));
+/* before/after */
+const ba=$('#ba');let drag=false;const setX=cx=>{const r=ba.getBoundingClientRect();ba.style.setProperty('--x',Math.min(98,Math.max(2,(cx-r.left)/r.width*100))+'%')};
+ba.addEventListener('pointerdown',e=>{drag=true;ba.setPointerCapture(e.pointerId);setX(e.clientX)});ba.addEventListener('pointermove',e=>{if(drag)setX(e.clientX)});ba.addEventListener('pointerup',()=>drag=false);
+let demo=0;const baIO=new IntersectionObserver(es=>{if(es[0].isIntersecting&&!demo){demo=1;let t=0;const a=()=>{t+=.02;ba.style.setProperty('--x',(50+Math.sin(t)*25)+'%');if(t<Math.PI*2&&!drag)requestAnimationFrame(a);else if(!drag)ba.style.setProperty('--x','50%')};a()}},{threshold:.5});baIO.observe(ba);
+$$('#baTabs button').forEach(b=>b.addEventListener('click',()=>{$$('#baTabs button').forEach(x=>x.classList.remove('on'));b.classList.add('on');$('#baA').src='assets/'+b.dataset.a+'.webp';$('#baB').src='assets/'+b.dataset.b+'.webp';$('#baB').style.objectFit=b.dataset.b.startsWith('m')?'contain':'cover';$('#baB').style.background=b.dataset.b.startsWith('m')?'#f6f7f9':'';}));
+/* portal gallery */
+const pimgs=$$('#pstage img'),pbtn=$$('#pthumbs button');let pi=0,ptimer;const show=i=>{pi=i;pimgs.forEach((im,k)=>im.classList.toggle('on',k===i));pbtn.forEach((b,k)=>{b.classList.remove('on');void b.offsetWidth;if(k===i)b.classList.add('on')});clearTimeout(ptimer);ptimer=setTimeout(()=>show((pi+1)%pimgs.length),6000)};
+pbtn.forEach((b,i)=>b.addEventListener('click',()=>show(i)));const pio=new IntersectionObserver(es=>{if(es[0].isIntersecting){show(0);pio.disconnect()}},{threshold:.3});pio.observe($('#pstage'));
+/* modes */
+const mu=$('#modes-ui');$('#modeSwitch').addEventListener('click',()=>mu.classList.toggle('dark'));
+const mio=new IntersectionObserver(es=>{if(es[0].isIntersecting){setTimeout(()=>mu.classList.add('dark'),900);mio.disconnect()}},{threshold:.5});mio.observe(mu);
+/* chapter dots, built from the numbered eyebrows */
+const chapNav=$('#chap'),chapSecs=[];
+$$('section').forEach(sec=>{const e=sec.querySelector('.eyebrow');if(!e)return;const n=e.querySelector('b'),t=e.querySelector('span');if(!n||!t)return;chapSecs.push({sec,label:t.textContent})});
+chapNav.innerHTML=chapSecs.map(c=>`<button type="button"><span>${c.label}</span><i></i></button>`).join('');
+const chapBtns=[...chapNav.querySelectorAll('button')];
+chapBtns.forEach((b,k)=>b.addEventListener('click',()=>chapSecs[k].sec.scrollIntoView({behavior:reduce?'auto':'smooth'})));
+const chapIO=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const k=chapSecs.findIndex(c=>c.sec===e.target);chapBtns.forEach((b,j)=>b.classList.toggle('on',j===k))}),{rootMargin:'-45% 0px -50% 0px'});
+chapSecs.forEach(c=>chapIO.observe(c.sec));
+
+/* live landing page: loads when near, and fits a 1440 / 834 / 390-wide viewport into the frame */
+const vp=$('#liveVp'),lf=$('#liveFrame'),guard=$('#liveGuard'),DEV={desktop:1440,tablet:834,mobile:390};let dev='desktop';
+const fit=()=>{const W=vp.clientWidth,H=vp.clientHeight,w=DEV[dev],mob=dev==='mobile';
+  const sc=mob?Math.min(1,(H-48)/844):Math.min(1,W/w);   // desktop/tablet fill the width; mobile fits a 390x844 phone
+  lf.style.width=w+'px';lf.style.height=(mob?844:H/sc)+'px';lf.style.transform=`scale(${sc})`;
+  lf.style.left=Math.max(0,(W-w*sc)/2)+'px';vp.classList.toggle('mobile',mob)};
+new IntersectionObserver((es,o)=>{if(es[0].isIntersecting){lf.src=lf.dataset.src;o.disconnect()}},{rootMargin:'600px'}).observe(vp);
+fit();addEventListener('resize',fit);
+[...document.querySelectorAll('.dev button')].forEach((b,_,all)=>b.addEventListener('click',()=>{dev=b.dataset.d;all.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));fit();try{lf.contentWindow.scrollTo(0,0)}catch(e){}}));
+guard.addEventListener('click',()=>{vp.classList.add('on');lf.tabIndex=0;lf.focus()});
+
+/* the strip loops seamlessly: each row is doubled, the copy hidden from screen readers */
+document.querySelectorAll('.strip-track').forEach(t=>{const n=t.children.length;t.innerHTML+=t.innerHTML;[...t.children].slice(n).forEach(f=>f.setAttribute('aria-hidden','true'))});
+
+/* lightbox for any [data-zoom] image */
+const lb=$('#lb'),lbi=lb.querySelector('img');let lbFrom=null;
+const lbOpen=img=>{lbFrom=document.activeElement;lbi.src=img.currentSrc||img.src;lbi.alt=img.alt;lb.classList.add('on');lb.querySelector('button').focus()};
+const lbClose=()=>{lb.classList.remove('on');if(lbFrom&&lbFrom.focus)lbFrom.focus()};
+document.addEventListener('click',e=>{const z=e.target.closest('[data-zoom]');if(z)lbOpen(z)});
+lb.addEventListener('click',e=>{if(e.target===lb||e.target.closest('button'))lbClose()});
+addEventListener('keydown',e=>{if(e.key==='Escape'&&lb.classList.contains('on'))lbClose()});
+})();
+</script>
+</body>
+</html>

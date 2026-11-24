@@ -116,6 +116,33 @@ const PROJECTS = [
   },
 
   {
+    name:    "everlean",
+    eyebrow: "Product Redesign · 2026",
+    desc:    "A continuous improvement platform, redesigned for the shop floor: landing page, web portal and native app.",
+
+    // This project has its own page, at ahmededris.com/everlean/.
+    link: "everlean/",
+
+    img: "images/everlean-cover.webp",
+    thumb: "images/everlean-thumb.webp",  // landing, portal and app, cross-fading
+
+    bg:     "#0b0e13",  // the case study's near-black
+    fg:     "#f2f4f7",
+    accent: "#a4b3ff",  // everlean's light indigo
+    dark:   true,
+
+    stops: ["#1d2160", "#06080c"],
+    blobs: ["#4d51de", "#007974"],
+
+    role: "Lead Product Designer",
+    year: "2026",
+    type: "Landing · Portal · iOS/Android",
+
+    overview: "everlean helps factories collect improvement ideas and safety observations from every employee, but its desktop form was built for office desks and used on noisy shop floors.",
+    work:     "A voice-first app for the line, a board-first portal for the 9:00 meeting, and a landing page that sells the product — on one token-based design system, light and dark.",
+  },
+
+  {
     name:    "Cookster",
     eyebrow: "Social Platform · 2024",
     desc:    "A video-first social network for food lovers — share recipes, discover dishes, follow chefs.",
